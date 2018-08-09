@@ -1,0 +1,28 @@
+<div fxLayout = "column"  fxLayoutAlign = "center center" style = "height:100vh">
+
+    <mat-card fxFlexAlign = "center center" >
+      <mat-card-title>
+        <div>
+       <span fxFlex></span>
+        Nawalcube login
+        <span fxFlex></span>
+      </div>
+      <div *ngIf = "lgtype === 'forgot'" style = "font-size: 15Px">
+          <span fxFlex></span>
+        Password reset
+        <span fxFlex></span>
+      </div>
+      </mat-card-title>
+      <br>
+      <br>
+      <app-login [lgtype] = "lgtype" (loginbt) = "emaillogin($event)"></app-login>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+          <h2 *ngIf = "lgtype === 'loginlnd'" style="font-size:15px" fxFlexAlign ="center start" style="font-size:15px"> <a type="button" (click) = "forgotpass()" routerLinkActive="active" >Forgot Password?</a></h2>
+          <h2 *ngIf = "lgtype === 'forgot'" style="font-size:15px" fxFlexAlign ="center start" style="font-size:15px"> <a type="button" (click) = "login()" routerLinkActive="active" >Login</a></h2>
+          <span style="line-height:60px" fxFlex></span>
+          <h2 style="font-size:15px" fxFlexAlign ="center end">  <a type="button" routerLink="/signup" routerLinkActive="active">New User? Signup</a></h2>              
+      </div>
+    </mat-card>
+
+  </div>

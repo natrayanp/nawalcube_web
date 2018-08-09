@@ -1,0 +1,14 @@
+<div fxLayout = "column"  fxLayoutAlign = "center center" style = "height:100vh">
+
+<mat-card fxFlexAlign = "center" >
+  <mat-card-title>
+   <span fxFlex></span>
+    Nawalcube login for app
+    <span fxFlex></span>
+  </mat-card-title>
+  
+  <app-login [lgtype] = "'loginauth'" (loginbt) = "emaillogin($event)"></app-login>
+
+</mat-card>
+
+</div>
