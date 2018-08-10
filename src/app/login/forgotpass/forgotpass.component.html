@@ -1,0 +1,55 @@
+
+  <div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center" style = "height:100vh">
+  <div>
+  
+  </div>
+
+  <mat-card fxFlexAlign = "center center" >
+   
+      <mat-card-title>
+          <span fxFlex></span>
+           Nawalcube
+           <span fxFlex></span>        
+         </mat-card-title>
+         <mat-card-subtitle>
+           <span fxFlex></span>
+           Reset Password
+           <span fxFlex></span>
+         </mat-card-subtitle>
+         <app-alerts></app-alerts>
+    
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" style="margin-top:0px">
+        
+        <div >
+          
+            <form class="example-form"  [formGroup]="userForm"> 
+            <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
+              
+                    <mat-form-field class="example-full-width" >
+                      <input matInput placeholder="Email" formControlName="email" fxFlex>
+                    <mat-error *ngIf="userForm.controls['email'].hasError('pattern')">
+                      email is not valid
+                    </mat-error>
+                    <mat-error *ngIf="userForm.controls['email'].hasError('required')">
+                      email is Mandatory
+                    </mat-error>
+                  </mat-form-field>
+                  
+  
+                    <br>
+                                
+                <button mat-raised-button [disabled]="userForm.controls['email'].invalid" (click)="emailpasswordreset()" id="userpassresetbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto" *ngIf="!hvcode"> <strong>Reset Password</strong></button>    
+
+                <br>
+                <a type="button" routerLink="/login" routerLinkActive="active">Back to login</a>
+               
+              </div>
+            </form>
+        </div>
+        </div>
+
+  
+  
+  
+  
+  
