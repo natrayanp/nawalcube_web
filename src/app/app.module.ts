@@ -9,8 +9,8 @@ import { ServicesModule } from './services/services.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { AuthoriseModule } from './authorise/authorise.module';
-import { SingupModule } from './singup/singup.module';
-import { DialogsModule } from './dialogs/dialogs.module';
+import { DialogsModule } from './commonmodules/dialogs/dialogs.module';
+import { NotificationsModule } from './commonmodules/notifications/notifications.module';
 
 
 @NgModule({
@@ -25,8 +25,8 @@ import { DialogsModule } from './dialogs/dialogs.module';
     SharedModule,
     LoginModule,
     AuthoriseModule,
-    SingupModule,
-    DialogsModule
+    DialogsModule,
+    NotificationsModule
   ],
   exports: [
   ],

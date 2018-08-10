@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
+import { FirebaseauthService } from '../../services/firebaseauth.service';
 
 @Component({
   selector: 'app-login-land',
@@ -7,36 +10,52 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-land.component.scss']
 })
 export class LoginLandComponent implements OnInit {
-  lgtype: string;
+  userpasswdlgForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private dialog: DialogsService,
+    private auth: FirebaseauthService
+  ) { }
 
   ngOnInit() {
-    this.lgtype = 'loginlnd';
+    this.createloginForm();
+  }
+
+  createloginForm() {
+    const group = {
+       'email': ['', Validators.compose([Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
+       'password' : ['', Validators.compose([Validators.required,Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
+    };
+    this.userpasswdlgForm = this.fb.group(group);
   }
 
   emaillogin(event) {
     console.log(event);
-    switch (event.status) {
-      case ('success'): {
-        console.log(event.data);
-        break;
-      }
-      case ('fail'): {
-        console.log(event.data);
-        break;
-      }
-    }
-  }
+    console.log('popup');
+    const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
+    this.auth.emailLogin(this.userpasswdlgForm.value)
+    .then((user) => {
+      console.log(user);
+      const to_upwrd = {
+        'action': 'authsignin',
+        'status': 'success',
+        'data': user
+      };
+    this.router.navigate(['/allow']);
+    mydialog.close();
 
-  forgotpass() {
-    console.log('forgot');
-    this.lgtype = 'forgot';
-  }
-
-  login() {
-    console.log('loginlnd');
-    this.lgtype = 'loginlnd';
+    })
+    .catch((error) => {
+      const to_upwrd = {
+        'action': 'authsignin',
+        'status': 'fail',
+        'data': error
+      };
+      console.log(error);
+      mydialog.close();
+    });
   }
 
 }

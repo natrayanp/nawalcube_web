@@ -7,7 +7,7 @@
         Nawalcube login
         <span fxFlex></span>
       </div>
-      <div *ngIf = "lgtype === 'forgot'" style = "font-size: 15Px">
+      <div style = "font-size: 15Px">
           <span fxFlex></span>
         Password reset
         <span fxFlex></span>
@@ -15,13 +15,43 @@
       </mat-card-title>
       <br>
       <br>
-      <app-login [lgtype] = "lgtype" (loginbt) = "emaillogin($event)"></app-login>
+      
+      <form class="example-form"  [formGroup]="userpasswdlgForm"> 
+          <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
+                
+              <mat-form-field class="example-full-width" >
+                <input matInput placeholder="Email" formControlName="email" >
+                    <mat-error *ngIf="userpasswdlgForm.controls['email'].hasError('pattern')">
+                      email is not valid
+                    </mat-error>
+                    <mat-error *ngIf="userpasswdlgForm.controls['email'].hasError('required')">
+                      email is Mandatory
+                    </mat-error>
+              </mat-form-field>
+              
+            
+              <mat-form-field class="example-full-width" *ngIf = "lgtype !== 'forgot'">
+                <input matInput type="password" placeholder="Password" formControlName="password" fxFlex="0 1 auto">
+                    <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('pattern')">
+                      Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
+                    </mat-error>
+                    <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('required')">
+                      Password cannot be blank
+                    </mat-error>
+              </mat-form-field>
+              
+              <br>
+          
+          <button mat-raised-button  [disabled]="userpasswdlgForm.invalid" (click)="emaillogin()" id="userpassloginbtn" class="example-full-width" style="height:50px;width:300px;font-size:20px;" color="primary" > <strong>Login</strong></button>    
+         
+              <br>
+        </div>
+      </form>
 
       <div fxLayout="row" fxLayoutAlign="center center">
-          <h2 *ngIf = "lgtype === 'loginlnd'" style="font-size:15px" fxFlexAlign ="center start" style="font-size:15px"> <a type="button" (click) = "forgotpass()" routerLinkActive="active" >Forgot Password?</a></h2>
-          <h2 *ngIf = "lgtype === 'forgot'" style="font-size:15px" fxFlexAlign ="center start" style="font-size:15px"> <a type="button" (click) = "login()" routerLinkActive="active" >Login</a></h2>
+          <a style="font-size:15px" fxFlexAlign ="center start"  type="button" routerLink="/forgot" routerLinkActive="active" >Forgot Password?</a>
           <span style="line-height:60px" fxFlex></span>
-          <h2 style="font-size:15px" fxFlexAlign ="center end">  <a type="button" routerLink="/signup" routerLinkActive="active">New User? Signup</a></h2>              
+          <a style="font-size:15px" fxFlexAlign ="center end" type="button" routerLink="/signup" routerLinkActive="active">New User? Signup</a>
       </div>
     </mat-card>
 

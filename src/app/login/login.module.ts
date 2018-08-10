@@ -1,15 +1,25 @@
 import { NgModule } from '@angular/core';
 
 import { LoginRoutingModule } from './login-routing.module';
-import { LoginLandComponent } from './login-land/login-land.component';
 import { SharedModule } from '../shared/shared.module';
+import { NotificationsModule } from '../commonmodules/notifications/notifications.module';
+
+import { LoginLandComponent } from './login-land/login-land.component';
+import { SingupComponent } from './singup/singup.component';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+
 
 
 @NgModule({
   imports: [
     LoginRoutingModule,
-    SharedModule
+    SharedModule,
+    NotificationsModule
   ],
-  declarations: [LoginLandComponent]
+  declarations: [
+    LoginLandComponent,
+    SingupComponent,
+    ForgotpassComponent
+  ]
 })
 export class LoginModule { }

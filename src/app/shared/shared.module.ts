@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { LoginComponent } from './login/login.component';
     FlexLayoutModule
   ],
   declarations: [
-    LoginComponent
   ],
   exports: [
     CommonModule,
@@ -24,7 +22,6 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule,
-    LoginComponent
   ]
 })
 export class SharedModule { }

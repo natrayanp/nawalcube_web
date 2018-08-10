@@ -15,6 +15,11 @@ export class FirebaseauthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(useridpass['email'], useridpass['password']);
   }
 
+  checkifemailexists(email) {
+    return this.afAuth.auth.fetchSignInMethodsForEmail(email);
+  }
+
+
   emailLogin(useridpass) {
     console.log(useridpass);
     return this.afAuth.auth.signInWithEmailAndPassword(useridpass['email'], useridpass['password']);
@@ -23,11 +28,11 @@ export class FirebaseauthService {
     // Sends email allowing user to reset password
     resetPassword(email: string) {
       return this.afAuth.auth.sendPasswordResetEmail(email)
-        .then(() => {
+      /*  .then(() => {
           console.log('Password reset link sent to your email');
           // this.notify.update('Password reset link sent to your email', 'info', 'alert', 'no')
         })
-        .catch((error) => this.handleError(error));
+        .catch((error) => this.handleError(error));*/
     }
 
     // If error, console log and notify user
