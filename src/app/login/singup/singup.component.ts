@@ -15,6 +15,7 @@ export class SingupComponent implements OnInit {
   signupForm: FormGroup;
   userpasswdlgForm: FormGroup;
   mydialog: any;
+  id1: string;
 
   constructor(
     private router: Router,
@@ -25,6 +26,7 @@ export class SingupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.id1 = this.notify.get_unq_id();
     this.createSignupForm();
     this.createloginForm();
   }
@@ -70,7 +72,7 @@ export class SingupComponent implements OnInit {
       .then((user) => {
         console.log(user);
         if (user.length > 0) {
-          this.notify.update(this.userpasswdlgForm.controls['email'].value + ' email already registered', 'error', 'alert', 'no');
+          this.notify.update(this.id1, this.userpasswdlgForm.controls['email'].value + ' email already registered', 'error', 'alert', 'no');
           this.mydialog.close();
           this.reset_pass_field();
         } else {
@@ -79,7 +81,7 @@ export class SingupComponent implements OnInit {
 
       })
       .catch((error) => {
-        this.notify.update(error.message, 'error', 'alert', 'no');
+        this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
         this.mydialog.close();
       });
       /*
@@ -95,11 +97,11 @@ export class SingupComponent implements OnInit {
       console.log(user);
       // this.router.navigate(['/allow']);
       this.mydialog.close();
-      this.notify.update('Sign up with user id ' + this.userpasswdlgForm.controls['email'].value + ' completed.  Login now.', 'success', 'alert', 'no');
+      this.notify.update(this.id1, 'Sign up with user id ' + this.userpasswdlgForm.controls['email'].value + ' completed.  Login now.', 'success', 'alert', 'no');
       this.reset_all_form();
     })
     .catch((error) => {
-      this.notify.update(error.message, 'error', 'alert', 'no');
+      this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
       console.log(error);
       this.mydialog.close();
       this.userpasswdlgForm.controls['password'].reset();

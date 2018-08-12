@@ -43,7 +43,7 @@ export class LoginLandComponent implements OnInit {
         'status': 'success',
         'data': user
       };
-    this.router.navigate(['/allow']);
+    this.router.navigate(['/secure']);
     mydialog.close();
 
     })

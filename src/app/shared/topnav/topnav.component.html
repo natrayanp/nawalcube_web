@@ -1,0 +1,67 @@
+<!--toolbr-->
+<mat-toolbar *ngIf = "toolbr" class="fixed-header mat-elevation-z2">
+
+  <!--leftspan-->
+    <span  *ngIf = "leftspan"  fxFlex = "1 1 10%"></span>
+
+
+    <!-- Company logo-->
+    <!--comlogo-->
+    <div *ngIf = "comlogo_sec" fxFlex="1 1 100%" fxFlex.gt-xs="1 1 250px" fxFlexFill  fxLayoutAlign="start center">
+
+      <div>
+          <!--comlogo_txt1-->
+          <strong *ngIf = "comlogo_txt1" style="font-size: 55px;font-family: 'Cabin Sketch', cursive; color: darkgreen">{{comlogo_txt1val}}</strong>
+          <!--comlogo_txt2-->
+          <strong  *ngIf = "comlogo_txt2" fxFlexAlign = "baseline" >{{comlogo_txt2val}}</strong>
+          <strong *ngIf = "comlogo_txt2" fxFlexAlign = "baseline" class = "otrtxtprp">{{comlogo_txt3val}}</strong>
+      </div>    
+    </div>
+
+    
+    <span  *ngIf = "!mid_section" fxFlex></span>
+    <!-- Middle section-->
+    <div *ngIf = "mid_section" fxFlex="1 1 auto" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" >    
+        <div>
+            <a *ngIf = "mid_devlnk" type ="button" mat-icon-button routerLink="/devhome" routerLinkActive="active"  (click)="singup('devhome')">
+            <strong fxFlexAlign = "baseline" style="color:grey" >Developers</strong>
+          </a>
+        </div>
+        <!--div>
+            <a type ="button" mat-icon-button routerLink="/home" routerLinkActive="active"  (click)="Singup('')">
+            <strong fxFlexAlign = "baseline" style="color:grey" >Product1</strong>
+          </a>
+        </div-->
+    </div>
+
+    
+
+
+    <!-- End section-->
+    <div *ngIf = "end_section" fxFlex="1 1 20%" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" >    
+      <div>
+          <a *ngIf = "end_reglnk" type ="button" mat-icon-button  routerLinkActive="active"  (click)="singup('register')">
+          <strong fxFlexAlign = "baseline"  >Register</strong>
+        </a>
+      </div>
+      <div >
+        <a *ngIf = "end_loglnk" type ="button" mat-icon-button routerLinkActive="active"  (click)="singup('login')">
+          <div fxLayout = "row">
+            <strong>Login</strong>
+            <!--strong fxFlexAlign = "baseline" style="color:red" >Logout</strong-->
+            <!--mat-icon fxFlexAlign = "centre">lock</mat-icon-->        
+          </div>
+        </a>
+
+        <a *ngIf = "end_logoutlnk" type ="button" mat-icon-button routerLinkActive="active"  (click)="singup(' ')">
+          <div fxLayout = "row">
+            <strong style = "color:red">Logout</strong>
+            <!--strong fxFlexAlign = "baseline" style="color:red" >Logout</strong-->
+            <!--mat-icon fxFlexAlign = "centre">lock</mat-icon-->        
+          </div>
+        </a>
+
+      </div>
+    </div>
+<span fxFlex = "1 1 10%"></span>
+</mat-toolbar>

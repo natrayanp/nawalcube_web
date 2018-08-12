@@ -4,6 +4,7 @@
 
   /// Notify users about errors and other helpful stuff
   export interface Msg {
+    id: string;
     content: string;
     style: string;
     type: string;
@@ -12,6 +13,8 @@
 
   @Injectable()
   export class NotifyService {
+
+    private unq_id_seq = 0;
     private _notimsgSource = new Subject<Msg[] | null>();
     private _alrtmsgSource = new Subject<Msg[] | null>();
     private _bannermsgSource = new Subject<Msg[] | null>();
@@ -36,20 +39,21 @@
 
 
 
-    update(content: any, style: 'error' | 'info' | 'success',type: 'notification' | 'alert' | 'banner', canclose: 'yes' | 'no') {
+    update(id: string, content: string, style: 'error' | 'info' | 'success', type: 'notification' | 'alert' | 'banner', canclose: 'yes' | 'no') {
       if (type === 'notification') {
-          const msg: Msg = { content, style, type, canclose };
+          const msg: Msg = { id, content, style, type, canclose };
           this.notimsg1.push(msg);
           this._notimsgSource.next(this.notimsg1);
       } else if (type === 'alert') {
-          const msg: Msg = { content, style, type, canclose };
+          console.log('insdie alert');
+          const msg: Msg = { id, content, style, type, canclose };
           this.alertmsg1.pop();
           this.alertmsg1.push(msg);
           console.log(JSON.stringify(this.alertmsg1));
           this._alrtmsgSource.next(this.alertmsg1);
           // this.starttimer();
       } else if (type === 'banner') {
-          const msg: Msg = { content, style, type, canclose };
+          const msg: Msg = { id, content, style, type, canclose };
           this.bannermsg1.push(msg);
           this._bannermsgSource.next(this.bannermsg1);
       }
@@ -92,6 +96,12 @@
       this.clearnotifcation();
       this.clearalertmsg();
       this.clearbannermsg();
+    }
+
+    get_unq_id () {
+      this.unq_id_seq = this.unq_id_seq + 1;
+      const unq_id = 'noti' + this.unq_id_seq;
+      return unq_id;
     }
 
   }

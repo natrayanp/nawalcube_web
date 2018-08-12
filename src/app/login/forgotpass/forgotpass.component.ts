@@ -13,7 +13,7 @@ import { NotifyService } from '../../commonmodules/notifications/notify.service'
 })
 export class ForgotpassComponent implements OnInit {
   userForm: FormGroup;
-
+  id1: string;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -23,6 +23,7 @@ export class ForgotpassComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.id1 = this.notify.get_unq_id();
     this.createforgotpassForm();
   }
 
@@ -38,7 +39,7 @@ export class ForgotpassComponent implements OnInit {
     this.auth.resetPassword(this.userForm.controls['email'].value)
     .then((user) => {
                     console.log(user);
-                    this.notify.update('Reset email sent to ' + this.userForm.controls['email'].value, 'success', 'alert', 'no');
+                    this.notify.update(this.id1, 'Reset email sent to ' + this.userForm.controls['email'].value, 'success', 'alert', 'no');
                     this.userForm.reset();
                     this.userForm.markAsUntouched();
                     this.userForm.markAsPristine();
@@ -47,7 +48,7 @@ export class ForgotpassComponent implements OnInit {
               .catch((error) => {
                 console.log(error);
                 console.log('inside error');
-                this.notify.update(error.message, 'error', 'alert', 'no');
+                this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
                 const to_upwrd = {
                   'action': 'authsignin',
                   'status': 'fail',

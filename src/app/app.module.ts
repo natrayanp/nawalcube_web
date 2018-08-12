@@ -11,7 +11,9 @@ import { LoginModule } from './login/login.module';
 import { AuthoriseModule } from './authorise/authorise.module';
 import { DialogsModule } from './commonmodules/dialogs/dialogs.module';
 import { NotificationsModule } from './commonmodules/notifications/notifications.module';
-
+import { NologinModule } from './nologin/nologin.module';
+import { PostloginModule } from './postlogin/postlogin.module';
+import { DevmoduleModule } from './devmodule/devmodule.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,10 @@ import { NotificationsModule } from './commonmodules/notifications/notifications
     LoginModule,
     AuthoriseModule,
     DialogsModule,
-    NotificationsModule
+    NotificationsModule,
+    NologinModule,
+    PostloginModule,
+    DevmoduleModule
   ],
   exports: [
   ],
