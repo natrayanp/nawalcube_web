@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
+import { NotifyService } from '../../commonmodules/notifications/notify.service';
 
 @Component({
   selector: 'app-login-land',
@@ -11,15 +12,18 @@ import { FirebaseauthService } from '../../services/firebaseauth.service';
 })
 export class LoginLandComponent implements OnInit {
   userpasswdlgForm: FormGroup;
+  id1: string;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private dialog: DialogsService,
-    private auth: FirebaseauthService
+    private auth: FirebaseauthService,
+    private notify: NotifyService
   ) { }
 
   ngOnInit() {
+    this.id1 = this.notify.get_unq_id();
     this.createloginForm();
   }
 
@@ -31,8 +35,7 @@ export class LoginLandComponent implements OnInit {
     this.userpasswdlgForm = this.fb.group(group);
   }
 
-  emaillogin(event) {
-    console.log(event);
+  emaillogin() {
     console.log('popup');
     const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
     this.auth.emailLogin(this.userpasswdlgForm.value)
@@ -54,6 +57,7 @@ export class LoginLandComponent implements OnInit {
         'data': error
       };
       console.log(error);
+      this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
       mydialog.close();
     });
   }

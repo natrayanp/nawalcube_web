@@ -6,9 +6,10 @@ import { DevlandComponent } from './devland/devland.component';
 import { DevlgerrComponent } from './devlgerr/devlgerr.component';
 
 const routes: Routes = [
-  { path: 'devhome', component: DevhomeComponent },
+  { path: '', component: DevhomeComponent },
   { path: 'devsecure', component: DevlandComponent },
   { path: 'devlgerr', component: DevlgerrComponent }
+
 ];
 
 @NgModule({

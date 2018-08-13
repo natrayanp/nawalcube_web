@@ -1,21 +1,21 @@
 <div fxLayout = "column"  fxLayoutAlign = "center center" style = "height:100vh">
 
     <mat-card fxFlexAlign = "center center" >
-      <mat-card-title>
-        <div>
-       <span fxFlex></span>
-        Nawalcube login
-        <span fxFlex></span>
-      </div>
-      <div style = "font-size: 15Px">
-          <span fxFlex></span>
-        
-        <span fxFlex></span>
-      </div>
-      </mat-card-title>
+
+        <mat-card-title>
+            <span fxFlex></span>
+            <strong style="font-size: 55px;font-family: 'Cabin Sketch', cursive; color: darkgreen">Nawalcube</strong>
+             <span fxFlex></span>        
+           </mat-card-title>
+           <mat-card-subtitle>
+             <span fxFlex></span>
+             <div fxFlexAlign = "center" >login </div>
+             <span fxFlex></span>
+           </mat-card-subtitle>
+
       <br>
       <br>
-      
+      <app-alerts [id]="id1"></app-alerts>
       <form class="example-form"  [formGroup]="userpasswdlgForm"> 
           <div  fxLayout="column" fxFlex="1 0 auto" fxLayoutGap="30px" fxLayoutAlign="center center" fxFlex="0 1 auto">
                 
@@ -30,7 +30,7 @@
               </mat-form-field>
               
             
-              <mat-form-field class="example-full-width" *ngIf = "lgtype !== 'forgot'">
+              <mat-form-field class="example-full-width">
                 <input matInput type="password" placeholder="Password" formControlName="password" fxFlex="0 1 auto">
                     <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('pattern')">
                       Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
@@ -49,9 +49,9 @@
       </form>
 
       <div fxLayout="row" fxLayoutAlign="center center">
-          <a style="font-size:15px" fxFlexAlign ="center start"  type="button" routerLink="/forgot" routerLinkActive="active" >Forgot Password?</a>
+          <a style="font-size:15px" fxFlexAlign ="center start"  type="button" routerLink="/login/forgot" routerLinkActive="active" >Forgot Password?</a>
           <span style="line-height:60px" fxFlex></span>
-          <a style="font-size:15px" fxFlexAlign ="center end" type="button" routerLink="/signup" routerLinkActive="active">New User? Signup</a>
+          <a style="font-size:15px" fxFlexAlign ="center end" type="button" routerLink="/login/signup" routerLinkActive="active">New User? Signup</a>
       </div>
     </mat-card>
 

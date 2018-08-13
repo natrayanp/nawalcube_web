@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlglandComponent } from './plgland/plgland.component';
 
 const routes: Routes = [
-  { path: 'secure', component: PlglandComponent }
+  { path: '', component: PlglandComponent }
 ];
 
 @NgModule({

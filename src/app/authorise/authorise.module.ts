@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -12,12 +13,16 @@ import { AuthAllowComponent } from './auth-allow/auth-allow.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     FlexLayoutModule,
     MaterialModule,
     NotificationsModule,
     AuthoriseRoutingModule,
     SharedModule
   ],
-  declarations: [AuthLoginComponent, AuthAllowComponent]
+  declarations: [
+    AuthLoginComponent,
+    AuthAllowComponent
+  ]
 })
 export class AuthoriseModule { }

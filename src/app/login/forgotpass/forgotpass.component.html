@@ -5,17 +5,21 @@
   </div>
 
   <mat-card fxFlexAlign = "center center" >
-   
-      <mat-card-title>
-          <span fxFlex></span>
-           Nawalcube
-           <span fxFlex></span>        
-         </mat-card-title>
-         <mat-card-subtitle>
-           <span fxFlex></span>
-           Reset Password
-           <span fxFlex></span>
-         </mat-card-subtitle>
+
+
+
+         <mat-card-title>
+            <span fxFlex></span>
+            <strong style="font-size: 55px;font-family: 'Cabin Sketch', cursive; color: darkgreen">Nawalcube</strong>
+             <span fxFlex></span>        
+           </mat-card-title>
+           <mat-card-subtitle>
+             <span fxFlex></span>
+             <div fxFlexAlign = "center" >Reset Password </div>
+             <span fxFlex></span>
+           </mat-card-subtitle>
+
+
          <app-alerts></app-alerts>
     
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" style="margin-top:0px">
@@ -38,7 +42,7 @@
   
                     <br>
                                 
-                <button mat-raised-button [disabled]="userForm.controls['email'].invalid" (click)="emailpasswordreset()" id="userpassresetbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto" *ngIf="!hvcode"> <strong>Reset Password</strong></button>    
+                <button mat-raised-button [disabled]="userForm.controls['email'].invalid" (click)="emailpasswordreset()" id="userpassresetbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto"> <strong>Reset Password</strong></button>    
 
                 <br>
                 <a type="button" routerLink="/login" routerLinkActive="active">Back to login</a>

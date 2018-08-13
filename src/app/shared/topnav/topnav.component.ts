@@ -31,6 +31,7 @@ export class TopnavComponent implements OnInit {
 
   ngOnInit() {
     this.screen = this.sourcepage;
+    console.log(this.screen);
     this.set_display();
   }
 
@@ -52,28 +53,23 @@ export class TopnavComponent implements OnInit {
         this.end_logoutlnk = true;
         break;
       }
-      case ('homepg'): {
-        this.toolbr = true;
-        this.leftspan = true;
-        this.comlogo_sec = true;
-        this.comlogo_txt1 = true;
-        this.comlogo_txt1val = 'Nawalcube';
-        this.comlogo_txt2 = false;
-        this.comlogo_txt2val = '-';
-        this.comlogo_txt3 = false;
-        this.comlogo_txt3val = 'API';
-        this.mid_section = true;
-        this.mid_devlnk = true;
-        this.end_section = true;
-        this.end_reglnk = true;
-        this.end_loglnk = true;
-        this.end_logoutlnk = false;
-        break;
-      }
       case ('devlgerr'): {
         this.set_dev_hm_pg();
+        break;
       }
-
+      case ('homepg'): {
+        this.set_hm_pg();
+        break;
+      }
+      case ('plgland'): {
+        this.set_hm_pg();
+        this.leftspan = false;
+        this.mid_section = false;
+        this.end_reglnk = false;
+        this.end_loglnk = false;
+        this.end_logoutlnk = true;
+        break;
+      }
 
 
     }
@@ -97,5 +93,23 @@ export class TopnavComponent implements OnInit {
     this.end_loglnk = true;
     this.end_logoutlnk = false;
   }
-
+  
+  
+  set_hm_pg() {
+  this.toolbr = true;
+  this.leftspan = true;
+  this.comlogo_sec = true;
+  this.comlogo_txt1 = true;
+  this.comlogo_txt1val = 'Nawalcube';
+  this.comlogo_txt2 = false;
+  this.comlogo_txt2val = '-';
+  this.comlogo_txt3 = false;
+  this.comlogo_txt3val = '';
+  this.mid_section = true;
+  this.mid_devlnk = true;
+  this.end_section = true;
+  this.end_reglnk = true;
+  this.end_loglnk = true;
+  this.end_logoutlnk = false;
+  }
 }

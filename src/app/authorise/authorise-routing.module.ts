@@ -6,7 +6,7 @@ import { AuthAllowComponent } from './auth-allow/auth-allow.component';
 
 
 const routes: Routes = [
-  { path: 'authlogin', component: AuthLoginComponent },
+  { path: '', component: AuthLoginComponent },
   { path: 'allow', component: AuthAllowComponent }
 ];
 

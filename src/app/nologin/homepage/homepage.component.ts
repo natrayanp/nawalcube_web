@@ -26,8 +26,8 @@ export class HomepageComponent implements OnInit {
         this.router.navigate(['/signup']);
         break;
       }
-      case ('devhome'): {
-        this.router.navigate(['/devhome']);
+      case ('developers'): {
+        this.router.navigate(['/developers']);
         break;
       }
 

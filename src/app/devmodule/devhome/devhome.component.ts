@@ -13,13 +13,14 @@ export class DevhomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('inside devhome');
   }
 
 
   navclick(event) {
     switch (event) {
       case ('login'): {
-        this.router.navigate(['/authlogin'], { queryParams: { request: 'yenn' } });
+        this.router.navigate(['/authorise'], { queryParams: { request: 'yenn' } });
         break;
       }
       case ('register'): {

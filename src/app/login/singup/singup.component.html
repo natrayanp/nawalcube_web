@@ -1,17 +1,22 @@
 <div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center" style = "height:100vh">
 <mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
 
-    <mat-card-title>
-        <span fxFlex></span>
-         Nawalcube
-         <span fxFlex></span>        
-       </mat-card-title>
-       <mat-card-subtitle>
-         <span fxFlex></span>
-         Signup
-         <span fxFlex></span>
-       </mat-card-subtitle>
-       <app-alerts></app-alerts>
+
+
+       <mat-card-title>
+          <span fxFlex></span>
+          <strong style="font-size: 55px;font-family: 'Cabin Sketch', cursive; color: darkgreen">Nawalcube</strong>
+           <span fxFlex></span>        
+         </mat-card-title>
+         <mat-card-subtitle>
+           <span fxFlex></span>
+           <div fxFlexAlign = "center" >Signup </div>
+           <span fxFlex></span>
+         </mat-card-subtitle>
+
+
+
+       <app-alerts [id]="id1"></app-alerts>
 
       <div>
       <span fxFlex = "10%"></span>

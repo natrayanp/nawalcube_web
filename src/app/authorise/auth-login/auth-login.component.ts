@@ -142,7 +142,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     this.router.navigate(['/allow']);
     } else if (this.req_param === 'yenn') {
       console.log('inside yenn ');
-      this.router.navigate(['/devsecure']);
+      this.router.navigate(['developers/devsecure']);
     }
     mydialog.close();
 
@@ -161,7 +161,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
 
   send_error_resp(req_param) {
     if (req_param === 'yenn') {
-      this.router.navigate(['/devlgerr']);
+      this.router.navigate(['developers/devlgerr']);
     } else if (req_param === 'code') {
       this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
     } else {

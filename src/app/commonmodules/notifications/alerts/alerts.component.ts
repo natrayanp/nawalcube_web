@@ -26,7 +26,7 @@ export class AlertsComponent implements OnChanges, OnInit, DoCheck, AfterViewIni
 
 
  ngOnChanges() {
-  console.log('ngOnChanges child');
+  console.log('ngOnChanges child', this.alert_id);
 }
 
 
