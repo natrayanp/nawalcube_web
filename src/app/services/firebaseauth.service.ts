@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
 )
 export class FirebaseauthService {
 
+  /*
+  this.afAuth.auth === firebase.aut()
+  returns firebase.sAuth
+  */
+
   firebase_user: firebase.User;
 
   constructor(
