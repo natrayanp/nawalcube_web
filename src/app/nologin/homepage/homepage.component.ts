@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseauthService } from '../../services/firebaseauth.service';
 
 
 @Component({
@@ -10,10 +11,12 @@ import { Router } from '@angular/router';
 export class HomepageComponent implements OnInit {
 
   constructor(
-              private router: Router
+              private router: Router,
+              private auth: FirebaseauthService
             ) { }
 
   ngOnInit() {
+    console.log(this.auth.firebase_user);
   }
 
   navclick(event) {

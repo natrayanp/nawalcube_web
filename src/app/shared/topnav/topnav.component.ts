@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FirebaseauthService } from '../../services/firebaseauth.service';
 
 @Component({
   selector: 'app-topnav',
@@ -27,7 +28,9 @@ export class TopnavComponent implements OnInit {
   end_loglnk = true;
   end_logoutlnk = true;
 
-  constructor() { }
+  constructor(
+    private auth: FirebaseauthService
+  ) { }
 
   ngOnInit() {
     this.screen = this.sourcepage;

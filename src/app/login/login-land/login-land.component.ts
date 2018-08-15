@@ -40,25 +40,14 @@ export class LoginLandComponent implements OnInit {
     const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
     this.auth.emailLogin(this.userpasswdlgForm.value)
     .then((user) => {
-      console.log(user);
-      const to_upwrd = {
-        'action': 'authsignin',
-        'status': 'success',
-        'data': user
-      };
-    this.router.navigate(['/secure']);
-    mydialog.close();
-
+            console.log(user);
+            this.router.navigate(['/secure']);
+            mydialog.close();
     })
     .catch((error) => {
-      const to_upwrd = {
-        'action': 'authsignin',
-        'status': 'fail',
-        'data': error
-      };
-      console.log(error);
-      this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
-      mydialog.close();
+            console.log(error);
+            this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
+            mydialog.close();
     });
   }
 

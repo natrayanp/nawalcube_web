@@ -1,12 +1,33 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { auth } from 'firebase';
+import { Router } from '@angular/router';
 
 @Injectable(
 //  {providedIn: 'root'}
 )
 export class FirebaseauthService {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  firebase_user: firebase.User;
+
+  constructor(
+              private afAuth: AngularFireAuth,
+              public router: Router
+            ) {
+
+    this.afAuth.authState.subscribe(auths => {
+      console.log(auths);
+      this.firebase_user = auths;
+      console.log(typeof(auths));
+      if (this.firebase_user) {
+        console.log(this.firebase_user.uid)
+        console.log('logged in');
+      } else {
+        this.router.navigate(['']);
+        console.log('not logged in');
+      }
+    });
+   }
 
 
   //// Email/Password Auth ////
@@ -23,6 +44,12 @@ export class FirebaseauthService {
   emailLogin(useridpass) {
     console.log(useridpass);
     return this.afAuth.auth.signInWithEmailAndPassword(useridpass['email'], useridpass['password']);
+  }
+
+  fire_logout() {
+    console.log('before log out in service');
+    console.log(this.firebase_user);
+    return this.afAuth.auth.signOut();
   }
 
     // Sends email allowing user to reset password
@@ -44,5 +71,8 @@ export class FirebaseauthService {
             // this.notify.update(error.message, 'error');
           return('error');
     }
+
+
+
 
 }
