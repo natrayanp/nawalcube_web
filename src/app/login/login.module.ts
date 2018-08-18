@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { LoginapiService } from './loginapi.service';
+
 import { LoginRoutingModule } from './login-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { NotificationsModule } from '../commonmodules/notifications/notifications.module';
@@ -22,6 +24,9 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
     LoginLandComponent,
     SingupComponent,
     ForgotpassComponent
+  ],
+  providers: [
+    LoginapiService
   ]
 })
 export class LoginModule { }

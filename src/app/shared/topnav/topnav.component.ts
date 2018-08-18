@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-topnav',
@@ -29,7 +30,8 @@ export class TopnavComponent implements OnInit {
   end_logoutlnk = true;
 
   constructor(
-    private auth: FirebaseauthService
+    private auth: FirebaseauthService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -39,7 +41,13 @@ export class TopnavComponent implements OnInit {
   }
 
   singup(btn) {
-    this.navclickevnt.emit(btn);
+    if (btn === 'logout') {
+      this.auth.delete_session();
+      // Navigate to home page
+      this.router.navigate(['/']);
+    } else {
+      this.navclickevnt.emit(btn);
+    }
   }
 
   set_display() {

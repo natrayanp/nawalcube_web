@@ -10,6 +10,8 @@ import { SharedModule } from './shared/shared.module';
 import { DialogsModule } from './commonmodules/dialogs/dialogs.module';
 import { NotificationsModule } from './commonmodules/notifications/notifications.module';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +24,7 @@ import { NotificationsModule } from './commonmodules/notifications/notifications
     SharedModule,
     DialogsModule,
     NotificationsModule,
+    HttpClientModule
   ],
   exports: [
   ],

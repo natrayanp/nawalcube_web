@@ -14,6 +14,8 @@ export class FirebaseauthService {
   */
 
   firebase_user: firebase.User;
+  idToken: string;
+  session_id: string;
 
   constructor(
               private afAuth: AngularFireAuth,
@@ -25,8 +27,10 @@ export class FirebaseauthService {
       this.firebase_user = auths;
       console.log(typeof(auths));
       if (this.firebase_user) {
-        console.log(this.firebase_user.uid)
+        console.log(this.firebase_user.uid);
         console.log('logged in');
+        console.log('out of id');
+        this.get_id_token();
       } else {
         this.router.navigate(['']);
         console.log('not logged in');
@@ -77,7 +81,48 @@ export class FirebaseauthService {
           return('error');
     }
 
+    public get_id_token() {
+      this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ true)
+      .then(idToken => {
+        this.idToken = idToken;
+        return this.idToken;
+      }).catch(function(error) {
+        // Handle error
+        console.log('error inside get id token');
+        this.idToken = null;
+      });
+  }
 
 
+  public set_session() {
+    const sc = this.getsession('nc_session');
+    console.log(sc);
+    if (sc === null) {
+      const currentdate = new Date();
+      const val = [Array(10)].map(i => (((Math.random() * 36))).toString(36)).join('');
+      const dt = currentdate.toISOString();
+      const vdt = (val + dt ).replace('T', ' ').replace(/-|:|\.|\s+/g, '');
+      /* cookie implementation
+      document.cookie = cookiename + ' =' + vdt;
+      */
+     sessionStorage.setItem('nc_session', vdt);
+    }
+  }
+
+  getsession(name) {
+    return sessionStorage.getItem(name);
+  /*
+  cookie implementation
+  // Get name followed by anything except a semicolon
+  const cookiestring = RegExp('' + cookiename + '[^;]+').exec(document.cookie);
+    console.log(cookiestring);
+  // Return everything after the equal sign, or an empty string if the cookie name not found
+  return decodeURIComponent(!!cookiestring ? cookiestring.toString().replace(/^[^=]+./, '') : '');
+  */
+  }
+
+  delete_session() {
+    sessionStorage.removeItem('nc_session');
+  }
 
 }

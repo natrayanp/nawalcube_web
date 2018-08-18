@@ -12,6 +12,9 @@ export const environment = {
     storageBucket: 'ananew-472d8.appspot.com',
     messagingSenderId: '753856447807'
   },
+  // url_<screen + Functionality>
+  url_signup: 'http://127.0.0.1:8080',
+  endpt_signup : 'signup',
 };
 
 /*

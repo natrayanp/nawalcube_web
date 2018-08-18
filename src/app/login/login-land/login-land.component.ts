@@ -38,9 +38,11 @@ export class LoginLandComponent implements OnInit {
   emaillogin() {
     console.log('popup');
     const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
+    console.log(this.userpasswdlgForm.value);
     this.auth.emailLogin(this.userpasswdlgForm.value)
     .then((user) => {
             console.log(user);
+            this.auth.set_session();
             this.router.navigate(['/secure']);
             mydialog.close();
     })

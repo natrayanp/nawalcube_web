@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
+import { LoginapiService } from '../loginapi.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class SingupComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: DialogsService,
     private auth: FirebaseauthService,
-    private notify: NotifyService
+    private notify: NotifyService,
+    private api: LoginapiService,
   ) { }
 
   ngOnInit() {
@@ -76,7 +78,7 @@ export class SingupComponent implements OnInit {
           this.mydialog.close();
           this.reset_pass_field();
         } else {
-          this.createuser();
+          //this.createuser();
         }
 
       })
@@ -91,13 +93,27 @@ export class SingupComponent implements OnInit {
     */
   }
 
-  createuser() {
-    this.auth.emailSignUp(this.userpasswdlgForm.value)
+  subzzz() {
+    this.mydialog  = this.dialog.showalert('Sign Up in progress', 'We are working on your request, please wait');
+    this.createuser({'email': 'natrayanp@gmail.com', 'password': 'test@321' });
+  }
+
+  createuser(data) {
+    this.auth.emailSignUp(data)
+    // this.auth.emailSignUp(this.userpasswdlgForm.value)
     .then((user) => {
       console.log(user);
-      // this.router.navigate(['/allow']);
+      // Send data to API
+      this.send_data_to_api('signup', this.signupForm.value);
+
       this.mydialog.close();
-      this.notify.update(this.id1, 'Sign up with user id ' + this.userpasswdlgForm.controls['email'].value + ' completed.  Login now.', 'success', 'alert', 'no');
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      this.notify.update(
+                this.id1,
+                  'Sign up with user id ' +
+                  this.userpasswdlgForm.controls['email'].value +
+                  ' completed.  Login now.', 'success', 'alert', 'no'
+              );
       this.reset_all_form();
     })
     .catch((error) => {
@@ -107,6 +123,19 @@ export class SingupComponent implements OnInit {
       this.userpasswdlgForm.controls['password'].reset();
     });
   }
+
+  send_data_to_api(scrndfunc, data) {
+    this.api.loginapipost(scrndfunc, data)
+    .subscribe (
+      resp => {
+        console.log(resp);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 
   reset_pass_field() {
     this.userpasswdlgForm.controls['password'].reset();
