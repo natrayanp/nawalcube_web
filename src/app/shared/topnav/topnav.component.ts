@@ -42,10 +42,15 @@ export class TopnavComponent implements OnInit {
 
   singup(btn) {
     if (btn === 'logout') {
+      
+      // Removing the session id
       this.auth.delete_session();
+
       // Navigate to home page
       this.router.navigate(['/']);
+    
     } else {
+    
       this.navclickevnt.emit(btn);
     }
   }

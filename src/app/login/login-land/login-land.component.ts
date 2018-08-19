@@ -29,8 +29,11 @@ export class LoginLandComponent implements OnInit {
 
   createloginForm() {
     const group = {
-       'email': ['', Validators.compose([Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
-       'password' : ['', Validators.compose([Validators.required,Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
+       'email': ['', Validators.compose([Validators.required, 
+        Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
+
+       'password' : ['', Validators.compose([Validators.required,
+                      Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
     };
     this.userpasswdlgForm = this.fb.group(group);
   }
@@ -42,7 +45,10 @@ export class LoginLandComponent implements OnInit {
     this.auth.emailLogin(this.userpasswdlgForm.value)
     .then((user) => {
             console.log(user);
+
+            // setting session for the user.  On logout remove this.
             this.auth.set_session();
+
             this.router.navigate(['/secure']);
             mydialog.close();
     })

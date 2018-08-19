@@ -17,7 +17,7 @@ export class NatHttpService {
              ) { }
 
   // POST request to API
-  apipost(scrndfunc, data, conttyp = 'json') {
+  apipost(scrndfunc, data) {
     console.log(environment['url_' + scrndfunc] + '/' + environment['endpt_' + scrndfunc]);
     return this.http.post(
                           environment['url_' + scrndfunc] + '/' + environment['endpt_' + scrndfunc],
@@ -28,41 +28,13 @@ export class NatHttpService {
   }
 
   // GET request to API
-  apiget(scrndfunc, conttyp = 'json') {
+  apiget(scrndfunc) {
     return this.http.get(
                           environment[scrndfunc + 'url'] + '/' + environment[scrndfunc]
                          // {headers: this.set_http_headers(conttyp), observe: 'response'}
                         );
   }
 
-
-
-  set_http_headers(conttyp) {
-
-    if (conttyp === 'json') {
-      this.setHeader(this.headers, 'Content-Type', 'application/json');
-    }
-
-    this.headers.append('custom-header', 'mycookie');
-    
-
-    // Get the id token and set it in the header for api
-    const idtkn = this.auth.get_id_token();
-
-    if (idtkn !== null) {
-      this.setHeader(this.headers, 'Authorization', 'Bearer ' + idtkn);
-    }
-
-    console.log(this.headers.get('Authorization'));
-    // this.setHeader(this.headers, 'Access-Control-Allow-Credentials', true);
-
-    return this.headers;
-  }
-
-
-  setHeader(headers, key , value) {
-      return headers.set(key, value);
-  }
 
 
 }

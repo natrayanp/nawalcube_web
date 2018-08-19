@@ -45,11 +45,16 @@ export class SingupComponent implements OnInit {
   createloginForm() {
     const group = {
        'email': ['', Validators.compose([Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
-       'password' : ['', Validators.compose([Validators.required,Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])],
-       'repassword' : ['', Validators.compose([Validators.required,Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
+       'password' : ['', Validators.compose([Validators.required,
+                                              Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)
+                                            ])
+                                          ],
+       'repassword' : ['', Validators.compose([Validators.required,
+                                              Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)
+                                            ])]
     };
     this.userpasswdlgForm = this.fb.group(group);
-    let tt = this.userpasswdlgForm.valueChanges;
+    const tt = this.userpasswdlgForm.valueChanges;
     tt.subscribe (
       (res) => {
         if ((this.userpasswdlgForm.controls['repassword'].value).toString().length > 0) {
@@ -74,11 +79,12 @@ export class SingupComponent implements OnInit {
       .then((user) => {
         console.log(user);
         if (user.length > 0) {
-          this.notify.update(this.id1, this.userpasswdlgForm.controls['email'].value + ' email already registered', 'error', 'alert', 'no');
-          this.mydialog.close();
-          this.reset_pass_field();
+            this.notify.update(this.id1, this.userpasswdlgForm.controls['email'].value +
+                                ' email already registered', 'error', 'alert', 'no');
+            this.mydialog.close();
+            this.reset_pass_field();
         } else {
-          //this.createuser();
+            this.createuser();
         }
 
       })
@@ -93,21 +99,23 @@ export class SingupComponent implements OnInit {
     */
   }
 
+/*
   subzzz() {
     this.mydialog  = this.dialog.showalert('Sign Up in progress', 'We are working on your request, please wait');
-    this.createuser({'email': 'natrayanp@gmail.com', 'password': 'test@321' });
+    this.createuser({ 'email': 'natrayanp@gmail.com', 'password': 'test@321', 'repassword': 'test@321' });
   }
-
-  createuser(data) {
-    this.auth.emailSignUp(data)
-    // this.auth.emailSignUp(this.userpasswdlgForm.value)
+*/
+    createuser() {
+    // createuser(data) {
+    // this.auth.emailSignUp(data)
+    this.auth.emailSignUp(this.userpasswdlgForm.value)
     .then((user) => {
       console.log(user);
+
       // Send data to API
       this.send_data_to_api('signup', this.signupForm.value);
 
       this.mydialog.close();
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       this.notify.update(
                 this.id1,
                   'Sign up with user id ' +
@@ -132,6 +140,7 @@ export class SingupComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.auth.fire_del_usr();
       }
     );
   }

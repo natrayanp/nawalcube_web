@@ -16,44 +16,45 @@ export class AlertsComponent implements OnChanges, OnInit, DoCheck, AfterViewIni
 
   ngOnInit() {
     this.alert_id = this.id;
+    /*
     console.log(this.alert_id);
     console.log('ngOnInit child');
     console.log(this.notify.alertmsg);
     this.subscription = this.notify.alertmsg.subscribe ((res) => {
       console.log(res);
     });
+    */
  }
 
 
  ngOnChanges() {
-  console.log('ngOnChanges child', this.alert_id);
+  // console.log('ngOnChanges child', this.alert_id);
 }
 
 
 
 ngDoCheck() {
-  console.log('ngDoCheck child');
+  // console.log('ngDoCheck child');
 }
 
 ngAfterContentInit() {
-  console.log('ngAfterContentInit child');
+  // console.log('ngAfterContentInit child');
 }
 
 ngAfterContentChecked() {
-  console.log('ngAfterContentChecked child');
+  // console.log('ngAfterContentChecked child');
 }
 
 ngAfterViewInit() {
-  console.log('ngAfterViewInit child');
+  // console.log('ngAfterViewInit child');
 }
 
 ngAfterViewChecked() {
-  console.log('ngAfterViewChecked child');
+  // console.log('ngAfterViewChecked child');
 }
 
 ngOnDestroy() {
-  console.log('ngOnDestroy child');
-  this.subscription.unsubscribe();
+  // this.subscription.unsubscribe();
 }
 
 

@@ -61,15 +61,19 @@ export class FirebaseauthService {
     return this.afAuth.auth.signOut();
   }
 
-    // Sends email allowing user to reset password
-    resetPassword(email: string) {
-      return this.afAuth.auth.sendPasswordResetEmail(email)
-      /*  .then(() => {
-          console.log('Password reset link sent to your email');
-          // this.notify.update('Password reset link sent to your email', 'info', 'alert', 'no')
-        })
-        .catch((error) => this.handleError(error));*/
-    }
+  // Sends email allowing user to reset password
+  resetPassword(email: string) {
+    return this.afAuth.auth.sendPasswordResetEmail(email)
+    /*  .then(() => {
+        console.log('Password reset link sent to your email');
+        // this.notify.update('Password reset link sent to your email', 'info', 'alert', 'no')
+      })
+      .catch((error) => this.handleError(error));*/
+  }
+
+  fire_del_usr() {
+    return this.afAuth.auth.currentUser.delete();
+  }
 
     // If error, console log and notify user
     private handleError(error: Error) {
@@ -95,7 +99,7 @@ export class FirebaseauthService {
 
 
   public set_session() {
-    const sc = this.getsession('nc_session');
+    const sc = this.get_session('nc_session');
     console.log(sc);
     if (sc === null) {
       const currentdate = new Date();
@@ -109,7 +113,7 @@ export class FirebaseauthService {
     }
   }
 
-  getsession(name) {
+  get_session(name) {
     return sessionStorage.getItem(name);
   /*
   cookie implementation
