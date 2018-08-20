@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable(
 //  {providedIn: 'root'}
@@ -16,54 +17,74 @@ export class FirebaseauthService {
   firebase_user: firebase.User;
   idToken: string;
   session_id: string;
+  isloggedin$ = new BehaviorSubject(false);
+
 
   constructor(
-              private afAuth: AngularFireAuth,
+              public afAuth: AngularFireAuth,
               public router: Router
             ) {
 
-    this.afAuth.authState.subscribe(auths => {
-      console.log(auths);
-      this.firebase_user = auths;
-      console.log(typeof(auths));
-      if (this.firebase_user) {
-        console.log(this.firebase_user.uid);
-        console.log('logged in');
-        console.log('out of id');
-        this.get_id_token();
-      } else {
-        this.router.navigate(['']);
-        console.log('not logged in');
-      }
+    this.afAuth.authState.subscribe(user => {
+      this.update_auth_sate(user);
     });
    }
 
+   update_auth_sate(user) {
+    console.log(user);
+    this.firebase_user = user;
+    console.log(typeof(user));
+    if (this.firebase_user) {
+      console.log(this.firebase_user.uid);
+      console.log('logged in');
+      console.log('out of id');
+      this.isloggedin$.next(true);
+      // this.get_id_token();
+      this.refresh_id_token()
+      .then(idToken => {
+        this.idToken = idToken;
+      }).catch(function(error) {
+        // Handle error
+        console.log('error inside get id token');
+        this.idToken = null;
+      });
+    } else {
+      console.log(this.router.url);
+      if(this.router.url.endsWith('/signup')) {
+        console.log('stay in sign up screen');
+      } else {
+        this.router.navigate(['']);
+      }
+      console.log('not logged in');
+    }
+  }
+
 
   //// Email/Password Auth ////
-  emailSignUp(useridpass) {
+  async emailSignUp(useridpass) {
+    return await this.afAuth.auth.createUserWithEmailAndPassword(useridpass['email'], useridpass['password']);
+  }
+
+
+  async checkifemailexists(email) {
+    return await this.afAuth.auth.fetchSignInMethodsForEmail(email);
+  }
+
+
+  async emailLogin(useridpass) {
     console.log(useridpass);
-    return this.afAuth.auth.createUserWithEmailAndPassword(useridpass['email'], useridpass['password']);
+    return await this.afAuth.auth.signInWithEmailAndPassword(useridpass['email'], useridpass['password']);
   }
 
-  checkifemailexists(email) {
-    return this.afAuth.auth.fetchSignInMethodsForEmail(email);
-  }
-
-
-  emailLogin(useridpass) {
-    console.log(useridpass);
-    return this.afAuth.auth.signInWithEmailAndPassword(useridpass['email'], useridpass['password']);
-  }
-
-  fire_logout() {
+  async fire_logout() {
     console.log('before log out in service');
     console.log(this.firebase_user);
-    return this.afAuth.auth.signOut();
+    return await this.afAuth.auth.signOut();
   }
 
   // Sends email allowing user to reset password
-  resetPassword(email: string) {
-    return this.afAuth.auth.sendPasswordResetEmail(email)
+  async resetPassword(email: string) {
+    return await this.afAuth.auth.sendPasswordResetEmail(email)
     /*  .then(() => {
         console.log('Password reset link sent to your email');
         // this.notify.update('Password reset link sent to your email', 'info', 'alert', 'no')
@@ -71,8 +92,8 @@ export class FirebaseauthService {
       .catch((error) => this.handleError(error));*/
   }
 
-  fire_del_usr() {
-    return this.afAuth.auth.currentUser.delete();
+  async fire_del_usr() {
+    return await this.afAuth.auth.currentUser.delete();
   }
 
     // If error, console log and notify user
@@ -85,17 +106,14 @@ export class FirebaseauthService {
           return('error');
     }
 
+    async refresh_id_token() {
+      return await this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ false);
+    }
+
+
     public get_id_token() {
-      this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ true)
-      .then(idToken => {
-        this.idToken = idToken;
-        return this.idToken;
-      }).catch(function(error) {
-        // Handle error
-        console.log('error inside get id token');
-        this.idToken = null;
-      });
-  }
+      return this.idToken;
+    }
 
 
   public set_session() {

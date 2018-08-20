@@ -20,13 +20,14 @@ export class HomepageComponent implements OnInit {
   }
 
   navclick(event) {
+    console.log(event);
     switch (event) {
       case ('login'): {
         this.router.navigate(['/login']);
         break;
       }
       case ('register'): {
-        this.router.navigate(['/signup']);
+        this.router.navigate(['/login/signup']);
         break;
       }
       case ('developers'): {

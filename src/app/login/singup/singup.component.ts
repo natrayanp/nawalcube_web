@@ -71,10 +71,9 @@ export class SingupComponent implements OnInit {
   }
 
   emailsignup() {
+    
     this.notify.clearalertmsg();
     this.mydialog  = this.dialog.showalert('Sign Up in progress', 'We are working on your request, please wait');
-
-
       this.auth.checkifemailexists(this.userpasswdlgForm.controls['email'].value)
       .then((user) => {
         console.log(user);
@@ -84,7 +83,23 @@ export class SingupComponent implements OnInit {
             this.mydialog.close();
             this.reset_pass_field();
         } else {
-            this.createuser();
+            console.log('before ');
+
+            
+            this.auth.emailSignUp(this.userpasswdlgForm.value)
+              .then((userx) => {
+                console.log('iam inside success' + userx);
+                this.signup();
+              })
+              .catch((error) => {
+                this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
+                this.mydialog.close();
+              });
+
+            
+            // this.signup();
+            // console.log('after ');
+            // this.createuser2();
         }
 
       })
@@ -92,51 +107,115 @@ export class SingupComponent implements OnInit {
         this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
         this.mydialog.close();
       });
-      /*
-      if (!already_regis) {
-
-    }
-    */
   }
 
-/*
-  subzzz() {
-    this.mydialog  = this.dialog.showalert('Sign Up in progress', 'We are working on your request, please wait');
-    this.createuser({ 'email': 'natrayanp@gmail.com', 'password': 'test@321', 'repassword': 'test@321' });
-  }
-*/
-    createuser() {
-    // createuser(data) {
-    // this.auth.emailSignUp(data)
-    this.auth.emailSignUp(this.userpasswdlgForm.value)
+  async signup() {
+    
+    console.log('inside f1 start');
+    // const x = await this.createuser();
+    // const x = await this.auth.emailSignUp(this.userpasswdlgForm.value);
+  /*
+    await this.auth.emailSignUp(this.userpasswdlgForm.value)
     .then((user) => {
-      console.log(user);
-
-      // Send data to API
-      this.send_data_to_api('signup', this.signupForm.value);
-
-      this.mydialog.close();
-      this.notify.update(
-                this.id1,
-                  'Sign up with user id ' +
-                  this.userpasswdlgForm.controls['email'].value +
-                  ' completed.  Login now.', 'success', 'alert', 'no'
-              );
-      this.reset_all_form();
+      console.log('iam inside success' + user);
+      endf = false;
     })
     .catch((error) => {
       this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
-      console.log(error);
       this.mydialog.close();
-      this.userpasswdlgForm.controls['password'].reset();
+      endf = true;
     });
+*/
+    console.log('inside f1 end');
+
+    await this.auth.refresh_id_token()
+    .then(idToken => {
+      this.auth.idToken = idToken;
+      console.log('inside get id token');
+    })
+    .catch(function(error) {
+      // Handle error
+      console.log('error inside get id token');
+      this.auth.idToken = null;
+      this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
+      this.mydialog.close();
+    });
+
+    console.log('inside f2 end');
+    if (this.auth.idToken !== null) {
+      this.createuserapi();
+    }
   }
+
+  createuserapi() {
+      this.api.loginapipost('signup', this.signupForm.value)
+      .subscribe (
+          resp => {
+                this.auth.fire_logout()
+                .then((userq) => {
+                  console.log(userq);
+                  this.mydialog.close();
+                  this.notify.update(
+                            this.id1,
+                              'Sign up with user id ' +
+                              this.userpasswdlgForm.controls['email'].value +
+                              ' completed.  Login now.', 'success', 'alert', 'no'
+                          );
+                  this.reset_all_form();
+                  })
+                .catch((error) => {
+                  console.log(error);
+                  this.mydialog.close();
+                  this.notify.update(
+                            this.id1,
+                              'Sign up with user id ' +
+                              this.userpasswdlgForm.controls['email'].value +
+                              ' has issues.  Please contact support.', 'error', 'alert', 'no'
+                          );
+                  this.reset_all_form();
+                  });
+          },
+          error => {
+            console.log(error);
+            const msgtouser = error['message'];
+            this.auth.fire_del_usr()
+            .then((userq) => {
+              console.log(userq);
+              this.commontask(msgtouser);
+            })
+            .catch((errorr) => {
+              console.log(errorr);
+              this.commontask(msgtouser);
+            })
+          }
+      );
+}
+
+
+commontask(msg) {
+  this.mydialog.close();
+  this.notify.update(
+            this.id1, 
+              'Sign up with user id ' +
+              this.userpasswdlgForm.controls['email'].value +
+              ' has issues.  Please contact support. [server: ' + msg + ']', 'error', 'alert', 'no'
+          );
+  this.reset_all_form();
+}
 
   send_data_to_api(scrndfunc, data) {
     this.api.loginapipost(scrndfunc, data)
     .subscribe (
       resp => {
-        console.log(resp);
+        this.mydialog.close();
+        this.notify.update(
+                  this.id1,
+                    'Sign up with user id ' +
+                    this.userpasswdlgForm.controls['email'].value +
+                    ' completed.  Login now.', 'success', 'alert', 'no'
+                );
+        this.reset_all_form();
+        this.auth.fire_logout();
       },
       error => {
         console.log(error);
