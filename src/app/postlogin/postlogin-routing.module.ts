@@ -3,8 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PlglandComponent } from './plgland/plgland.component';
 
+import { AuthGuardService } from '../services/auth-guard.service';
+
+
 const routes: Routes = [
-  { path: '', component: PlglandComponent }
+  { path: '', component: PlglandComponent, canLoad: [AuthGuardService] }
 ];
 
 @NgModule({

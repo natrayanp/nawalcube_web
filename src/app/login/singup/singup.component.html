@@ -19,13 +19,27 @@
        <app-alerts [id]="id1"></app-alerts>
       <div>
       <span fxFlex = "10%"></span>
-    Your Details:
+    
   </div>
   <br>
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px">
  
 
             <form ngClass="example-form1" [ngClass.lt-md]="{'example-form1':false,'example-form':true}" [formGroup]="signupForm">
+
+            <div fxLayout = "row">
+                <h4>Your Details:</h4>
+            </div>
+            <div fxLayout = "row">
+                <mat-form-field>
+                    <mat-select placeholder="Register as:" formControlName="custtype" name="customer type">
+                      <mat-option *ngFor="let cust of cust_types" [value]="cust">
+                        {{cust.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+            </div>
             <div  fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="center center"  >
               
                     <mat-form-field class="example-full-width1" >
@@ -42,7 +56,7 @@
                     </mat-form-field>
 
                    
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="example-full-width" >
                         <input matInput placeholder="Adhaar#"  formControlName="adhaar" fxFlex>
                         <mat-error *ngIf="signupForm.controls['adhaar'].hasError('required')">
                           Adhaar number is required
@@ -69,6 +83,21 @@
                         Enter a valid PAN
                       </mat-error>
                     </mat-form-field>
+
+
+                    <mat-form-field class="example-full-width" *ngIf = "signupForm.controls['custtype'].value.value !== '0'">
+                        <input matInput placeholder="ARN#"  formControlName="arn" fxFlex>
+                        <mat-error *ngIf="signupForm.controls['arn'].hasError('required')">
+                          ARN is required
+                        </mat-error>
+                        <!--mat-error *ngIf="signupForm.controls['adhaar'].hasError('pattern')">
+                          Adhaar number cannot have alphabhets or special characters. Length should be 12
+                        </mat-error>
+                        <mat-error *ngIf="signupForm.controls['adhaar'].hasError('maxlength')">
+                          Length should be 12
+                        </mat-error-->
+                      </mat-form-field>
+
 
                     <mat-form-field class="example-full-width" >
                         <span matPrefix>+91 &nbsp;</span>
@@ -116,7 +145,7 @@
                   </mat-form-field>
                   
                 
-                  <mat-form-field class="example-full-width" *ngIf = "lgtype !== 'forgot'">
+                  <mat-form-field class="example-full-width">
                     <input matInput type="password" placeholder="Password" formControlName="password" fxFlex="0 1 auto">
                         <mat-error *ngIf="userpasswdlgForm.controls['password'].hasError('pattern')">
                           Length must be min 8 max 10, starting with A-Z or a-z and with at least one number, one uppercase, lowercase letter and one special character from !@#%&amp;
@@ -126,19 +155,19 @@
                         </mat-error>
                   </mat-form-field>
 
-                  <mat-form-field class="example-full-width" *ngIf = "lgtype !== 'forgot'">
+                  <mat-form-field class="example-full-width">
                       <input matInput type="password" placeholder="Reenter Password" formControlName="repassword" fxFlex="0 1 auto">
                           <mat-error *ngIf="userpasswdlgForm.controls['repassword'].hasError('required')">
                             Password cannot be blank
                           </mat-error>
-                          <mat-error *ngIf="userpasswdlgForm.controls['repassword'].hasError('nomatch')">
+                          <mat-error *ngIf="userpasswdlgForm.controls['repassword'].hasError('passmatch')">
                               Password do not match
                             </mat-error>
                     </mat-form-field>
                   
                   <br>
               
-              <button mat-raised-button  [disabled]="userpasswdlgForm.invalid" (click)="emailsignup()" id="userpassloginbtn" class="example-full-width" style="height:50px;width:300px;font-size:20px;" color="primary" > <strong>Login</strong></button>    
+              <button mat-raised-button  [disabled]="userpasswdlgForm.invalid" (click)="submitsignup()" id="userpassloginbtn" class="example-full-width" style="height:50px;width:300px;font-size:20px;" color="primary" > <strong>Login</strong></button>    
              
                   <br>
             </div>

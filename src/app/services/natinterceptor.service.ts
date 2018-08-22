@@ -23,12 +23,14 @@ export class NatinterceptorService {
     const idtkn = this.auth.get_id_token();
     const sess = this.auth.get_session('nc_session');
     const entityid = sessionStorage.getItem('entityid');
+    const countryid = sessionStorage.getItem('countryid');
 
     console.log(idtkn);
     console.log(sess);
     console.log(entityid);
 
     this.headers = this.setHeader(this.headers, 'entityid', entityid);
+    this.headers = this.setHeader(this.headers, 'countryid', countryid);
 
     if (typeof(idtkn) !== undefined) {
       this.headers = this.setHeader(this.headers, 'Authorization', 'Bearer ' + idtkn);

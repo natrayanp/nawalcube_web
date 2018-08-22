@@ -18,17 +18,22 @@ export class FirebaseauthService {
   idToken: string;
   session_id: string;
   isloggedin$ = new BehaviorSubject(false);
-
+  isinvestor = false;
 
   constructor(
               public afAuth: AngularFireAuth,
               public router: Router
             ) {
 
-    this.afAuth.authState.subscribe(user => {
-      this.update_auth_sate(user);
-    });
-   }
+                this.afAuth.authState.subscribe(
+                  user => {
+                            this.update_auth_sate(user);
+                          },
+                  err =>  {
+                            console.log('error in resolving auth state');
+                          }
+                  );
+              }
 
    update_auth_sate(user) {
     console.log(user);
@@ -50,19 +55,24 @@ export class FirebaseauthService {
       });
     } else {
       console.log(this.router.url);
-      if(this.router.url.endsWith('/signup')) {
+      if (this.router.url.endsWith('/signup')) {
         console.log('stay in sign up screen');
       } else {
         this.router.navigate(['']);
       }
       console.log('not logged in');
     }
+
+    // this.get_id_tkn_result();
+
   }
 
 
   //// Email/Password Auth ////
   async emailSignUp(useridpass) {
     return await this.afAuth.auth.createUserWithEmailAndPassword(useridpass['email'], useridpass['password']);
+  /* console.log(nat);
+     return nat;*/
   }
 
 
@@ -72,7 +82,6 @@ export class FirebaseauthService {
 
 
   async emailLogin(useridpass) {
-    console.log(useridpass);
     return await this.afAuth.auth.signInWithEmailAndPassword(useridpass['email'], useridpass['password']);
   }
 
@@ -110,11 +119,64 @@ export class FirebaseauthService {
       return await this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ false);
     }
 
+    get_id_tkn_result() {
+     console.log('firebase start');
+      this.isinvestor = false;
+      this.afAuth.auth.currentUser.getIdTokenResult(true)
+    // }
+    // async chk_user_type() {
+      // await this.auth.get_id_tkn_result()
+      .then((idTokenResult) => {
+      console.log(idTokenResult.claims.custtype);
+      if (idTokenResult.claims.custtype === 'I') {
+        console.log('iam returning true');
+        this.isinvestor = true;
+      } else {
+        // return this.navigate_to_login();
+        console.log('iam returning false');
+        this.isinvestor = false;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+            console.log('iam returning false ctch');
+           this.isinvestor = false;
+         });
+    }
+  
+
+    chk_isinvestor() {
+      return this.isinvestor ? true : false;
+    }
+    
+
+    async get_id_tkn_result1() {
+      return await this.afAuth.auth.currentUser.getIdTokenResult(true);
+      /*
+      return new Promise((resolve, reject) => {
+        this.afAuth.auth.currentUser.getIdTokenResult()
+        .then( (idTokenResult) => {
+          console.log(idTokenResult.claims.custtype);
+          resolve(idTokenResult);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      }*/
+    }
+
 
     public get_id_token() {
       return this.idToken;
     }
 
+    isLoggedIn() {
+      if (this.firebase_user === null ) {
+          return false;
+        } else {
+          return true;
+        }
+      }
 
   public set_session() {
     const sc = this.get_session('nc_session');

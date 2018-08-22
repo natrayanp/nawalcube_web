@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
 { path: '',
@@ -20,8 +20,8 @@ const routes: Routes = [
 },
 {
   path: 'secure',
-  canLoad: [AuthGuard],
-  loadChildren: './postlogin/postlogin.module#PostloginModule'  
+  canLoad: [AuthGuardService],
+  loadChildren: './postlogin/postlogin.module#PostloginModule'
 },
 
 ];

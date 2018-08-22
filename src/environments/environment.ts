@@ -17,6 +17,10 @@ export const environment = {
   endpt_signup : 'signup',
 };
 
+export const installation = {
+  entityid: 'NAWALCUBE',
+  countryid: 'IN'
+}
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
