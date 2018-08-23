@@ -178,23 +178,38 @@ export class FirebaseauthService {
         }
       }
 
-  public set_session() {
-    const sc = this.get_session('nc_session');
+  public set_session(uid) {
+    let sess_str = '';
+
+    if (uid !== null) {
+      sess_str = uid + '_sessid';
+    } else {
+      sess_str = '_sessid';
+    }
+
+    const sc = this.get_session(sess_str);
     console.log(sc);
     if (sc === null) {
       const currentdate = new Date();
       const val = [Array(10)].map(i => (((Math.random() * 36))).toString(36)).join('');
       const dt = currentdate.toISOString();
-      const vdt = (val + dt ).replace('T', ' ').replace(/-|:|\.|\s+/g, '');
+      const vdt = (val + dt + uid ).replace('T', ' ').replace(/-|:|\.|\s+/g, '');
       /* cookie implementation
       document.cookie = cookiename + ' =' + vdt;
       */
-     sessionStorage.setItem('nc_session', vdt);
+     sessionStorage.setItem(sess_str, vdt);
     }
   }
 
   get_session(name) {
-    return sessionStorage.getItem(name);
+    let sess_str = '';
+
+    if (name !== null) {
+      sess_str = this.firebase_user.uid + '_sessid';
+    } else {
+      sess_str = '_sessid';
+    }
+    return sessionStorage.getItem(sess_str);
   /*
   cookie implementation
   // Get name followed by anything except a semicolon
@@ -205,8 +220,15 @@ export class FirebaseauthService {
   */
   }
 
-  delete_session() {
-    sessionStorage.removeItem('nc_session');
+  delete_session(name) {
+    let sess_str = '';
+
+    if (name !== null) {
+      sess_str = this.firebase_user.uid + '_sessid';
+    } else {
+      sess_str = '_sessid';
+    }
+    sessionStorage.removeItem(sess_str);
   }
 
 }

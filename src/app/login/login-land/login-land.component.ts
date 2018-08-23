@@ -5,6 +5,7 @@ import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
 import {  filter } from 'rxjs/operators';
+import { LoginapiService } from '../loginapi.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
     private fb: FormBuilder,
     private dialog: DialogsService,
     private auth: FirebaseauthService,
-    private notify: NotifyService
+    private notify: NotifyService,
+    private api: LoginapiService,
   ) { }
 
   ngOnInit() {
@@ -64,11 +66,27 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
     this.auth.emailLogin(this.userpasswdlgForm.value)
     .then((user) => {
             console.log(user);
+            console.log(user.user.phoneNumber);
+            console.log(user.user.uid);
+            console.log(user.user.providerId);
+            console.log(user.user.displayName);
+            console.log(user.user.email);
             // setting session for the user.  On logout remove this.
-            this.auth.set_session();
-            mydialog.close();
-            console.log('navigate to secure page');
-            this.router.navigate(['/secure']);
+            this.auth.set_session(user.user.uid);
+            const data_to_api = {'sessionid': this.auth.get_session(user.user.uid)};
+            this.api.loginapiget('nclogin')
+            .subscribe (
+                resp => {
+                  // try to get last login, user status, user name
+                  console.log(resp);
+                  console.log('navigate to secure page');
+                  this.router.navigate(['/secure']);
+                  mydialog.close();
+                },
+                err => {
+                  mydialog.close();
+                }
+              );
     })
     .catch((error) => {
             console.log(error);
