@@ -4,10 +4,12 @@
 
 export const apiurls = {
   // Common routes for all
-  all_api_url: 'http://127.0.0.1:8080',
+  all_api_url: /*'http://127.0.0.1:8080'*/'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev',
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
   url_nclogin: 'http://127.0.0.1:8080',
+  url_ncloginks: 'http://127.0.0.1:8080',
+  url_alllogout: 'http://127.0.0.1:8080',
 };
 
 
@@ -25,7 +27,11 @@ export const environment = {
   url_signup: apiurls.all_api_url,
   endpt_signup : 'signup',
   url_nclogin: apiurls.all_api_url,
-  endpt_nclogin : 'login'
+  endpt_nclogin : 'login',
+  url_ncloginks: apiurls.all_api_url,
+  endpt_ncloginks : 'loginks',
+  url_alllogout: apiurls.all_api_url,
+  endpt_alllogout : 'logout'
 };
 
 

@@ -1,9 +1,11 @@
 <!--toolbr-->
 <mat-toolbar *ngIf = "toolbr" class="fixed-header mat-elevation-z2">
-
+    <mat-toolbar-row>
   <!--leftspan-->
     <span  *ngIf = "leftspan"  fxFlex = "1 1 10%"></span>
-
+    <button mat-icon-button (click)="toggle_sidenav()" fxHide fxShow.lt-lg = "true">
+        <mat-icon>menu</mat-icon>
+      </button>
 
     <!-- Company logo-->
     <!--comlogo-->
@@ -21,9 +23,9 @@
     
     <span  *ngIf = "!mid_section" fxFlex></span>
     <!-- Middle section-->
-    <div *ngIf = "mid_section" fxFlex="1 1 auto" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" >    
+    <div *ngIf = "mid_section" fxFlex="1 1 auto" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" fxHide fxShow.gt-md = "true">    
         <div>
-            <a *ngIf = "mid_devlnk" type ="button" mat-icon-button routerLink="/developers" routerLinkActive="active"  (click)="singup('developers')">
+            <a *ngIf = "mid_devlnk" type ="button" mat-icon-button  (click)="singup('developers')">
             <strong fxFlexAlign = "baseline" style="color:grey" >Developers</strong>
           </a>
         </div>
@@ -38,7 +40,7 @@
 
 
     <!-- End section-->
-    <div *ngIf = "end_section" fxFlex="1 1 20%" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" >    
+    <div *ngIf = "end_section" fxFlex="1 1 20%" fxFlexFill fxLayoutAlign="end center" fxLayoutGap ="40px" fxHide fxShow.gt-md = "true">    
       <div>
           <a *ngIf = "end_reglnk" type ="button" mat-icon-button  routerLinkActive="active"  (click)="singup('register')">
           <strong fxFlexAlign = "baseline"  >Register</strong>
@@ -60,8 +62,31 @@
             <!--mat-icon fxFlexAlign = "centre">lock</mat-icon-->        
           </div>
         </a>
-
       </div>
     </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.lt-lg = "true">
+        <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngIf = "mid_devlnk" (click)="singup('developers')">
+          <span>Developers</span>
+        </button>
+        <button mat-menu-item *ngIf = "end_reglnk" (click)="singup('register')">
+          <span>Register</span>
+        </button>
+        <button mat-menu-item *ngIf = "end_loglnk"  (click)="singup('login')">
+          <span>Login</span>
+        </button>
+        <button mat-menu-item *ngIf = "end_logoutlnk"  (click)="singup('logout')">
+            <span>Logout</span>
+          </button>
+      </mat-menu>
 <span fxFlex = "1 1 10%"></span>
+</mat-toolbar-row>
+<mat-toolbar-row *ngIf = "end_logoutlnk">
+    <span fxFlex = "1 1 auto"></span>
+  <h6 style ="font-size: 15px">Welcome {{auth.firebase_user.uid}}</h6>
+  <span fxFlex = "1 1 10%"></span>
+</mat-toolbar-row>
+
 </mat-toolbar>

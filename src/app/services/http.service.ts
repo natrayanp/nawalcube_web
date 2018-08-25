@@ -30,7 +30,7 @@ export class NatHttpService {
   // GET request to API
   apiget(scrndfunc) {
     return this.http.get(
-                          environment[scrndfunc + 'url'] + '/' + environment[scrndfunc]
+      environment['url_' + scrndfunc] + '/' + environment['endpt_' + scrndfunc]
                          // {headers: this.set_http_headers(conttyp), observe: 'response'}
                         );
   }

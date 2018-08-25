@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
+import { SidenavService } from '../../services/sidenav.service';
 
 
 @Component({
@@ -11,14 +12,20 @@ import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 })
 export class PlglandComponent implements OnInit {
 
+  @ViewChild('sidenav') public sidenav;
+
   constructor(
                 private router: Router,
                 private auth: FirebaseauthService,
                 private dialog: DialogsService,
-              ) { }
+                public snav: SidenavService
+              ) {
+
+              }
 
   ngOnInit() {
     console.log(this.auth.firebase_user);
+    this.snav.sidenav = this.sidenav;
   }
 
 //   shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/, /(^|\.)local\$/].some(h => h.test(window.location.host));
@@ -45,6 +52,8 @@ export class PlglandComponent implements OnInit {
 
 
 
+
+
 navclicktest() {
   this.auth.fire_logout()
   .then((user) => {
@@ -56,5 +65,7 @@ navclicktest() {
         console.log(error);
   });
 }
+
+
 
 }

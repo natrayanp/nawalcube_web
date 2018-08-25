@@ -18,4 +18,3 @@ export class AppComponent implements OnInit{
     sessionStorage.setItem('countryid', installation.countryid);
   }
   }
-}

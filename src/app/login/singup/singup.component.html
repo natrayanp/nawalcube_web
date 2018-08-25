@@ -1,5 +1,5 @@
 <div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center" style = "height:100vh">
-<mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
+<mat-card [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'auto'}" fxAlign = "center" >
 
 
 
@@ -22,12 +22,12 @@
     
   </div>
   <br>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px">
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center center"style="margin-top:0px">
  
 
             <form ngClass="example-form1" [ngClass.lt-md]="{'example-form1':false,'example-form':true}" [formGroup]="signupForm">
 
-            <div fxLayout = "row">
+            <div fxLayout = "row" >
                 <h4>Your Details:</h4>
             </div>
             <div fxLayout = "row">

@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NatHttpService } from '../../services/http.service';
+import { NotifyService } from '../../commonmodules/notifications/notify.service';
+import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
+import { SidenavService } from '../../services/sidenav.service';
 
 @Component({
   selector: 'app-topnav',
@@ -12,6 +16,7 @@ export class TopnavComponent implements OnInit {
   @Output() navclickevnt: EventEmitter<any> = new EventEmitter();
 
   screen: string;
+  id1: string;
 
   toolbr = true;
   leftspan = true;
@@ -32,25 +37,24 @@ export class TopnavComponent implements OnInit {
   constructor(
     private auth: FirebaseauthService,
     private router: Router,
+    private dialog: DialogsService,
+    private nathttp: NatHttpService,
+    private notify: NotifyService,
+    private snav: SidenavService
   ) { }
 
   ngOnInit() {
     this.screen = this.sourcepage;
     console.log(this.screen);
     this.set_display();
+    this.id1 = this.notify.get_unq_id();
   }
 
   singup(btn) {
     if (btn === 'logout') {
-      
-      // Removing the session id
-      this.auth.delete_session();
-
-      // Navigate to home page
-      this.router.navigate(['/']);
-    
+        console.log('inside singup');
+        this.logout_handler();
     } else {
-    
       this.navclickevnt.emit(btn);
     }
   }
@@ -81,6 +85,7 @@ export class TopnavComponent implements OnInit {
         this.set_hm_pg();
         this.leftspan = false;
         this.mid_section = false;
+        this.mid_devlnk = false;
         this.end_reglnk = false;
         this.end_loglnk = false;
         this.end_logoutlnk = true;
@@ -128,4 +133,41 @@ export class TopnavComponent implements OnInit {
   this.end_loglnk = true;
   this.end_logoutlnk = false;
   }
+
+logout_handler() {
+  const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
+  // serverside cleanups
+  const user = this.auth.firebase_user;
+  const data = {
+    'uid': user.uid
+  };
+  console.log('logout handler');
+  this.nathttp.apiget('alllogout')
+  .subscribe (
+      resp => {
+        this.auth.fire_logout()
+        .then( () => {
+          mydialog.close();
+          this.auth.delete_session();
+          this.router.navigate(['/']);
+        })
+        .catch ((err) => {
+          this.notify.update(this.id1, err, 'error', 'alert', 'no');
+        });
+        //
+      },
+      err => {
+        this.notify.update(this.id1, err.error.usrmsg, 'error', 'alert', 'no');
+        mydialog.close();
+      }
+    );
+}
+
+
+
+toggle_sidenav() {
+  this.snav.sidenav.toggle();
+}
+
+
 }

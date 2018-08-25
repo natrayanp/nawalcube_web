@@ -33,7 +33,7 @@ return new Promise((resolve) => {
   if (this.auth.isLoggedIn()) {
         // Check if user is investor
         console.log('inside if');
-        this.auth.get_id_tkn_result1()
+        this.auth.get_id_tkn_result()
         .then((idTokenResult) => {
           // Confirm the user is an Investor.
           console.log('inside if then');
@@ -58,7 +58,7 @@ return new Promise((resolve) => {
     resolve(false);
     mydialog.close();
   }
-}
+});
 }
 
 private navigate_to_login() {

@@ -17,8 +17,8 @@ export class FirebaseauthService {
   firebase_user: firebase.User;
   idToken: string;
   session_id: string;
-  isloggedin$ = new BehaviorSubject(false);
-  isinvestor = false;
+  // isloggedin$ = new BehaviorSubject(false);
+  // isinvestor = false;
 
   constructor(
               public afAuth: AngularFireAuth,
@@ -43,7 +43,7 @@ export class FirebaseauthService {
       console.log(this.firebase_user.uid);
       console.log('logged in');
       console.log('out of id');
-      this.isloggedin$.next(true);
+      // this.isloggedin$.next(true);
       // this.get_id_token();
       this.refresh_id_token()
       .then(idToken => {
@@ -119,6 +119,7 @@ export class FirebaseauthService {
       return await this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ false);
     }
 
+    /*
     get_id_tkn_result() {
      console.log('firebase start');
       this.isinvestor = false;
@@ -143,26 +144,13 @@ export class FirebaseauthService {
            this.isinvestor = false;
          });
     }
-  
 
     chk_isinvestor() {
       return this.isinvestor ? true : false;
     }
-    
-
-    async get_id_tkn_result1() {
+*/
+    async get_id_tkn_result() {
       return await this.afAuth.auth.currentUser.getIdTokenResult(true);
-      /*
-      return new Promise((resolve, reject) => {
-        this.afAuth.auth.currentUser.getIdTokenResult()
-        .then( (idTokenResult) => {
-          console.log(idTokenResult.claims.custtype);
-          resolve(idTokenResult);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-      }*/
     }
 
 
@@ -178,7 +166,7 @@ export class FirebaseauthService {
         }
       }
 
-  public set_session(uid) {
+  public set_session(uid, sessid) {
     let sess_str = '';
 
     if (uid !== null) {
@@ -190,25 +178,28 @@ export class FirebaseauthService {
     const sc = this.get_session(sess_str);
     console.log(sc);
     if (sc === null) {
+      /*
       const currentdate = new Date();
       const val = [Array(10)].map(i => (((Math.random() * 36))).toString(36)).join('');
       const dt = currentdate.toISOString();
       const vdt = (val + dt + uid ).replace('T', ' ').replace(/-|:|\.|\s+/g, '');
+      */
       /* cookie implementation
       document.cookie = cookiename + ' =' + vdt;
       */
-     sessionStorage.setItem(sess_str, vdt);
+     sessionStorage.setItem(sess_str, sessid);
     }
   }
 
-  get_session(name) {
-    let sess_str = '';
-
-    if (name !== null) {
-      sess_str = this.firebase_user.uid + '_sessid';
-    } else {
-      sess_str = '_sessid';
+  get_session(sess_str) {
+    if (sess_str === null) {
+      if (this.firebase_user.uid !== null) {
+        sess_str = this.firebase_user.uid + '_sessid';
+      } else {
+        sess_str = '_sessid';
+      }
     }
+
     return sessionStorage.getItem(sess_str);
   /*
   cookie implementation
@@ -220,10 +211,10 @@ export class FirebaseauthService {
   */
   }
 
-  delete_session(name) {
+  delete_session() {
     let sess_str = '';
 
-    if (name !== null) {
+    if (this.firebase_user.uid !== null) {
       sess_str = this.firebase_user.uid + '_sessid';
     } else {
       sess_str = '_sessid';

@@ -19,9 +19,10 @@ export class NatinterceptorService {
   constructor(private auth: FirebaseauthService) {  }
 
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    console.log('token id start');
     const idtkn = this.auth.get_id_token();
-    const sess = this.auth.get_session('nc_session');
+    console.log('token id end');
+    const sess = this.auth.get_session(null);
     const entityid = sessionStorage.getItem('entityid');
     const countryid = sessionStorage.getItem('countryid');
 
