@@ -17,6 +17,7 @@ export class TopnavComponent implements OnInit {
 
   screen: string;
   id1: string;
+  site: string;
 
   toolbr = true;
   leftspan = true;
@@ -117,6 +118,7 @@ export class TopnavComponent implements OnInit {
     this.end_reglnk = false;
     this.end_loglnk = true;
     this.end_logoutlnk = false;
+    this.site = 'dv';
   }
   
   
@@ -137,6 +139,7 @@ export class TopnavComponent implements OnInit {
   this.end_reglnk = true;
   this.end_loglnk = true;
   this.end_logoutlnk = false;
+  this.site = 'nc';
   }
 
 logout_handler() {
@@ -147,7 +150,8 @@ logout_handler() {
     'uid': user.uid
   };
   console.log('logout handler');
-  this.nathttp.apiget('alllogout')
+
+  this.nathttp.apiget(this.site + 'logout')
   .subscribe (
       resp => {
         this.auth.fire_logout()

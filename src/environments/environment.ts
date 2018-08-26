@@ -4,12 +4,15 @@
 
 export const apiurls = {
   // Common routes for all
-  all_api_url: /*'http://127.0.0.1:8080'*/'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev',
+  all_api_url: 'http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
   url_nclogin: 'http://127.0.0.1:8080',
   url_ncloginks: 'http://127.0.0.1:8080',
-  url_alllogout: 'http://127.0.0.1:8080',
+  url_dvlogin: 'http://127.0.0.1:8080',
+  url_dvloginks: 'http://127.0.0.1:8080',
+  url_nclogout: 'http://127.0.0.1:8080',
+  url_dvlogout: 'http://127.0.0.1:8080',
 };
 
 
@@ -30,8 +33,14 @@ export const environment = {
   endpt_nclogin : 'login',
   url_ncloginks: apiurls.all_api_url,
   endpt_ncloginks : 'loginks',
-  url_alllogout: apiurls.all_api_url,
-  endpt_alllogout : 'logout'
+  url_nclogout: apiurls.all_api_url,
+  endpt_nclogout : 'logout',
+  url_dvlogin: apiurls.all_api_url,
+  endpt_dvlogin : 'dvlogin',
+  url_dvloginks: apiurls.all_api_url,
+  endpt_dvloginks : 'dvloginks',
+  url_dvlogout: apiurls.all_api_url,
+  endpt_dvlogout : 'dvlogout',
 };
 
 

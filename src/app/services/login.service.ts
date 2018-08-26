@@ -1,82 +1,33 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { DialogsService } from '../../../commonmodules/dialogs/dialogs.service';
-import { FirebaseauthService } from '../../../services/firebaseauth.service';
-import { LoginService } from '../../../services/login.service';
-import { NotifyService } from '../../../commonmodules/notifications/notify.service';
-import {  filter } from 'rxjs/operators';
-// import { DevloginapiService } from '../core/devloginapi.service';
+import { NotifyService } from '../commonmodules/notifications/notify.service';
+import { DialogsService } from '../commonmodules/dialogs/dialogs.service';
+import { FirebaseauthService } from './firebaseauth.service';
+import { NatHttpService } from './http.service';;
 
-@Component({
-  selector: 'app-devlogin',
-  templateUrl: './devlogin.component.html',
-  styleUrls: ['./devlogin.component.scss']
+@Injectable({
+  providedIn: 'root'
 })
-export class DevloginComponent implements OnInit, AfterViewChecked {
-
-  userpasswdlgForm: FormGroup;
-  id1: string;
-  shoalrt = false;
-  myr: any;
+export class LoginService {
   mydialog: any;
-
+  id1: string;
+  scrndfunc: string;
   constructor(
-    // private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    // private dialog: DialogsService,
+     private router: Router,
+  //  private route: ActivatedRoute,
+    private dialog: DialogsService,
     private auth: FirebaseauthService,
     private notify: NotifyService,
-    // private api: DevloginapiService,
-    private loginserv: LoginService
+    private api: NatHttpService,
   ) { }
 
-  ngOnInit() {
-    console.log('devlogin component');
-    this.id1 = this.notify.get_unq_id();
-    // Make the loged in user details as empty before login: START
-        this.auth.firebase_user = null;
-        this.auth.idToken = '';
-    // Make the loged in user details as empty before login: END
-    this.createloginForm();
-    this.myr = this.route.queryParams
-    .pipe(filter(params => params.reason))
-      .subscribe(params => {
-       (params.reason === 'guardfail') ? this.shoalrt = true : console.log('kk');
-        console.log(params); // {reason: 'guardfail'} from authgurad
-      });
-  }
-
-  ngAfterViewChecked() {
-    if (this.shoalrt) {
-      this.notify.update(this.id1, 'You are not authorised ', 'error', 'alert', 'no');
-      this.shoalrt = false;
-    }
-
-}
-
-  createloginForm() {
-    const group = {
-       'email': ['', Validators.compose([Validators.required, 
-        Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
-
-       'password' : ['', Validators.compose([Validators.required,
-                      Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
-    };
-    this.userpasswdlgForm = this.fb.group(group);
-  }
-
-  emaillogin() {
-    this.loginserv.emaillogin(this.userpasswdlgForm, this.id1, 'dvlogin');
-  }
-
-  /*
-  emaillogin() {
+  emaillogin(usrpassfrmval, id1, scrndfunc) {
+    this.id1 = id1;
+    this.scrndfunc = scrndfunc;
     this.notify.clearalertmsg();
     this.mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
-    console.log(this.userpasswdlgForm.value);
-    this.auth.emailLogin(this.userpasswdlgForm.value)
+    console.log(usrpassfrmval.value);
+    this.auth.emailLogin(usrpassfrmval.value)
     .then((user) => {
             this.auth.firebase_user = user.user;
             console.log(user);
@@ -128,7 +79,7 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
     console.log('inside f2 end');
 
  //   const mydialog  = this.dialog.showalert('Title', 'Registering your login with server, please wait');
-  this.api.loginapiget('nclogin')
+  this.api.apiget(this.scrndfunc)
   .subscribe (
       (resp: any) => {
         // try to get last login, user status, user name
@@ -138,20 +89,20 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
        if (user.user.uid === resp.uid) {
             this.auth.set_session(user.user.uid, resp.sessionid);
             this.mydialog.close();
-            this.router.navigate(['developers/devsecure']);
+            const navlocation = this.get_nav_location('success');
+            this.router.navigate([navlocation]);
         } else {
           this.notify.update(this.id1, 'Please clear your browser cache and retry', 'error', 'alert', 'no');
           this.mydialog.close();
         }
       },
-      (error) => {
-        console.log('insider error');
-        console.log(error);
-        if (error.error.status_code === 401) {
+      (err) => {
+        console.log(err);
+        if (err.error.status_code === 401) {
           this.mydialog.close();
-          this.reconfirm_sess(user, error.error.usrmsg);
+          this.reconfirm_sess(user, err.error.usrmsg);
         }
-        console.log(error);
+        console.log(err);
         this.notify.update(this.id1, 'Unknown error, plese try again' , 'error', 'alert', 'no');
         this.mydialog.close();
       }
@@ -164,16 +115,17 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
     mydialog.subscribe(res => {
       this.mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
       if (res) {
-        this.api.loginapiget('ncloginks')
+        this.api.apiget(this.scrndfunc + 'ks')
         .subscribe (
             (resp: any) => {
               // try to get last login, user status, user name
               console.log(resp);
               console.log('navigate to secure page');
               if (user.user.uid === resp.uid) {
-           '/secure'     this.auth.set_session(user.user.uid, resp.sessionid);
+                this.auth.set_session(user.user.uid, resp.sessionid);
                 this.mydialog.close();
-                this.router.navigate(['developers/devsecure']);
+                const navlocation = this.get_nav_location('success');
+                this.router.navigate([navlocation]);
               } else {
                 this.notify.update(this.id1, 'Please clear your browser cache and retry', 'error', 'alert', 'no');
                 this.mydialog.close();
@@ -192,5 +144,19 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-*/
+
+  get_nav_location(act) {
+    switch (act) {
+      case ('success'): {
+        if (this.scrndfunc === 'nclogin') {
+          return '/secure';
+        } else if (this.scrndfunc === 'dvlogin') {
+          return 'developers/devsecure';
+        }
+        break;
+      }
+    }
+
+  }
+
 }

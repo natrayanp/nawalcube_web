@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
+// import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
+import { LoginService } from '../../services/login.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
 import {  filter } from 'rxjs/operators';
-import { LoginapiService } from '../loginapi.service';
+// import { LoginapiService } from '../loginapi.service';
 
 
 @Component({
@@ -21,13 +22,14 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
   mydialog: any;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private dialog: DialogsService,
+    // private dialog: DialogsService,
     private auth: FirebaseauthService,
     private notify: NotifyService,
-    private api: LoginapiService,
+    // private api: LoginapiService,
+    private loginserv: LoginService
   ) { }
 
   ngOnInit() {
@@ -65,6 +67,10 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
   }
 
   emaillogin() {
+    this.loginserv.emaillogin(this.userpasswdlgForm, this.id1, 'nclogin');
+  }
+/*
+  emaillogin1() {
     this.notify.clearalertmsg();
     this.mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
     console.log(this.userpasswdlgForm.value);
@@ -183,5 +189,5 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
+*/
 }
