@@ -20,7 +20,8 @@ export class DevhomeComponent implements OnInit {
   navclick(event) {
     switch (event) {
       case ('login'): {
-        this.router.navigate(['/authorise'], { queryParams: { request: 'yenn' } });
+        // this.router.navigate(['/authorise'], { queryParams: { request: 'yenn' } });
+        this.router.navigate(['developers/devlogin']);
         break;
       }
       case ('register'): {

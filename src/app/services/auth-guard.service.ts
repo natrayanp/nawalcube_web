@@ -4,9 +4,7 @@ import { FirebaseauthService } from '../services/firebaseauth.service';
 import { DialogsService } from '../commonmodules/dialogs/dialogs.service';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthGuardService implements CanLoad, CanActivate {
   isinvestor = false;
   constructor(

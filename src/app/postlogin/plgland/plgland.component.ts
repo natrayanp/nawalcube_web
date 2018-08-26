@@ -47,10 +47,14 @@ export class PlglandComponent implements OnInit {
           console.log(error);
           mydialog.close();
     });
+  } else if (eve === 'sidenav') {
+      this.toggle_sidenav();
   }
 }
 
-
+toggle_sidenav() {
+  this.snav.sidenav.toggle();
+}
 
 
 

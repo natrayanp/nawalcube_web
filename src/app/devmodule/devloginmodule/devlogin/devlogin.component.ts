@@ -1,19 +1,19 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
-import { FirebaseauthService } from '../../services/firebaseauth.service';
-import { NotifyService } from '../../commonmodules/notifications/notify.service';
+import { DialogsService } from '../../../commonmodules/dialogs/dialogs.service';
+import { FirebaseauthService } from '../../../services/firebaseauth.service';
+import { NotifyService } from '../../../commonmodules/notifications/notify.service';
 import {  filter } from 'rxjs/operators';
-import { LoginapiService } from '../loginapi.service';
-
+import { DevloginapiService } from '../core/devloginapi.service';
 
 @Component({
-  selector: 'app-login-land',
-  templateUrl: './login-land.component.html',
-  styleUrls: ['./login-land.component.scss']
+  selector: 'app-devlogin',
+  templateUrl: './devlogin.component.html',
+  styleUrls: ['./devlogin.component.scss']
 })
-export class LoginLandComponent implements OnInit, AfterViewChecked {
+export class DevloginComponent implements OnInit, AfterViewChecked {
+
   userpasswdlgForm: FormGroup;
   id1: string;
   shoalrt = false;
@@ -27,10 +27,11 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
     private dialog: DialogsService,
     private auth: FirebaseauthService,
     private notify: NotifyService,
-    private api: LoginapiService,
+    private api: DevloginapiService,
   ) { }
 
   ngOnInit() {
+    console.log('devlogin component');
     this.id1 = this.notify.get_unq_id();
     // Make the loged in user details as empty before login: START
         this.auth.firebase_user = null;
@@ -130,19 +131,20 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
        if (user.user.uid === resp.uid) {
             this.auth.set_session(user.user.uid, resp.sessionid);
             this.mydialog.close();
-            this.router.navigate(['/secure']);
+            this.router.navigate(['developers/devsecure']);
         } else {
           this.notify.update(this.id1, 'Please clear your browser cache and retry', 'error', 'alert', 'no');
           this.mydialog.close();
         }
       },
-      (err) => {
-        console.log(err);
-        if (err.error.status_code === 401) {
+      (error) => {
+        console.log('insider error');
+        console.log(error);
+        if (error.error.status_code === 401) {
           this.mydialog.close();
-          this.reconfirm_sess(user, err.error.usrmsg);
+          this.reconfirm_sess(user, error.error.usrmsg);
         }
-        console.log(err);
+        console.log(error);
         this.notify.update(this.id1, 'Unknown error, plese try again' , 'error', 'alert', 'no');
         this.mydialog.close();
       }
@@ -164,7 +166,7 @@ export class LoginLandComponent implements OnInit, AfterViewChecked {
               if (user.user.uid === resp.uid) {
                 this.auth.set_session(user.user.uid, resp.sessionid);
                 this.mydialog.close();
-                this.router.navigate(['/secure']);
+                this.router.navigate(['developers/devsecure']);
               } else {
                 this.notify.update(this.id1, 'Please clear your browser cache and retry', 'error', 'alert', 'no');
                 this.mydialog.close();

@@ -159,18 +159,22 @@ export class SingupComponent implements OnInit {
             this.mydialog.close();
             this.reset_pass_field();
         } else {
-            console.log('before ');
-            this.auth.emailSignUp(this.userpasswdlgForm.value)
-              .then((userx) => {
-                console.log('iam inside success' + userx);
-                this.signup();
-              })
-              .catch((error) => {
-                this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
-                this.mydialog.close();
-              });
+            this.esignup();
         }
+      })
+      .catch((error) => {
+        this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
+        this.mydialog.close();
+      });
+  }
 
+
+  esignup() {
+    console.log('before ');
+    this.auth.emailSignUp(this.userpasswdlgForm.value)
+      .then((userx) => {
+        console.log('iam inside success' + userx);
+        this.signup();
       })
       .catch((error) => {
         this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
@@ -242,7 +246,7 @@ export class SingupComponent implements OnInit {
             .catch((errorr) => {
               console.log(errorr);
               this.commontask(msgtouser);
-            })
+            });
           }
       );
   }

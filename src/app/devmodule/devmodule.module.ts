@@ -8,9 +8,12 @@ import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DevmoduleRoutingModule } from './devmodule-routing.module';
+
 import { DevhomeComponent } from './devhome/devhome.component';
-import { DevlandComponent } from './devland/devland.component';
+// import { DevlandComponent } from './devland/devland.component';
 import { DevlgerrComponent } from './devlgerr/devlgerr.component';
+// import { DevcreappComponent } from './devcreapp/devcreapp.component';
+// import { DevdashComponent } from './devdash/devdash.component';
 
 @NgModule({
   imports: [
@@ -23,8 +26,10 @@ import { DevlgerrComponent } from './devlgerr/devlgerr.component';
   ],
   declarations: [
     DevhomeComponent,
-    DevlandComponent,
-    DevlgerrComponent
+    // DevlandComponent,
+    DevlgerrComponent,
+    // DevcreappComponent,
+    // DevdashComponent
   ]
 })
 export class DevmoduleModule { }

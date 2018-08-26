@@ -20,6 +20,7 @@ export class TopnavComponent implements OnInit {
 
   toolbr = true;
   leftspan = true;
+  sidenav_shw = false;
   comlogo_sec = true;
   comlogo_txt1 = true;
   comlogo_txt1val: string;
@@ -69,6 +70,7 @@ export class TopnavComponent implements OnInit {
       case ('devland'): {
         this.set_dev_hm_pg();
         this.leftspan = false;
+        this.sidenav_shw = true;
         this.end_loglnk = false;
         this.end_logoutlnk = true;
         break;
@@ -84,6 +86,7 @@ export class TopnavComponent implements OnInit {
       case ('plgland'): {
         this.set_hm_pg();
         this.leftspan = false;
+        this.sidenav_shw = true;
         this.mid_section = false;
         this.mid_devlnk = false;
         this.end_reglnk = false;
@@ -100,6 +103,7 @@ export class TopnavComponent implements OnInit {
   set_dev_hm_pg() {
     this.toolbr = true;
     this.leftspan = true;
+    this.sidenav_shw = false;
     this.comlogo_sec = true;
     this.comlogo_txt1 = true;
     this.comlogo_txt1val = 'Nawalcube';
@@ -119,6 +123,7 @@ export class TopnavComponent implements OnInit {
   set_hm_pg() {
   this.toolbr = true;
   this.leftspan = true;
+  this.sidenav_shw = false;
   this.comlogo_sec = true;
   this.comlogo_txt1 = true;
   this.comlogo_txt1val = 'Nawalcube';
@@ -162,12 +167,5 @@ logout_handler() {
       }
     );
 }
-
-
-
-toggle_sidenav() {
-  this.snav.sidenav.toggle();
-}
-
 
 }

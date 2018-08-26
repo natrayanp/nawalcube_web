@@ -5,8 +5,10 @@ import { AngularFireModule } from 'angularfire2';
 
 import { FirebaseauthService } from './firebaseauth.service';
 import { NatHttpService } from './http.service';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NatinterceptorService } from './natinterceptor.service';
+import { SidenavService } from './sidenav.service';
+import { AuthGuardService } from './auth-guard.service';
 
 import { environment } from '../../environments/environment';
 
@@ -20,7 +22,10 @@ import { environment } from '../../environments/environment';
     NatHttpService,
     NatinterceptorService,
     {provide: HTTP_INTERCEPTORS, useClass: NatinterceptorService, multi: true, },
+    SidenavService,
+    AuthGuardService
   ],
   declarations: [],
 })
 export class ServicesModule { }
+

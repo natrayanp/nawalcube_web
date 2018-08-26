@@ -39,6 +39,10 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     console.log('ngOnInit master');
     this.id1 = this.notify.get_unq_id();
     this.id2 = this.notify.get_unq_id();
+    // Make the loged in user details as empty before login: START
+        this.auth.firebase_user = null;
+        this.auth.idToken = '';
+    // Make the loged in user details as empty before login: END
     this.createloginForm();
     // http://localhost:4200/authlogin;apiKey=lklkl;redirect_uri=kdhke;request=code
     /*
@@ -119,7 +123,11 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
   createloginForm() {
     const group = {
        'email': ['', Validators.compose([Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)])],
-       'password' : ['', Validators.compose([Validators.required,Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)])]
+       'password' : ['',
+                      Validators.compose([Validators.required,
+                                          Validators.pattern(/^[A-Za-z](?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?]{7,9}$/)
+                                        ])
+                    ]
     };
     this.userpasswdlgForm = this.fb.group(group);
   }
@@ -139,10 +147,11 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
       };
       console.log(this.req_param);
     if (this.req_param === 'code') {
-    this.router.navigate(['/allow']);
+        this.router.navigate(['/allow']);
     } else if (this.req_param === 'yenn') {
-      console.log('inside yenn ');
-      this.router.navigate(['developers/devsecure']);
+        console.log('inside yenn ');
+        this.router.navigate(['/developers/devsecure']);
+        // this.router.navigate([{ outlets: { devout: '/developers/devsecure/devdash'}}]);
     }
     mydialog.close();
 

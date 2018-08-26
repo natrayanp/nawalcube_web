@@ -10,10 +10,10 @@ const routes: Routes = [
   path: 'developers',
   loadChildren: './devmodule/devmodule.module#DevmoduleModule'
 },
-{
-  path: 'authorise',
-  loadChildren: './authorise/authorise.module#AuthoriseModule'
-},
+  {
+    path: 'authorise',
+    loadChildren: './authorise/authorise.module#AuthoriseModule'
+  },
 {
   path: 'login',
   loadChildren: './login/login.module#LoginModule'

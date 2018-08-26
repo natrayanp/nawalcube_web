@@ -2,14 +2,22 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DevhomeComponent } from './devhome/devhome.component';
-import { DevlandComponent } from './devland/devland.component';
+// import { DevlandComponent } from './devland/devland.component';
 import { DevlgerrComponent } from './devlgerr/devlgerr.component';
 
-const routes: Routes = [
-  { path: '', component: DevhomeComponent },
-  { path: 'devsecure', component: DevlandComponent },
-  { path: 'devlgerr', component: DevlgerrComponent }
 
+
+const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'home', component: DevhomeComponent },
+  {
+    path: 'devlogin',
+    loadChildren: './devloginmodule/devlogin.module#DevloginmoduleModule'
+  },
+  { path: 'devsecure',
+    loadChildren: './devsecmodule/devsec.module#DevsecModule'
+  },
+  { path: 'devlgerr', component: DevlgerrComponent }
 ];
 
 @NgModule({

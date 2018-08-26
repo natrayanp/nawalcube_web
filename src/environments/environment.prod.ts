@@ -14,7 +14,7 @@ export const apiurls = {
 
 
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     apiKey: 'AIzaSyDQg2KUEAJaj-bfdQfp_08T6L2ybnpbOSc',
     authDomain: 'ananew-472d8.firebaseapp.com',

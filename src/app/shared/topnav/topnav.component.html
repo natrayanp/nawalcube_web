@@ -3,7 +3,7 @@
     <mat-toolbar-row>
   <!--leftspan-->
     <span  *ngIf = "leftspan"  fxFlex = "1 1 10%"></span>
-    <button mat-icon-button (click)="toggle_sidenav()" fxHide fxShow.lt-lg = "true">
+    <button *ngIf = "sidenav_shw" mat-icon-button (click)="singup('sidenav')" fxHide fxShow.lt-lg = "true">
         <mat-icon>menu</mat-icon>
       </button>
 
