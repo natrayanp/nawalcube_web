@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-devavailappcard',
@@ -10,8 +10,7 @@ export class DevavailappcardComponent implements OnInit {
 
   @Input() public mode;
   isfull: boolean;
-  public radiobtngrp: FormGroup;
-  constructor(private fb: FormBuilder,) { }
+  constructor() { }
 
   ngOnInit() {
     if (this.mode === 'full') {
@@ -19,10 +18,6 @@ export class DevavailappcardComponent implements OnInit {
     } else {
       this.isfull = false;
     }
-    this.radiobtngrp = this.fb.group({
-      mfapi: [''],
-      mfvpi: ['']
-    });
   }
 
   tt() {
