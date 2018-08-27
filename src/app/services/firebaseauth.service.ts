@@ -17,6 +17,7 @@ export class FirebaseauthService {
   firebase_user: firebase.User;
   idToken: string;
   session_id: string;
+  site: string;
   // isloggedin$ = new BehaviorSubject(false);
   // isinvestor = false;
 
@@ -58,7 +59,11 @@ export class FirebaseauthService {
       if (this.router.url.endsWith('/signup')) {
         console.log('stay in sign up screen');
       } else {
-        this.router.navigate(['']);
+        if(this.site === 'dv') {
+          this.router.navigate(['/developers']);
+        } else {
+          this.router.navigate(['']);
+        }
       }
       console.log('not logged in');
     }

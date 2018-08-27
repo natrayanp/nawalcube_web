@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, OnInit, DoCheck, AfterContentInit, AfterViewInit, AfterViewChecked,  AfterContentChecked, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, DoCheck,
+         AfterContentInit, AfterViewInit, AfterViewChecked,
+         AfterContentChecked, OnDestroy } from '@angular/core';
 import { NotifyService } from '../notify.service';
 import { Observable } from 'rxjs';
 
@@ -7,7 +9,8 @@ import { Observable } from 'rxjs';
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.scss']
 })
-export class AlertsComponent implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterViewChecked, AfterContentInit, AfterContentChecked, OnDestroy {
+export class AlertsComponent
+implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterViewChecked, AfterContentInit, AfterContentChecked, OnDestroy {
   @Input() public id: string;
   alert_id: string;
   private subscription: any;
@@ -15,6 +18,8 @@ export class AlertsComponent implements OnChanges, OnInit, DoCheck, AfterViewIni
   constructor(public notify: NotifyService) { }
 
   ngOnInit() {
+    console.log('insider alerts');
+    console.log(this.id);
     this.alert_id = this.id;
     /*
     console.log(this.alert_id);

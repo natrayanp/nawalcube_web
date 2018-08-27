@@ -7,6 +7,7 @@ import { LoginService } from '../../../services/login.service';
 import { NotifyService } from '../../../commonmodules/notifications/notify.service';
 import {  filter } from 'rxjs/operators';
 // import { DevloginapiService } from '../core/devloginapi.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-devlogin',
@@ -29,12 +30,14 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
     private auth: FirebaseauthService,
     private notify: NotifyService,
     // private api: DevloginapiService,
-    private loginserv: LoginService
+    private loginserv: LoginService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     console.log('devlogin component');
     this.id1 = this.notify.get_unq_id();
+    console.log(this.id1);
     // Make the loged in user details as empty before login: START
         this.auth.firebase_user = null;
         this.auth.idToken = '';
@@ -68,7 +71,10 @@ export class DevloginComponent implements OnInit, AfterViewChecked {
   }
 
   emaillogin() {
+    console.log('before done with emaillogin');
     this.loginserv.emaillogin(this.userpasswdlgForm, this.id1, 'dvlogin');
+    console.log('done with emaillogin');
+    this.ref.markForCheck();
   }
 
   /*

@@ -24,8 +24,10 @@ export class DevlandComponent implements OnInit {
   ngOnInit() {
     console.log('dev land page');
     this.snav.sidenav = this.devsidenav;
-    // this.router.navigate(['/devdash', {outlets: {devout: ['']}}]);
-    this.router.navigate(['/developers/devsecure/devdsb']);
+    console.log(this.router.url);
+    if (this.router.url === '/developers/devsecure') {
+      this.router.navigate(['/developers/devsecure/devdsb']);
+    }
     // this.router.navigate([{outlets: {devout: ['devdash']}}], {relativeTo: this.route});
   }
 

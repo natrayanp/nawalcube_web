@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NotifyService } from '../commonmodules/notifications/notify.service';
 import { DialogsService } from '../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from './firebaseauth.service';
-import { NatHttpService } from './http.service';;
+import { NatHttpService } from './http.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,15 @@ export class LoginService {
     private auth: FirebaseauthService,
     private notify: NotifyService,
     private api: NatHttpService,
+    
   ) { }
 
   emaillogin(usrpassfrmval, id1, scrndfunc) {
     this.id1 = id1;
     this.scrndfunc = scrndfunc;
     this.notify.clearalertmsg();
-    this.mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
+    console.log('login service');
+    this.mydialog  = this.dialog.showalert('Info', 'We are working on your request, please wait');
     console.log(usrpassfrmval.value);
     this.auth.emailLogin(usrpassfrmval.value)
     .then((user) => {
@@ -43,7 +46,15 @@ export class LoginService {
     })
     .catch((error) => {
             console.log(error);
+            const mydialog1  = this.dialog.okalert('Error', error.message);
+            mydialog1.subscribe(res => {
+              if (res) {
+                  console.log(res);
+              }
+            }
+            );
             this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
+            console.log('after');
             this.mydialog.close();
     });
   }
@@ -63,6 +74,13 @@ export class LoginService {
       // Handle error
       console.log('error inside get id token');
       this.auth.idToken = null;
+      const mydialog1  = this.dialog.okalert('Error', error.message);
+      mydialog1.subscribe(res => {
+        if (res) {
+            console.log(res);
+        }
+      }
+      );
       this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
       this.mydialog.close();
     });
@@ -92,6 +110,8 @@ export class LoginService {
             const navlocation = this.get_nav_location('success');
             this.router.navigate([navlocation]);
         } else {
+          const mydialog1  = this.dialog.okalert('Error', 'Please clear your browser cache and retry');
+          mydialog1.subscribe(res => {if (res) {console.log(res); }});
           this.notify.update(this.id1, 'Please clear your browser cache and retry', 'error', 'alert', 'no');
           this.mydialog.close();
         }
@@ -103,6 +123,8 @@ export class LoginService {
           this.reconfirm_sess(user, err.error.usrmsg);
         }
         console.log(err);
+        const mydialog1  = this.dialog.okalert('Error', 'Unknown error, plese try again');
+        mydialog1.subscribe(res => {if (res) {console.log(res); }});
         this.notify.update(this.id1, 'Unknown error, plese try again' , 'error', 'alert', 'no');
         this.mydialog.close();
       }

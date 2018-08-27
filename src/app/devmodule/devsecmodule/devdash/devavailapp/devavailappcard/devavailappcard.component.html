@@ -1,0 +1,61 @@
+<div fxLayout= "row" fxLayoutGap = "60px">
+  <div>
+<mat-card [ngClass]="{'card-full-container': isfull, 'card-small-container': !isfull}" fxLayout="column">
+            <mat-card-header >
+              
+                <mat-radio-group *ngIf = "!isfull" [(ngModel)]="favoriteSeason">
+                    <mat-radio-button value="MFAPI" ><strong>Mutual Fund API</strong></mat-radio-button>
+                </mat-radio-group>
+                <div *ngIf = "isfull"><span fxFlex></span><h3 fxLayoutAlign = "center" >Mutual Fund API</h3><span fxFlex></span></div>
+                            
+            </mat-card-header>
+            <div fxLayout = "row">
+              <mat-divider *ngIf = "isfull"></mat-divider>
+              </div>
+
+            <mat-card-content class="incard-container">
+                
+                <div fxFlexLayout = "row" fxLayoutAlign = "center center">
+              <p>
+                  Access to Nawal's APIs for Mutual fund transactions.   
+              </p>
+              </div>
+              <p *ngIf = "isfull" style = "font-size: 13px; color: blueviolet">Enjoy the freedom and power of having your own gateway</p>
+            </mat-card-content>
+          
+          <mat-card-footer *ngIf = 'isfull'>
+              <button mat-raised-button color="primary" style = "width:80%">CREATE APP</button>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    <div>
+
+        <mat-card [ngClass]="{'card-full-container': isfull, 'card-small-container': !isfull}" fxLayout="column">
+            <mat-card-header >
+              
+                <mat-radio-group *ngIf = "!isfull" [(ngModel)]="favoriteSeason">
+                    <mat-radio-button value="MFVPI" ><strong>Mutual Fund API</strong></mat-radio-button>
+                </mat-radio-group>
+                <div *ngIf = "isfull"><span fxFlex></span><h3 fxLayoutAlign = "center" >Mutual Fund API</h3><span fxFlex></span></div>
+                            
+            </mat-card-header>
+            <div fxLayout = "row">
+              <mat-divider *ngIf = "isfull"></mat-divider>
+              </div>
+
+            <mat-card-content class="incard-container">
+                
+                <div fxFlexLayout = "row" fxLayoutAlign = "center center">
+              <p>
+                  Access to Nawal's APIs for Mutual fund transactions.   
+              </p>
+              </div>
+              <p *ngIf = "isfull" style = "font-size: 13px; color: blueviolet">Enjoy the freedom and power of having your own gateway</p>
+            </mat-card-content>
+          
+          <mat-card-footer *ngIf = 'isfull'>
+              <button mat-raised-button color="primary" style = "width:80%">CREATE APP</button>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </div>

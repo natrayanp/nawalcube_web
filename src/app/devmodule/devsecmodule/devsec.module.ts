@@ -12,6 +12,10 @@ import { DevsecureRoutingModule } from './devsec-routing-module';
 import { DevlandComponent } from './devland/devland.component';
 import { DevcreappComponent } from './devcreapp/devcreapp.component';
 import { DevdashComponent } from './devdash/devdash.component';
+import { DevavailappComponent } from './devdash/devavailapp/devavailapp.component';
+import { DevavailappcardComponent } from './devdash/devavailapp/devavailappcard/devavailappcard.component';
+import { DevuserAppComponent } from './devdash/devuser-app/devuser-app.component';
+import { DevuserAppCardComponent } from './devdash/devuser-app/devuser-app-card/devuser-app-card.component';
 
 @NgModule({
   imports: [
@@ -26,7 +30,11 @@ import { DevdashComponent } from './devdash/devdash.component';
   declarations: [
     DevlandComponent,
     DevcreappComponent,
-    DevdashComponent
+    DevdashComponent,
+    DevavailappComponent,
+    DevavailappcardComponent,
+    DevuserAppComponent,
+    DevuserAppCardComponent
   ]
 })
 export class DevsecModule { }

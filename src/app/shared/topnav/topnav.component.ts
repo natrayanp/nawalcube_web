@@ -118,9 +118,8 @@ export class TopnavComponent implements OnInit {
     this.end_reglnk = false;
     this.end_loglnk = true;
     this.end_logoutlnk = false;
-    this.site = 'dv';
+    this.auth.site = 'dv';
   }
-  
   
   set_hm_pg() {
   this.toolbr = true;
@@ -139,7 +138,7 @@ export class TopnavComponent implements OnInit {
   this.end_reglnk = true;
   this.end_loglnk = true;
   this.end_logoutlnk = false;
-  this.site = 'nc';
+  this.auth.site = 'nc';
   }
 
 logout_handler() {
@@ -151,14 +150,19 @@ logout_handler() {
   };
   console.log('logout handler');
 
-  this.nathttp.apiget(this.site + 'logout')
+  this.nathttp.apiget(this.auth.site + 'logout')
   .subscribe (
       resp => {
         this.auth.fire_logout()
         .then( () => {
           mydialog.close();
           this.auth.delete_session();
-          this.router.navigate(['/']);
+          console.log(this.auth.site);
+          if (this.auth.site === 'dv') {
+            this.router.navigate(['/developers']);
+          } else {
+            this.router.navigate(['/']);
+          }
         })
         .catch ((err) => {
           this.notify.update(this.id1, err, 'error', 'alert', 'no');

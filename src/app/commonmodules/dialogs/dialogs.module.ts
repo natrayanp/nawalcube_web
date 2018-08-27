@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DisplayDialogComponent } from './display-dialog/display-dialog.component';
+import { OkDialogComponent } from './ok-dialog/ok-dialog.component';
 
 import { DialogsService } from './dialogs.service';
 
@@ -16,9 +17,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     FlexLayoutModule
   ],
-  declarations: [ConfirmDialogComponent, DisplayDialogComponent],
+  declarations: [ConfirmDialogComponent, DisplayDialogComponent, OkDialogComponent],
   exports: [],
-  entryComponents: [ConfirmDialogComponent, DisplayDialogComponent],
+  entryComponents: [ConfirmDialogComponent, DisplayDialogComponent, OkDialogComponent],
   providers: [DialogsService]
 })
 export class DialogsModule { }

@@ -1,17 +1,17 @@
-<p>
-  devdash works!
-</p>
-<div  class= "card-container" fxLayout = "column" fxLayoutAlign = "center center">
-    <div fxLayout = "row">
-    <div>
-            <label fxFlex class = "card-plus" (click) = "createapp()"> + </label>
+<div fxLayout = "row wrap" fxLayout.lt-lg = "column">
+    <div fxFlex = "1 1 100%">
+        <app-devavailapp></app-devavailapp>
+    </div>
+    <div fxFlex = "1 1 100%">
+        <div style = "min-height:210px"></div>
+    </div>
+    <div fxFlex = "1 1 100%">
+        <app-devuser-app></app-devuser-app>
     </div>
 </div>
-<div fxLayout = "row">
-    <div  fxFlex  >
-            <label fxFlex class = "card-create-app-label" (click) = "createapp()">CREATE NEW APP</label>
-        </div>
-    </div>
-</div>
+
+
+
+  
 
 
