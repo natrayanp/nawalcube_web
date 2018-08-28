@@ -12,5 +12,9 @@ export class DevcreappComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  copy_clip_brd(inputElement) {
+      inputElement.select();
+      document.execCommand('copy');
+      inputElement.setSelectionRange(0, 0);
+  }
 }

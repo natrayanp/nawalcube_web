@@ -1,5 +1,5 @@
 <!--toolbr-->
-<mat-toolbar *ngIf = "toolbr" class="fixed-header mat-elevation-z2">
+<mat-toolbar *ngIf = "toolbr" [ngClass]="{'fixed-header': true, 'mat-elevation-z2': screen !== 'devhomepg'}">
     <mat-toolbar-row>
   <!--leftspan-->
     <span  *ngIf = "leftspan"  fxFlex = "1 1 10%"></span>

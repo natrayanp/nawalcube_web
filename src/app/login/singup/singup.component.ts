@@ -21,7 +21,8 @@ export class SingupComponent implements OnInit {
   cust_types = [
     {value: 'I', viewValue: 'Investor'},
     {value: 'D', viewValue: 'Distributor (MFD)'},
-    {value: 'A', viewValue: 'Advisor (RIA)'}
+    {value: 'A', viewValue: 'Advisor (RIA)'},
+    {value: 'T', viewValue: 'Portfolio Tools'}
   ];
 
   constructor(

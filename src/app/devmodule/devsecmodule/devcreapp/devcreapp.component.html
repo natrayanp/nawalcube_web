@@ -1,3 +1,61 @@
-  <div fxLayout = "row" fxLayoutAlign = "center center">
-      <app-devavailappcard [mode] = "'less'"></app-devavailappcard>
+<mat-toolbar>Create App</mat-toolbar>
+<div fxLayout = "column" fxLayoutGap="50px" fxAlign = "center center">
+
+    <div fxLayout = "row" fxLayoutAlign = "center center">
+            <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
+                <div fxLayout = "row wrap" fxLayout.lt-md = "column" fxLayoutAlign = "center center">      
+            <app-devavailappcard [mode] = "'less'"></app-devavailappcard>       
+            </div> 
+    </mat-card>
+</div>
+  <div fxLayout = "row" fxLayoutAlign = "center center" fxLayoutGap ="50px" >
+      <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
+        <form>   
+            <div style = "min-height:50px"></div >
+            <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+            <mat-form-field class="example-full-width" >
+                <input matInput placeholder="App Name" >
+            </mat-form-field>
+            <div [ngStyle.lt-md] ="{'min-height' :'50px'}"></div >
+            <mat-form-field class="example-full-width" >
+                    <input matInput placeholder="App User Type" value="Portfolio Tools">
+                </mat-form-field>
+          </div>
+          <div style = "min-height:50px"></div >
+          <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+                <mat-form-field class="example-full-width" >
+                        <input #userinput matInput placeholder="Redirect URI" value="https://">
+                        <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput)">
+                                <mat-icon>file_copy</mat-icon>
+                              </button>   
+                    </mat-form-field>
+
+                
+                <!--div [ngStyle.lt-md] ="{'min-height' :'50px'}"></div >
+                    
+                <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Postback URI" value="https://">                       
+                </mat-form-field-->
+            </div>
+            <div style = "min-height:50px"></div >
+                <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+                        <mat-form-field class="example-full-width">
+                                <input #userinput1 matInput placeholder="Postback URI" value="https://">  
+                                <button mat-button color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput1)">
+                                        <mat-icon>file_copy</mat-icon>
+                                      </button>                     
+                        </mat-form-field>
+                </div>
+            <div style = "min-height:50px"></div >
+            <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Description">
+                    </mat-form-field>
+            </div>
+            <div style = "min-height:50px"></div >
+        </form>
+        <button mat-raised-button color = "primary" class="example-full-width">Create App</button>
+        <div style = "min-height:50px"></div >
+      </mat-card>
   </div>
+</div>  
