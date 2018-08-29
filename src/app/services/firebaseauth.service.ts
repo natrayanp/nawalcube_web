@@ -18,6 +18,13 @@ export class FirebaseauthService {
   idToken: string;
   session_id: string;
   site: string;
+  custtype: string;
+  tknclaims: any;
+
+  // THis variable is used to pass value 
+  // from Dashboard to Create app in developers site
+  selectedapp = '';
+
   // isloggedin$ = new BehaviorSubject(false);
   // isinvestor = false;
 

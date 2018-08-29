@@ -1,30 +1,39 @@
 <mat-toolbar>Create App</mat-toolbar>
+<div style = "min-height:50px"></div >
+
 <div fxLayout = "column" fxLayoutGap="50px" fxAlign = "center center">
 
     <div fxLayout = "row" fxLayoutAlign = "center center">
             <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
                 <div fxLayout = "row wrap" fxLayout.lt-md = "column" fxLayoutAlign = "center center">      
-            <app-devavailappcard [mode] = "'less'"></app-devavailappcard>       
+            <app-devavailappcard [mode] = "'less'" [initappname]="selectedapp" (rbchange)="rbchange($event)"></app-devavailappcard>       
             </div> 
     </mat-card>
 </div>
-  <div fxLayout = "row" fxLayoutAlign = "center center" fxLayoutGap ="50px" >
+  <div fxLayout = "row" fxLayoutAlign = "center center" fxLayoutGap ="50px" *ngIf = "ishowapp" >
       <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
-        <form>   
-            <div style = "min-height:50px"></div >
+            <form [formGroup]="appform">
+            
+                <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+                    <span fxFlex></span>
+                <h2>{{appform.controls['appname'].value}}</h2>    
+                <span fxFlex></span>
+                </div>
+
+             <div style = "min-height:50px"></div >
             <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
             <mat-form-field class="example-full-width" >
-                <input matInput placeholder="App Name" >
+                <input matInput placeholder="App Name" formControlName="appname">
             </mat-form-field>
             <div [ngStyle.lt-md] ="{'min-height' :'50px'}"></div >
             <mat-form-field class="example-full-width" >
-                    <input matInput placeholder="App User Type" value="Portfolio Tools">
+                    <input matInput placeholder="App User Type" [readonly] = "true" formControlName="appusertype">
                 </mat-form-field>
           </div>
           <div style = "min-height:50px"></div >
           <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
                 <mat-form-field class="example-full-width" >
-                        <input #userinput matInput placeholder="Redirect URI" value="https://">
+                        <input #userinput matInput placeholder="Redirect URI" value="https://" formControlName="redirecturi">
                         <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput)">
                                 <mat-icon>file_copy</mat-icon>
                               </button>   
@@ -40,7 +49,7 @@
             <div style = "min-height:50px"></div >
                 <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
                         <mat-form-field class="example-full-width">
-                                <input #userinput1 matInput placeholder="Postback URI" value="https://">  
+                                <input #userinput1 matInput placeholder="Postback URI" value="https://" formControlName="postbackuri">
                                 <button mat-button color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput1)">
                                         <mat-icon>file_copy</mat-icon>
                                       </button>                     
@@ -49,8 +58,17 @@
             <div style = "min-height:50px"></div >
             <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Description">
+                        <input matInput placeholder="Description" formControlName="description">
                     </mat-form-field>
+            </div>
+            <div *ngIf = "auth.tknclaims.custtype === 'D' || auth.tknclaims.custtype === 'A'">
+            <div style = "min-height:50px" ></div >
+                <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%"  *ngIf = "true" >
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="BSE Starmf Details" value = "MEMBERID=***;USERID=***;PASSWORD=***;" formControlName="starmfdet"> 
+                        <mat-hint align="start"><strong>Replace *** with actual values</strong> </mat-hint>
+                    </mat-form-field>
+            </div>
             </div>
             <div style = "min-height:50px"></div >
         </form>

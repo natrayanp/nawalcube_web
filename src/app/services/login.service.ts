@@ -86,7 +86,18 @@ export class LoginService {
     });
     console.log('inside f1 end');
 
-
+    await this.auth.get_id_tkn_result()
+    .then((idTokenResult) => {  
+      // Confirm the user is an Investor.
+      console.log('inside if then after f1');
+      console.log(idTokenResult.claims.custtype);
+      this.auth.tknclaims = idTokenResult.claims;
+      console.log(this.auth.tknclaims);
+      })
+    .catch((error) => {
+      console.log(error);
+      });
+    console.log('after f1 end end');
     if (this.auth.idToken !== null) {
       this.loginuserapi(user);
     }
