@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseauthService } from '../../../services/firebaseauth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DevmodService } from '../../core/devmod.service';
+
 
 @Component({
   selector: 'app-devcreapp',
@@ -10,38 +12,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class DevcreappComponent implements OnInit {
   name: string;
   custtyp: string;
+  custtypid: string;
   selectedapp = '';
   appform: FormGroup;
   ishowapp: boolean;
   constructor(
               private auth: FirebaseauthService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private http: DevmodService
             ) { }
 
   ngOnInit() {
     this.name = 'natrayan app';
     this.checkfor_selected_app();
     this.createappForm();
-    switch (this.auth.tknclaims.custtype) {
-        case ('I'): {
-          this.custtyp = 'Investor';
-          this.set_validators();
-          break;
-        }
-        case ('D'): {
-          this.custtyp = 'Distributor (MFD)';
-          break;
-        }
-        case ('A'): {
-          this.custtyp = 'Advisor (RIA)';
-          break;
-        }
-        case ('T'): {
-          this.custtyp = 'Portfolio Tools';
-          this.set_validators();
-          break;
-        }
-      }
+    this.get_cust_type_desc();
       this.appform.get('appusertype').setValue(this.custtyp);
   }
 
@@ -95,5 +80,65 @@ export class DevcreappComponent implements OnInit {
   }
   this.auth.selectedapp = '';
   }
+
+  sub_create_app() {
+    let apidata = JSON.stringify(this.appform.value);
+    apidata = JSON.parse(apidata);
+    apidata['appusertype'] = this.auth.tknclaims.custtype;
+    this.http.devmodapipost('appreg', apidata)
+    .subscribe(
+      (datas) => {
+                  console.log(datas);
+                }
+    );
+  }
+
+  get_cust_type_id() {
+  switch (this.auth.tknclaims.custtype) {
+    case ('Investor'): {
+      this.custtypid = 'I';
+      break;
+    }
+    case ('Distributor (MFD)'): {
+      this.custtypid = 'D';
+      break;
+    }
+    case ('Advisor (RIA)'): {
+      this.custtypid = 'A';
+      break;
+    }
+    case ('Portfolio Tools'): {
+      this.custtypid = 'T';
+      break;
+    }
+  }
+}
+
+get_cust_type_desc() {
+  switch (this.auth.tknclaims.custtype) {
+    case ('I'): {
+      this.custtyp = 'Investor';
+      this.set_validators();
+      break;
+    }
+    case ('D'): {
+      this.custtyp = 'Distributor (MFD)';
+      break;
+    }
+    case ('A'): {
+      this.custtyp = 'Advisor (RIA)';
+      break;
+    }
+    case ('T'): {
+      this.custtyp = 'Portfolio Tools';
+      this.set_validators();
+      break;
+    }
+    default: {
+      this.custtyp = '';
+    }
+  }
+}
+
 
 }

@@ -7,6 +7,8 @@ import { NotificationsModule } from '../commonmodules/notifications/notification
 import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { DevmodService } from './core/devmod.service';
+
 import { DevmoduleRoutingModule } from './devmodule-routing.module';
 
 import { DevhomeComponent } from './devhome/devhome.component';
@@ -30,6 +32,9 @@ import { DevlgerrComponent } from './devlgerr/devlgerr.component';
     DevlgerrComponent,
     // DevcreappComponent,
     // DevdashComponent
+  ],
+  providers: [
+    DevmodService
   ]
 })
 export class DevmoduleModule { }
