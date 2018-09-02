@@ -1,6 +1,38 @@
 <mat-divider></mat-divider>
-<mat-toolbar style = "background-color: white">My Apps</mat-toolbar>
+<mat-toolbar style = "background-color: white">
+    My Apps
+    <span fxFlex></span>
+    <button mat-icon-button (click)="fetch_appdet()"><mat-icon style = "color:red">refresh</mat-icon></button>
+</mat-toolbar>
 <mat-divider></mat-divider>
-
+<app-alerts [id]="id1"></app-alerts>
 <br>
-<app-devuser-app-card></app-devuser-app-card>
+
+<div  fxLayout = "row wrap" fxLayoutGap = "30px">
+
+                <mat-card class = "card-container1">
+                <div  class= "card-container" fxLayout = "column" fxLayoutAlign = "center center">
+                        <div fxLayout = "row">
+                        <div>
+                                <label fxFlex class = "card-plus" (click) = "createapp()"> + </label>
+                        </div>
+                      </div>
+                      <div fxLayout = "row">
+                        <div  fxFlex  >
+                                <label fxFlex class = "card-create-app-label" (click) = "createapp()">CREATE NEW APP</label>
+                            </div>
+                        </div>
+                      </div>
+                    </mat-card>
+                    <span fxFlex = "0 0 auto"></span>
+        <div *ngFor ="let app of apps">
+        <!--div style = "background-color: black" fxFlex="1 1 30%"> natarar </div-->
+        <app-devuser-app-card [app]="app" (delsucalrt)="deleteapp($event)"></app-devuser-app-card>
+        </div>
+    <!--
+        <div *ngFor ="let app of apps">
+    
+            <!--app-devuser-app-card [app]="app"></app-devuser-app-card>
+        </div>
+    -->
+</div>

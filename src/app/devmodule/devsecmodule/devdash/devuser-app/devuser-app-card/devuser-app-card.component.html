@@ -1,16 +1,52 @@
-<div fxLayout = "row">
-    <div>
-        <div  class= "card-container" fxLayout = "column" fxLayoutAlign = "center center">
-            <div fxLayout = "row">
-            <div>
-                    <label fxFlex class = "card-plus" (click) = "createapp()"> + </label>
-            </div>
-          </div>
-          <div fxLayout = "row">
-            <div  fxFlex  >
-                    <label fxFlex class = "card-create-app-label" (click) = "createapp()">CREATE NEW APP</label>
-                </div>
-            </div>
-          </div>
-    </div>
-  </div>
+        <mat-card class="card-container1">
+            <mat-card-header style = "min-width: 392px">
+
+                <mat-card-title style="font-size: 18px">{{app.appname}}adfffffffffffffffffffffffffffffffffffffffffffffffffffffffff</mat-card-title>
+                <mat-card-subtitle style = "min-width: 392px;">
+                    <div fxLayout="row" style = "min-width: 392px">
+                            <mat-chip-list>
+                                    <mat-chip  > <strong style = "text-align: right"></strong>Portfolio Tool</mat-chip>
+                                </mat-chip-list>
+                    <div fxFlex></div>
+                        <mat-chip-list>
+                            <mat-chip   style = "text-align: center"> Expiry: 25-Oct-2018</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    </mat-card-subtitle >
+                
+            </mat-card-header>
+                <mat-divider></mat-divider>
+            <div style="min-height: 20px"></div>
+
+            <mat-card-content>
+                    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap = "20px">
+
+                        <mat-form-field class="example-full-width">
+                            <input #appidfld matInput placeholder="API id" [value]="app.appid" [readonly]="true">
+                            <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Copy" (click)="copy_clip_brd(appidfld)" >
+                                    <mat-icon fxAlign = "center" style = "font-size: 20px">file_copy</mat-icon>
+                                  </button> 
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <input #appkyfld matInput fxFlex="100%" placeholder="API Key" [value]="app.appkey" [readonly]="true">
+                            <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Copy" (click)="copy_clip_brd(appkyfld)" >
+                                    <mat-icon fxAlign = "center" style = "font-size: 20px">file_copy</mat-icon>
+                                  </button> 
+                        </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                    <input #reurifld matInput fxFlex="100%" placeholder="Redirect URI" [value]="app.redirecturi" [readonly]="true">
+                                    <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Copy" (click)="copy_clip_brd(reurifld)" >
+                                            <mat-icon fxAlign = "center" style = "font-size: 20px">file_copy</mat-icon>
+                                          </button> 
+                            </mat-form-field>
+                        </div>
+            </mat-card-content>
+
+            <mat-card-footer>
+                <button mat-raised-button color="warn" style="width:50%" (click)="deleapp()">DELETE APP</button>
+                <!--button mat-raised-button color="primary" style="width:50%" (click)="createapp('MFAPI')">EXTEMD APP</button-->
+                <button mat-raised-button color="primary" style="width:50%" (click)="editapp()">EDIT APP</button>
+            </mat-card-footer>
+        </mat-card>

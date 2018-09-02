@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', component: DevlandComponent,
     children : [
       { path: 'devdsb', component: DevdashComponent},
+      // { path: 'devapp/:appid', component: DevcreappComponent},
       { path: 'devapp', component: DevcreappComponent}
     ]
 }

@@ -12,9 +12,11 @@ export class DevavailappcardComponent implements OnInit {
 
   @Input() public mode;
   @Input() public initappname;
+  @Input() public editmode;
   @Output() rbchange: EventEmitter<number> = new EventEmitter<number>();
   isfull: boolean;
   appname: string;
+  showallapp: boolean;
   constructor(
                 private auth: FirebaseauthService,
                 private router: Router,
@@ -27,6 +29,11 @@ export class DevavailappcardComponent implements OnInit {
       this.isfull = true;
     } else {
       this.isfull = false;
+    }
+    if (this.editmode) {
+      this.showallapp = false;
+    } else {
+      this.showallapp = true;
     }
   }
 

@@ -1,20 +1,21 @@
-<mat-toolbar>Create App</mat-toolbar>
+<mat-toolbar>{{toolbr_nme}}</mat-toolbar>
 <div style = "min-height:50px"></div >
+    <app-alerts [id]="id1"></app-alerts>
+<div fxLayout = "column" fxLayoutGap="50px" fxAlign = "center center" *ngIf="!succ_scrn">
 
-<div fxLayout = "column" fxLayoutGap="50px" fxAlign = "center center">
-
-    <div fxLayout = "row" fxLayoutAlign = "center center">
+    <div fxLayout = "row" fxLayoutAlign = "center center" *ngIf = "!editmode">
             <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
                 <div fxLayout = "row wrap" fxLayout.lt-md = "column" fxLayoutAlign = "center center">      
-            <app-devavailappcard [mode] = "'less'" [initappname]="selectedapp" (rbchange)="rbchange($event)"></app-devavailappcard>       
+            <app-devavailappcard [mode] = "'less'" [editmode] = "editmode" [initappname]="selectedapp" (rbchange)="rbchange($event)"></app-devavailappcard>       
             </div> 
     </mat-card>
 </div>
-  <div fxLayout = "row" fxLayoutAlign = "center center" fxLayoutGap ="50px" *ngIf = "ishowapp" >
+
+  <div fxLayout = "row" fxLayoutAlign = "center center" fxLayoutGap ="50px" *ngIf = "ishowapp && !succ_scrn">
       <mat-card [ngStyle] ="{'min-width' : '60%'}" [ngStyle.lt-md] ="{'min-width' : '100%'}" [ngStyle.lt-lg] ="{'min-width' : '90%'}">  
             <form [formGroup]="appform">
             
-                <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
+                <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%" *ngIf = "appform.controls['appname'].value.length > 0">
                     <span fxFlex></span>
                 <h2>{{appform.controls['appname'].value}}</h2>    
                 <span fxFlex></span>
@@ -23,7 +24,7 @@
              <div style = "min-height:50px"></div >
             <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
             <mat-form-field class="example-full-width" >
-                <input matInput placeholder="App Name" formControlName="appname">
+                <input matInput placeholder="App Name" formControlName="appname" [readonly] = "editmode">
             </mat-form-field>
             <div [ngStyle.lt-md] ="{'min-height' :'50px'}"></div >
             <mat-form-field class="example-full-width" >
@@ -33,7 +34,7 @@
           <div style = "min-height:50px"></div >
           <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
                 <mat-form-field class="example-full-width" >
-                        <input #userinput matInput placeholder="Redirect URI" value="https://" formControlName="redirecturi">
+                        <input #userinput matInput placeholder="Redirect URI" formControlName="redirecturi">
                         <button mat-button  color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput)">
                                 <mat-icon>file_copy</mat-icon>
                               </button>   
@@ -49,7 +50,7 @@
             <div style = "min-height:50px"></div >
                 <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%">
                         <mat-form-field class="example-full-width">
-                                <input #userinput1 matInput placeholder="Postback URI" value="https://" formControlName="postbackuri">
+                                <input #userinput1 matInput placeholder="Postback URI"  formControlName="postbackuri">
                                 <button mat-button color ="warn" matSuffix mat-icon-button aria-label="Clear" (click)="copy_clip_brd(userinput1)">
                                         <mat-icon>file_copy</mat-icon>
                                       </button>                     
@@ -65,15 +66,36 @@
             <div style = "min-height:50px" ></div >
                 <div fxLayout="row" fxLayout.lt-md = "column" fxLayoutGap.gt-sm = "5%"  *ngIf = "true" >
                     <mat-form-field class="example-full-width">
-                        <input matInput placeholder="BSE Starmf Details" value = "MEMBERID=***;USERID=***;PASSWORD=***;" formControlName="starmfdet"> 
+                        <input matInput placeholder="BSE Starmf Details" formControlName="starmfdet"> 
                         <mat-hint align="start"><strong>Replace *** with actual values</strong> </mat-hint>
                     </mat-form-field>
             </div>
             </div>
             <div style = "min-height:50px"></div >
+                <div fxHide = "true">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="product" formControlName="product">                        
+                        </mat-form-field>                
+                    </div>
         </form>
-        <button mat-raised-button color = "primary" class="example-full-width" (click) = "sub_create_app()">Create App</button>
-        <div style = "min-height:50px"></div >
+        <div fxLayout = "column">
+            <app-alerts [id]="id2"></app-alerts>
+            <div fxLayout = "row">
+                <button mat-raised-button color = "primary" class="example-full-width" (click) = "sub_create_app('create')" *ngIf = "!editmode"><strong>Create App</strong></button>       
+                    
+                <button mat-raised-button color = "primary" class="example-full-width" (click) = "sub_create_app('update')" *ngIf = "editmode"><strong>Save Changes</strong></button>
+                &nbsp;
+                <button mat-raised-button color = "warn" class="example-full-width" (click) = "cancel_app_edit()" ><strong>Cancel</strong></button>
+            </div>
+        </div>
+        
+
+            
       </mat-card>
   </div>
 </div>  
+
+<!--
+{{appform.value | json}}
+<p>app{{selectedapp}}</p>
+-->

@@ -24,6 +24,8 @@ export class FirebaseauthService {
   // THis variable is used to pass value 
   // from Dashboard to Create app in developers site
   selectedapp = '';
+  fbappid = '';
+  fbeditmode = false;
 
   // isloggedin$ = new BehaviorSubject(false);
   // isinvestor = false;
@@ -61,6 +63,7 @@ export class FirebaseauthService {
         console.log('error inside get id token');
         this.idToken = null;
       });
+      this.set_id_tkn_result1();
     } else {
       console.log(this.router.url);
       if (this.router.url.endsWith('/signup')) {
@@ -131,6 +134,19 @@ export class FirebaseauthService {
       return await this.afAuth.auth.currentUser.getIdToken(/* forceRefresh */ false);
     }
 
+    set_id_tkn_result1() {
+    this.get_id_tkn_result()
+    .then((idTokenResult) => {
+      // Confirm the user is an Investor.
+      console.log('inside if then after f1');
+      console.log(idTokenResult.claims.custtype);
+      this.tknclaims = idTokenResult.claims;
+      console.log(this.tknclaims);
+      })
+    .catch((error) => {
+      console.log(error);
+      });
+    }
     /*
     get_id_tkn_result() {
      console.log('firebase start');

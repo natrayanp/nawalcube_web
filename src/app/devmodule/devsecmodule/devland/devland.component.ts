@@ -54,6 +54,8 @@ export class DevlandComponent implements OnInit {
       this.snav.sidenav.toggle();
     }
     
-
+    tgbtcl(event) {
+      console.log(event);
+    }
 
   }

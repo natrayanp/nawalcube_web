@@ -14,6 +14,7 @@ export const apiurls = {
   url_nclogout: 'http://127.0.0.1:8080',
   url_dvlogout: 'http://127.0.0.1:8080',
   url_appreg: 'http://127.0.0.1:8080',
+  url_appfetch: 'http://127.0.0.1:8080',
 };
 
 
@@ -44,6 +45,8 @@ export const environment = {
   endpt_dvlogout : 'dvlogout',
   url_appreg: apiurls.all_api_url,
   endpt_appreg : 'appregis',
+  url_appfetch: apiurls.all_api_url,
+  endpt_appfetch: 'appdetail'
 };
 
 
