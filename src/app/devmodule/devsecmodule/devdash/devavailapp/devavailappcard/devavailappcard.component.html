@@ -1,6 +1,7 @@
 <div fxLayout= "row"  fxLayout.lt-md= "column wrap" fxLayoutGap = "60px">
   <div>
-<mat-card [ngClass]="{'card-full-container': isfull, 'card-small-container': !isfull}" fxLayout="column" >
+<mat-card [ngClass]="{'card-full-container': isfull, 'card-small-container': !isfull, 'card-fix': true}" fxLayout="column" >
+        <div class="card-fix-container">
             <mat-card-header >
               
                 <mat-radio-group *ngIf = "!isfull" [(ngModel)]="appname">
@@ -26,9 +27,11 @@
           <mat-card-footer *ngIf = 'isfull'>
               <button mat-raised-button color="primary" style = "width:80%" (click)="createapp('MFAPI')">CREATE APP</button>
           </mat-card-footer>
+        </div>
+
         </mat-card>
       </div>
-    <div>
+    <!--div>
 
         <mat-card [ngClass]="{'card-full-container': isfull, 'card-small-container': !isfull}" fxLayout="column" >
             <mat-card-header >
@@ -57,5 +60,5 @@
               <button mat-raised-button color="primary" style = "width:80%" (click)="createapp('MFVPI')">CREATE APP</button>
           </mat-card-footer>
         </mat-card>
-      </div>
+      </div-->
     </div>

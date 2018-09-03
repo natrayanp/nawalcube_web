@@ -8,7 +8,7 @@
 <app-alerts [id]="id1"></app-alerts>
 <br>
 
-<div  fxLayout = "row wrap" fxLayoutGap = "30px">
+<div  fxLayout = "row wrap" fxLayoutGap = "40px">
 
                 <mat-card class = "card-container1">
                 <div  class= "card-container" fxLayout = "column" fxLayoutAlign = "center center">
@@ -19,12 +19,12 @@
                       </div>
                       <div fxLayout = "row">
                         <div  fxFlex  >
-                                <label fxFlex class = "card-create-app-label" (click) = "createapp()">CREATE NEW APP</label>
+                                <label fxFlex class = "card-create-app-label" (click) = "createapp()"><strong>CREATE NEW APP</strong></label>
                             </div>
                         </div>
                       </div>
                     </mat-card>
-                    <span fxFlex = "0 0 auto"></span>
+                    <!--span fxFlex = "0 0 20px"></span-->
         <div *ngFor ="let app of apps">
         <!--div style = "background-color: black" fxFlex="1 1 30%"> natarar </div-->
         <app-devuser-app-card [app]="app" (delsucalrt)="deleteapp($event)"></app-devuser-app-card>
