@@ -2,9 +2,10 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
 export const apiurls = {
   // Common routes for all
-  all_api_url: /*'http://127.0.0.1:8080'*/'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev',
+  all_api_url: 'http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
   url_nclogin: 'http://127.0.0.1:8080',
@@ -13,6 +14,9 @@ export const apiurls = {
   url_dvloginks: 'http://127.0.0.1:8080',
   url_nclogout: 'http://127.0.0.1:8080',
   url_dvlogout: 'http://127.0.0.1:8080',
+  url_appreg: 'http://127.0.0.1:8080',
+  url_appfetch: 'http://127.0.0.1:8080',
+  url_authappnm: 'http://127.0.0.1:8080'
 };
 
 
@@ -41,6 +45,14 @@ export const environment = {
   endpt_dvloginks : 'dvloginks',
   url_dvlogout: apiurls.all_api_url,
   endpt_dvlogout : 'dvlogout',
+  url_appreg: apiurls.all_api_url,
+  endpt_appreg : 'appregis',
+  url_appfetch: apiurls.all_api_url,
+  endpt_appfetch: 'appdetail',
+  url_authappnm: apiurls.all_api_url,
+  endpt_authappnm: 'appname',
+  url_ge:  apiurls.all_api_url, // 'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'
+  endpt_ge: 'toups'
 };
 
 

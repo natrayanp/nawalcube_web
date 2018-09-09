@@ -31,9 +31,9 @@
                 <h4>Your Details:</h4>
             </div>
             <div fxLayout = "row">
-                <mat-form-field>
+                <mat-form-field >
                     <mat-select placeholder="Register as:" formControlName="custtype" name="customer type">
-                      <mat-option *ngFor="let cust of cust_types" [value]="cust">
+                      <mat-option *ngFor="let cust of cust_types" [value]="cust" >
                         {{cust.viewValue}}
                       </mat-option>
                     </mat-select>
@@ -200,14 +200,16 @@
   
   
   </div>
-  <div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="50px">
     <span style="line-height:60px"></span>
   
-  <a style="font-size:15px" type="button" routerLink="/login" routerLinkActive="active" style="font-size: 15px"  >Back to login</a>
+  <a style="font-size:15px" type="button" (click) = "myt('ln')" routerLinkActive="active" style="font-size: 15px"  >Back to login</a>
+  <a style="font-size:15px" type="button"  (click) = "myt('hm')" routerLinkActive="active" style="font-size: 15px"  ><mat-icon>home</mat-icon></a>
+  
   <div fxLayout="row" fxLayoutAlign="center center">
   <span style="line-height:60px"></span>
-
 </div>
+
   </div>
 </mat-card>
 </div>

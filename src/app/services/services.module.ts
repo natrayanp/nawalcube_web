@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireModule } from 'angularfire2';
-
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
 
 import { FirebaseauthService } from './firebaseauth.service';
 import { NatHttpService } from './http.service';

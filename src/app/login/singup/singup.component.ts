@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
 import { LoginapiService } from '../loginapi.service';
-
+import { cust_types } from '../../shared/interfacess';
+import { all } from 'q';
+import { NatHttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-singup',
@@ -18,12 +20,11 @@ export class SingupComponent implements OnInit {
   mydialog:  any;
   id1: string;
   selectedValue: string;
-  cust_types = [
-    {value: 'I', viewValue: 'Investor'},
-    {value: 'D', viewValue: 'Distributor (MFD)'},
-    {value: 'A', viewValue: 'Advisor (RIA)'},
-    {value: 'T', viewValue: 'Portfolio Tools'}
-  ];
+  cust_types = [];
+  hmlnk: string;
+  loglnk: string;
+  otherapp: boolean;
+  cust_readonly: boolean;
 
   constructor(
     private router: Router,
@@ -32,13 +33,69 @@ export class SingupComponent implements OnInit {
     private auth: FirebaseauthService,
     private notify: NotifyService,
     private api: LoginapiService,
+    private route: ActivatedRoute,
+    private http: NatHttpService
   ) { }
 
   ngOnInit() {
+    this.cust_readonly = false;
+    this.cust_types = cust_types;
     this.id1 = this.notify.get_unq_id();
     this.createSignupForm();
     this.createloginForm();
     this.signupForm.get('custtype').setValue(this.cust_types[0]);
+    this.set_links();
+    // const param1 = allParams.param1 // retrieve the parameter "param1"
+    // https://nawalcube.com/login/signup
+  }
+
+
+  set_links() {
+    const allParams = this.route.snapshot.queryParams; // allParams is an object
+    console.log(this.route.snapshot);
+    console.log(allParams.type);
+    console.log(typeof(allParams.type) !== 'undefined');
+    if (typeof(allParams.type) !== 'undefined') {
+      this.cust_types = [];
+      this.cust_types.push(cust_types[0]);
+      this.signupForm.get('custtype').setValue(this.cust_types[0]); // investor
+      this.cust_readonly = true; // investor
+      if (allParams.type === 'signup') {
+        this.otherapp = true;
+        this.hmlnk = allParams.home;
+        this.loglnk = allParams.home;
+      } else {
+        this.otherapp = false;
+      }
+      // validations of appid before navigate
+      const datas = {'appid': allParams.appid};
+      this.http.apipost('appfetch', datas)
+      .subscribe(
+                (res) => {
+                  console.log(res);
+                },
+                (erro) => {
+                  // Any error or appid not valid
+                  console.log(erro);
+                  window.location.href = this.hmlnk;
+                }
+      );
+    // validations of appid before navigate
+    } else {
+      this.cust_types = cust_types;
+    }
+  }
+
+  myt(pg) {
+    if (this.otherapp) {
+      window.location.href = this.hmlnk;
+    } else {
+      if (pg === 'ln') {
+        this.router.navigate(['/login']);
+      } else if (pg === 'hm') {
+        this.router.navigate(['/']);
+      }
+    }
   }
 
   createSignupForm() {

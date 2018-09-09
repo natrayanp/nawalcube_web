@@ -13,45 +13,67 @@ export class NatinterceptorService {
   hasidtkn: boolean;
   hassess: boolean;
   haschg: boolean;
+  isaddtkn: boolean;
+  idtkn: string;
+  sess = null;
+  skip: boolean;
 
   headers: HttpHeaders = new HttpHeaders();
 
   constructor(private auth: FirebaseauthService) {  }
-
+  
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('token id start');
-    const idtkn = this.auth.get_id_token();
-    console.log('token id end');
-    const sess = this.auth.get_session(null);
+    this.skip = false;
+    console.log(req.url);
+    if (req.url.endsWith('appname')) {
+      this.isaddtkn = true;
+    } 
+    
+    if (req.url.endsWith('toups')) {
+      this.skip = true;
+    }
+
+  if (!this.skip) {
+
+    if (!this.isaddtkn) {
+      console.log('token id start');
+      this.idtkn = this.auth.get_id_token();
+      console.log('token id end');
+      this.sess = this.auth.get_session(null);
+      console.log(this.idtkn);
+    }
+    console.log(this.idtkn);
+    console.log((this.idtkn) !== undefined);
     const entityid = sessionStorage.getItem('entityid');
     const countryid = sessionStorage.getItem('countryid');
-
-    console.log(idtkn);
-    console.log(sess);
     console.log(entityid);
 
     this.headers = this.setHeader(this.headers, 'entityid', entityid);
     this.headers = this.setHeader(this.headers, 'countryid', countryid);
 
-    if (typeof(idtkn) !== undefined) {
-      this.headers = this.setHeader(this.headers, 'Authorization', 'Bearer ' + idtkn);
+    if ((this.idtkn) !== undefined) {
+      this.headers = this.setHeader(this.headers, 'Authorization', 'Bearer ' + this.idtkn);
     }
 
-    if (sess !== null) {
-      this.headers = this.setHeader(this.headers, 'mysession', sess);
+    if (this.sess !== null) {
+      this.headers = this.setHeader(this.headers, 'mysession', this.sess);
     }
 
     req = req.clone({headers: this.headers});
-
+    return next.handle(req);
+  } else {
     return next.handle(req);
   }
 
-  setHeader(headers, key , value) {
-    return headers.set(key, value);
-  }
+
+
 }
 
 
+setHeader(headers, key , value) {
+  return headers.set(key, value);
+}
+}
     /*
 
     this.haschg = false;
@@ -111,11 +133,7 @@ export class NatinterceptorService {
 
 
 
-    
 
-
-
-    
 
 this.headers = this.headers.set('Authorization', ('Bearer ' + this.auth.get_id_token()));
 console.log(this.headers.get('Authorization'));
@@ -125,13 +143,6 @@ console.log(this.headers.get('Mycookie'));
 console.log(this.headers);
 
 this.authReq  = req.clone({headers: this.headers});
-
-
-
-
-}
-
-
 
 
 

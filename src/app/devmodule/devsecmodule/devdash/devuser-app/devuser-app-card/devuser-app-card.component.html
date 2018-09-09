@@ -1,4 +1,4 @@
-<mat-card style = "width: 392px; height: 382px;padding-top: 0px;">
+<mat-card style = "width: 392px; height: 482px;padding-top: 0px;">
         <mat-card-header fxLayout = "column" style ="min-height: 107px; margin-top:0px; padding-top: 0px;">
         
             <div style ="height: 70px">
@@ -11,7 +11,7 @@
             
                 <div fxLayout="row" >
                         <mat-chip-list>
-                                <mat-chip  > <strong ></strong>Portfolio Tool</mat-chip>
+                                <mat-chip  > <strong ></strong>{{user_type_desc}}</mat-chip>
                             </mat-chip-list>
                 <div fxFlex></div>
                     <mat-chip-list>
@@ -47,7 +47,23 @@
                                         <mat-icon fxAlign = "center" style = "font-size: 20px">file_copy</mat-icon>
                                       </button> 
                         </mat-form-field>
-                        <span fxFlex></span>
+                    
+                        <div fxLayout="row" fxLayoutAlign = "center center" *ngIf = "app.appusertype === 'D' || app.appusertype === 'A'">
+                            <mat-chip-list>
+                                <mat-chip style = "background-color: green" (click) = "call_user_auth()">Generate Auth Token</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex></div>
+                            <label>kdkdk</label>
+                        </div>
+                        <div *ngIf = "app.appusertype !== 'D' || app.appusertype !== 'A'">
+                            <span fxFlexFill></span>
+                            <span fxFlexFill></span>
+                            <span fxFlexFill></span>
+                        </div>
+                        <span fxFlexFill></span>
+                        <span fxFlexFill></span>
+                        <span fxFlexFill></span>
+                        <span fxFlexFill></span>
                     </div>
         </mat-card-content>
 

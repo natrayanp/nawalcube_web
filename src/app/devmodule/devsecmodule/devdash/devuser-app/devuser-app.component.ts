@@ -50,7 +50,7 @@ export class DevuserAppComponent implements OnInit {
                     this.notify.update(this.id1, error.message, 'error', 'alert', 'no');
                   }
                   this.mydialog.close();
-      }
+      },
       () => {
         this.mydialog.close();
       }

@@ -61,7 +61,7 @@ export class DevcreappComponent implements OnInit {
         this.editmode = false;
         this.checkfor_selected_app();
         this.set_validators();
-        this.get_cust_type_desc(this.auth.tknclaims.custtype);
+        this.http.get_cust_type_desc(this.auth.tknclaims.custtype);
         this.appform.get('appusertype').setValue(this.custtyp);
       } else {
         this.toolbr_nme = 'Edit App';
@@ -168,54 +168,6 @@ export class DevcreappComponent implements OnInit {
     );
   }
 
-  get_cust_type_id() {
-  switch (this.auth.tknclaims.custtype) {
-    case ('Investor'): {
-      this.custtypid = 'I';
-      break;
-    }
-    case ('Distributor (MFD)'): {
-      this.custtypid = 'D';
-      break;
-    }
-    case ('Advisor (RIA)'): {
-      this.custtypid = 'A';
-      break;
-    }
-    case ('Portfolio Tools'): {
-      this.custtypid = 'T';
-      break;
-    }
-  }
-}
-
-get_cust_type_desc(ctype) {
-  switch (ctype) {
-    case ('I'): {
-      this.custtyp = 'Investor';
-      // this.set_validators();
-      break;
-    }
-    case ('D'): {
-      this.custtyp = 'Distributor (MFD)';
-      break;
-    }
-    case ('A'): {
-      this.custtyp = 'Advisor (RIA)';
-      break;
-    }
-    case ('T'): {
-      this.custtyp = 'Portfolio Tools';
-      // this.set_validators();
-      break;
-    }
-    default: {
-      this.custtyp = '';
-    }
-  }
-}
-
-
 get_app_details() {
   const apidata = {
     'appid' : this.appid
@@ -228,7 +180,7 @@ get_app_details() {
                 console.log( datas.body.result_data[0].product);
                 this.auth.selectedapp = datas.body.result_data[0].product;
                 this.checkfor_selected_app();
-                this.get_cust_type_desc(datas.body.result_data[0].appusertype);
+                this.http.get_cust_type_desc(datas.body.result_data[0].appusertype);
                 console.log('done');
                 this.createappForm(datas.body.result_data[0]);
                 this.set_validators();
@@ -258,7 +210,7 @@ clear_validations() {
 
 /*
 this.checkfor_selected_app();
-this.get_cust_type_desc();
+this.http.get_cust_type_desc();
 this.appform.get('appusertype').setValue(this.custtyp);
 */
 

@@ -5,6 +5,11 @@ import { DialogsService } from '../../commonmodules/dialogs/dialogs.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
 import {ChangeDetectorRef } from '@angular/core';
+import { NatHttpService } from '../../services/http.service';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-auth-login',
@@ -18,11 +23,12 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
   req_param_missing = false;
   id1: string;
   id2: string;
-  api_key = '';
+  app_id = '';
   redirect_uri = '';
   req_param = '';
-  comlogo_txt3val: string;
+  comlogo_txt3val: Observable<any>;
   fatal_err = false;
+  mydialog: any;
 
   constructor(
               private router: Router,
@@ -31,7 +37,9 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
               private dialog: DialogsService,
               private auth: FirebaseauthService,
               private notify: NotifyService,
-              private cdref: ChangeDetectorRef
+              private cdref: ChangeDetectorRef,
+              private http: NatHttpService,
+              private httpc: HttpClient,
             ) { 
             }
 
@@ -59,10 +67,13 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
      this.route
      .queryParams
      .subscribe(params => {
-     'apiKey' in params ? this.api_key = params['apikey'] : this.api_param_missing = true;
-     'redirect_uri' in params ? this.redirect_uri = params['redirect_uri'] : this.uri_param_missing = true;
+     'appid' in params ? this.app_id = params['appid'] : this.api_param_missing = true;
+     'redirecturi' in params ? this.redirect_uri = params['redirecturi'] : this.uri_param_missing = true;
      'request' in params ? this.req_param = params['request'] : this.req_param_missing = true;
+     
        console.log(params);
+       this.initialise_scrn();
+       
      });
 
 
@@ -70,6 +81,28 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     console.log(this.req_param);
 
   }
+
+
+  initialise_scrn() {
+    const ttt = {'appid': this.app_id, 'redirecturi': this.redirect_uri};
+    console.log(ttt);
+    // this.comlogo_txt3val = this.http.apipost('authappnm', ttt).pipe(map(res => res.body.result_data.appname));
+    this.http.apipost('authappnm', ttt)
+    .subscribe((resp: any) => {
+                          console.log(resp);
+                          const subject = new Subject();
+                          this.comlogo_txt3val = subject.pipe(map(res => res));
+                          subject.next(resp.body.result_data.appname);
+                          //this.comlogo_txt3val = res.body.result_data.appname;
+                          console.log(this.comlogo_txt3val);
+                        },
+                (err) => {
+                  console.log(err);
+                  this.send_error_resp(this.req_param);
+                  // respond with error
+                }
+  );
+}
 
   ngOnChanges() {
     console.log('ngOnChanges master');
@@ -110,9 +143,11 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
       this.send_error_resp(this.req_param);
     } else {
       if (this.req_param === 'code') {
-        this.comlogo_txt3val = 'applications name';
+        // this.comlogo_txt3val = 'applications name';
       } else if (this.req_param === 'yenn') {
-        this.comlogo_txt3val = 'API';
+        const subject = new Subject();
+        this.comlogo_txt3val.source = subject.pipe(map(res => res));
+        subject.next('API');
       } else {
         this.send_error_resp(this.req_param);
       }
@@ -136,7 +171,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     this.notify.clearalertmsg();
     console.log(event);
     console.log('popup');
-    const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
+    this.mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
     this.auth.emailLogin(this.userpasswdlgForm.value)
     .then((user) => {
       console.log(user);
@@ -148,12 +183,13 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
       console.log(this.req_param);
     if (this.req_param === 'code') {
         this.router.navigate(['/allow']);
+        // window.location.href = 'http://127.0.0.1:8080/testapp?code=1345455';
     } else if (this.req_param === 'yenn') {
+      this.mydialog.close();
         console.log('inside yenn ');
         this.router.navigate(['/developers/devsecure']);
         // this.router.navigate([{ outlets: { devout: '/developers/devsecure/devdash'}}]);
     }
-    mydialog.close();
 
     })
     .catch((error) => {
@@ -163,16 +199,21 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
         'data': error
       };
       console.log(error);
-      mydialog.close();
+      this.mydialog.close();
       this.send_error_resp(this.req_param);
     });
   }
 
   send_error_resp(req_param) {
+    console.log('inside send req');
+    console.log(req_param);
+    console.log(this.redirect_uri);
     if (req_param === 'yenn') {
       this.router.navigate(['developers/devlgerr']);
     } else if (req_param === 'code') {
-      this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
+      // this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
+      // window.location.href = this.redirect_uri + '?error';
+      // this.httpc.post (this.redirect_uri, {'r': this.redirect_uri});
     } else {
       if (this.redirect_uri.length > 0) {
         this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });

@@ -15,6 +15,7 @@ export const apiurls = {
   url_dvlogout: 'http://127.0.0.1:8080',
   url_appreg: 'http://127.0.0.1:8080',
   url_appfetch: 'http://127.0.0.1:8080',
+  url_authappnm: 'http://127.0.0.1:8080'
 };
 
 
@@ -46,7 +47,11 @@ export const environment = {
   url_appreg: apiurls.all_api_url,
   endpt_appreg : 'appregis',
   url_appfetch: apiurls.all_api_url,
-  endpt_appfetch: 'appdetail'
+  endpt_appfetch: 'appdetail',
+  url_authappnm: apiurls.all_api_url,
+  endpt_authappnm: 'appname',
+  url_ge:  apiurls.all_api_url, // 'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'
+  endpt_ge: 'toups'
 };
 
 

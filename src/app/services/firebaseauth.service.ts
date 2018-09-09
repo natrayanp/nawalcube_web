@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+// import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -21,7 +22,7 @@ export class FirebaseauthService {
   custtype: string;
   tknclaims: any;
 
-  // THis variable is used to pass value 
+  // This variable is used to pass value 
   // from Dashboard to Create app in developers site
   selectedapp = '';
   fbappid = '';
@@ -65,16 +66,21 @@ export class FirebaseauthService {
       });
       this.set_id_tkn_result1();
     } else {
+      console.log('tt');
       console.log(this.router.url);
-      if (this.router.url.endsWith('/signup')) {
+      console.log('iam iam');
+      if (this.router.url.includes('/signup')) {
         console.log('stay in sign up screen');
       } else {
-        if(this.site === 'dv') {
+        if (this.site === 'dv') {
           this.router.navigate(['/developers']);
         } else {
           this.router.navigate(['']);
         }
       }
+      console.log('tt');
+      console.log(this.router.url);
+      console.log('iam iam');
       console.log('not logged in');
     }
 
