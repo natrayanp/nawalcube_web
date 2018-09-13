@@ -25,6 +25,7 @@ export class SingupComponent implements OnInit {
   loglnk: string;
   otherapp: boolean;
   cust_readonly: boolean;
+  appname: string;
 
   constructor(
     private router: Router,
@@ -67,12 +68,14 @@ export class SingupComponent implements OnInit {
       } else {
         this.otherapp = false;
       }
+      
       // validations of appid before navigate
-      const datas = {'appid': allParams.appid};
+      const datas = {'appid': allParams.appid,'login':'nologin'};
       this.http.apipost('appfetch', datas)
       .subscribe(
-                (res) => {
+                (res: any) => {
                   console.log(res);
+                  this.appname = res.result_data.appname;
                 },
                 (erro) => {
                   // Any error or appid not valid
@@ -81,6 +84,7 @@ export class SingupComponent implements OnInit {
                 }
       );
     // validations of appid before navigate
+    
     } else {
       this.cust_types = cust_types;
     }
