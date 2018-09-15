@@ -48,7 +48,11 @@ export const environment = {
   endpt_appreg : 'appregis',
   url_appfetch: apiurls.all_api_url,
   endpt_appfetch: 'appdetail',
+  url_appnlfetch: apiurls.all_api_url,
+  endpt_appnlfetch: 'appnldetail',
   url_authappnm: apiurls.all_api_url,
+  endpt_appregresp: 'appregresp',
+  url_appregresp: apiurls.all_api_url,  
   endpt_authappnm: 'appname',
   url_ge:  apiurls.all_api_url, // 'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'
   endpt_ge: 'toups'

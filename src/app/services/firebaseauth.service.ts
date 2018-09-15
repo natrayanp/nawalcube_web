@@ -59,12 +59,12 @@ export class FirebaseauthService {
       this.refresh_id_token()
       .then(idToken => {
         this.idToken = idToken;
+        this.set_id_tkn_result1();
       }).catch(function(error) {
         // Handle error
         console.log('error inside get id token');
         this.idToken = null;
-      });
-      this.set_id_tkn_result1();
+      });      
     } else {
       console.log('tt');
       console.log(this.router.url);

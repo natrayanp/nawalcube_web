@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseauthService } from '../../../services/firebaseauth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DevmodService } from '../../core/devmod.service';
+import { GenserviceService } from '../../../services/genservice.service';
 import { NotifyService } from '../../../commonmodules/notifications/notify.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -41,6 +42,7 @@ export class DevcreappComponent implements OnInit {
               private auth: FirebaseauthService,
               private fb: FormBuilder,
               private http: DevmodService,
+              private genserv: GenserviceService,
               private notify: NotifyService,
               private route: ActivatedRoute
             ) { }
@@ -56,14 +58,16 @@ export class DevcreappComponent implements OnInit {
     this.route.params.subscribe(params => {
       console.log(params);
       if (JSON.stringify(params) === '{}') {
+        console.log("inside {}");
         this.toolbr_nme = 'Create App';
         this.createappForm(this.empty_app_det);
         this.editmode = false;
         this.checkfor_selected_app();
         this.set_validators();
-        this.http.get_cust_type_desc(this.auth.tknclaims.custtype);
+        this.custtyp = this.genserv.get_cust_type_desc(this.auth.tknclaims.custtype);
         this.appform.get('appusertype').setValue(this.custtyp);
       } else {
+        console.log("inside else {}");
         this.toolbr_nme = 'Edit App';
         this.editmode = true;
         this.get_app_details();

@@ -25,25 +25,6 @@ export class NatinterceptorService {
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.skip = false;
     console.log(req.url);
-    if (req.url.endsWith('appname')) {
-      this.isaddtkn = true;
-    } 
-    
-    if (req.url.endsWith('toups')) {
-      this.skip = true;
-    }
-
-  if (!this.skip) {
-
-    if (!this.isaddtkn) {
-      console.log('token id start');
-      this.idtkn = this.auth.get_id_token();
-      console.log('token id end');
-      this.sess = this.auth.get_session(null);
-      console.log(this.idtkn);
-    }
-    console.log(this.idtkn);
-    console.log((this.idtkn) !== undefined);
     const entityid = sessionStorage.getItem('entityid');
     const countryid = sessionStorage.getItem('countryid');
     console.log(entityid);
@@ -51,21 +32,38 @@ export class NatinterceptorService {
     this.headers = this.setHeader(this.headers, 'entityid', entityid);
     this.headers = this.setHeader(this.headers, 'countryid', countryid);
 
-    if ((this.idtkn) !== undefined) {
-      this.headers = this.setHeader(this.headers, 'Authorization', 'Bearer ' + this.idtkn);
+    if (req.url.endsWith('toups') || req.url.endsWith('appnldetail')) {
+      this.skip = true;
+      this.isaddtkn = false;
     }
 
-    if (this.sess !== null) {
-      this.headers = this.setHeader(this.headers, 'mysession', this.sess);
+    if (!this.skip) {
+
+      if (!this.isaddtkn) {
+        console.log('token id start');
+        this.idtkn = this.auth.get_id_token();
+        console.log('token id end');
+        this.sess = this.auth.get_session(null);
+        console.log(this.idtkn);
+      }
+      console.log(this.idtkn);
+      console.log((this.idtkn) !== undefined);
+
+
+      if ((this.idtkn) !== undefined) {
+        this.headers = this.setHeader(this.headers, 'Authorization', 'Bearer ' + this.idtkn);
+      }
+
+      if (this.sess !== null) {
+        this.headers = this.setHeader(this.headers, 'mysession', this.sess);
+      }
+
+      req = req.clone({headers: this.headers});
+      return next.handle(req);
+    } else {
+      req = req.clone({headers: this.headers});
+      return next.handle(req);
     }
-
-    req = req.clone({headers: this.headers});
-    return next.handle(req);
-  } else {
-    return next.handle(req);
-  }
-
-
 
 }
 

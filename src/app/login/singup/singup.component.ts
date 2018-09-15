@@ -26,6 +26,7 @@ export class SingupComponent implements OnInit {
   otherapp: boolean;
   cust_readonly: boolean;
   appname: string;
+  appid: string;
 
   constructor(
     private router: Router,
@@ -39,6 +40,7 @@ export class SingupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.auth.fire_logout();
     this.cust_readonly = false;
     this.cust_types = cust_types;
     this.id1 = this.notify.get_unq_id();
@@ -63,31 +65,61 @@ export class SingupComponent implements OnInit {
       this.cust_readonly = true; // investor
       if (allParams.type === 'signup') {
         this.otherapp = true;
+        this.appid = allParams.appid;
         this.hmlnk = allParams.home;
         this.loglnk = allParams.home;
+        this.appname = allParams.appname;
+
+        console.log(this.appid);
+        console.log(this.hmlnk);
+        console.log(this.loglnk);
+        console.log(this.appname);
+
+
       } else {
         this.otherapp = false;
       }
-      
+     
+      /*
       // validations of appid before navigate
       const datas = {'appid': allParams.appid,'login':'nologin'};
-      this.http.apipost('appfetch', datas)
+      this.http.apipost('appnlfetch', datas)
       .subscribe(
                 (res: any) => {
                   console.log(res);
-                  this.appname = res.result_data.appname;
+                  if (res.body.result_data === null){
+                    window.location.href = this.hmlnk;
+                    // respond back with error from server
+                    // this.respond_error();
+                  } else {
+                    this.appname = res.result_data.appname;
+                  }                  
                 },
                 (erro) => {
                   // Any error or appid not valid
                   console.log(erro);
-                  window.location.href = this.hmlnk;
+                  // window.location.href = this.hmlnk;
                 }
       );
     // validations of appid before navigate
+    */
     
     } else {
       this.cust_types = cust_types;
     }
+  }
+
+
+  respond_error() {
+    const datas = {
+      'appid': this.appid,
+      'respond': 'error'
+    }
+    this.http.apipost('appregresp', datas)
+    .subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 
   myt(pg) {

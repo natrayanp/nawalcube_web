@@ -10,8 +10,8 @@
          </mat-card-title>
          <mat-card-subtitle>
            <span fxFlex></span>
-           <div fxFlexAlign = "center" >Signup </div>
-           <div *ngIf="otherapp"> &nbsp; for {{otherapp}}</div>
+           <div *ngIf="!otherapp" fxFlexAlign = "center" >Signup </div>
+           <div *ngIf="otherapp" fxFlexAlign = "center"> <span>Signup</span>&nbsp; for app &nbsp;<strong style="font-size: 25px;font-family: 'Cabin Sketch', cursive; color: darkgreen">{{appname}}</strong></div>
            <span fxFlex></span>
          </mat-card-subtitle>
 
