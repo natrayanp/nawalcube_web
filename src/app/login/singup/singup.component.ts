@@ -6,7 +6,6 @@ import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { NotifyService } from '../../commonmodules/notifications/notify.service';
 import { LoginapiService } from '../loginapi.service';
 import { cust_types } from '../../shared/interfacess';
-import { all } from 'q';
 import { NatHttpService } from '../../services/http.service';
 
 @Component({
@@ -248,10 +247,14 @@ export class SingupComponent implements OnInit {
       .then((user) => {
         console.log(user);
         if (user.length > 0) {
+          if(this.otherapp) {
+            this.resp_to_other_app('exists', this.userpasswdlgForm.controls['email'].value);
+          } else {
             this.notify.update(this.id1, this.userpasswdlgForm.controls['email'].value +
                                 ' email already registered', 'error', 'alert', 'no');
             this.mydialog.close();
             this.reset_pass_field();
+          }
         } else {
             this.esignup();
         }
@@ -303,6 +306,9 @@ export class SingupComponent implements OnInit {
       this.api.loginapipost('signup', this.signupForm.value)
       .subscribe (
           resp => {
+                if(this.otherapp) {
+                  this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+                } else {
                 this.auth.fire_logout()
                 .then((userq) => {
                   console.log(userq);
@@ -326,7 +332,8 @@ export class SingupComponent implements OnInit {
                           );
                   this.reset_all_form();
                   });
-          },
+                }
+          },  
           error => {
             console.log(error);
             const msgtouser = error.error['error_msg'];
@@ -396,6 +403,19 @@ commontask(msg) {
     this.signupForm.markAsUntouched();
     this.userpasswdlgForm.markAsPristine();
     this.signupForm.markAsPristine();
+  }
+
+  resp_to_other_app(signup, email) {
+    const dats = {
+      'signup': signup,
+      'email': email,
+      'appid': this.appid
+    }
+    this.api.loginapipost('appregres',dats)
+    .subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    )
   }
 
 }
