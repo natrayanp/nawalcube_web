@@ -413,7 +413,10 @@ commontask(msg) {
     }
     this.api.loginapipost('appregres',dats)
     .subscribe(
-      (res) => console.log(res),
+      (res:any) => {
+        console.log(res);
+        window.location.href = res.body.url;
+      },
       (err) => console.log(err)
     )
   }
