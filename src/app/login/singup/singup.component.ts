@@ -248,14 +248,14 @@ export class SingupComponent implements OnInit {
         console.log(user);
         if (user.length > 0) {
           if(this.otherapp) {
-            this.resp_to_other_app('exists', this.userpasswdlgForm.controls['email'].value);
+            console.log('inside emailsignup');
+            this.createuserapi_notkn();
+            // this.resp_to_other_app('exists', this.userpasswdlgForm.controls['email'].value);
           } else {
-            this.notify.update(this.id1, this.userpasswdlgForm.controls['email'].value +
-                                ' email already registered', 'error', 'alert', 'no');
-            this.mydialog.close();
-            this.reset_pass_field();
+            this.createuserapi_notkn();
           }
         } else {
+          console.log('inside else esignup');
             this.esignup();
         }
       })
@@ -302,55 +302,101 @@ export class SingupComponent implements OnInit {
     console.log('inside f2 end');
   }
 
+  createuserapi_notkn() {
+    const frm_data = {
+      'signup_frm' : this.signupForm.value,
+      'usrpass_frm' :this.userpasswdlgForm.value
+    }
+    console.log(frm_data);
+    this.api.loginapipost('signupn', frm_data)
+    .subscribe (
+      (resp) => {
+        if(this.otherapp) {
+          this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+        } else {
+          this.signup_success();
+        }
+      },
+      (err) => {
+        if(this.otherapp) {
+          this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+        } else {
+          this.signup_user_exists(err.error['error_msg']);
+        }
+      }
+    )
+  }
+
+  signup_user_exists(msg) {
+    console.log('inside signup_user_exists');
+    this.notify.update(this.id1, msg, 'error', 'alert', 'no');
+    this.mydialog.close();
+    this.reset_pass_field();          
+  }
+
   createuserapi() {
-      this.api.loginapipost('signup', this.signupForm.value)
+    const frm_data = {
+      'signup_frm' : this.signupForm.value,
+      'usrpass_frm' :this.userpasswdlgForm.value
+    }
+      this.api.loginapipost('signup', frm_data)
       .subscribe (
           resp => {
                 if(this.otherapp) {
                   this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
                 } else {
-                this.auth.fire_logout()
-                .then((userq) => {
-                  console.log(userq);
-                  this.mydialog.close();
-                  this.notify.update(
-                            this.id1,
-                              'Sign up with user id ' +
-                              this.userpasswdlgForm.controls['email'].value +
-                              ' completed.  Login now.', 'success', 'alert', 'no'
-                          );
-                  this.reset_all_form();
-                  })
-                .catch((error) => {
-                  console.log(error);
-                  this.mydialog.close();
-                  this.notify.update(
-                            this.id1,
-                              'Sign up with user id ' +
-                              this.userpasswdlgForm.controls['email'].value +
-                              ' has issues.  Please contact support.', 'error', 'alert', 'no'
-                          );
-                  this.reset_all_form();
-                  });
+                  this.signup_success();
                 }
           },  
           error => {
-            console.log(error);
-            const msgtouser = error.error['error_msg'];
-            console.log(error.error);
-            console.log(error.error['error_msg']);
-            this.auth.fire_del_usr()
-            .then((userq) => {
-              console.log(userq);
-              this.commontask(msgtouser);
-            })
-            .catch((errorr) => {
-              console.log(errorr);
-              this.commontask(msgtouser);
-            });
+              if(this.otherapp) {
+                this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+              } else {
+                this.signup_error(error);
+              }
           }
       );
   }
+
+  signup_success() {
+    this.auth.fire_logout()
+    .then((userq) => {
+      console.log(userq);
+      this.mydialog.close();
+      this.notify.update(
+                this.id1,
+                  'Sign up with user id ' +
+                  this.userpasswdlgForm.controls['email'].value +
+                  ' completed.  Login now.', 'success', 'alert', 'no'
+              );
+      this.reset_all_form();
+      })
+    .catch((error) => {
+      console.log(error);
+      this.mydialog.close();
+      this.notify.update(
+                this.id1,
+                  'Sign up with user id ' +
+                  this.userpasswdlgForm.controls['email'].value +
+                  ' has issues.  Please contact support.', 'error', 'alert', 'no'
+              );
+      this.reset_all_form();
+      });
+  }
+
+  signup_error(errorw) {
+    const msgtouser = errorw.error['error_msg'];
+    this.auth.fire_del_usr()
+    .then((userq) => {
+      console.log(userq);
+      this.commontask(msgtouser);
+    })
+    .catch((errorr) => {
+      console.log(errorr);
+      this.commontask(msgtouser);
+    });
+  }
+
 
 
 commontask(msg) {

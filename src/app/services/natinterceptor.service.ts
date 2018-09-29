@@ -32,7 +32,7 @@ export class NatinterceptorService {
     this.headers = this.setHeader(this.headers, 'entityid', entityid);
     this.headers = this.setHeader(this.headers, 'countryid', countryid);
 
-    if (req.url.endsWith('toups') || req.url.endsWith('appnldetail') || req.url.endsWith('ncappsingupres')) {
+    if (req.url.endsWith('toups') || req.url.endsWith('appnldetail') || req.url.endsWith('ncappsingupres')|| req.url.endsWith('signupnotkn') ) {
       this.skip = true;
       this.isaddtkn = false;
     }

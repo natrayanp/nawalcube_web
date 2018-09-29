@@ -9,6 +9,7 @@ export class GenserviceService {
   constructor() { }
 
   get_cust_type_desc(ctype) {
+    console.log(ctype);
     const myKeys = cust_types.filter(key => key.value === ctype);
     if (myKeys.length > 0) {
       return myKeys[0].viewValue;

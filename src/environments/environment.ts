@@ -7,6 +7,7 @@ export const apiurls = {
   all_api_url: 'http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
+  url_signupn: 'http://127.0.0.1:8080',
   url_nclogin: 'http://127.0.0.1:8080',
   url_ncloginks: 'http://127.0.0.1:8080',
   url_dvlogin: 'http://127.0.0.1:8080',
@@ -33,6 +34,8 @@ export const environment = {
   // url_<screen + Functionality>
   url_signup: apiurls.all_api_url,
   endpt_signup : 'signup',
+  url_signupn: apiurls.all_api_url,
+  endpt_signupn : 'signupnotkn',
   url_nclogin: apiurls.all_api_url,
   endpt_nclogin : 'login',
   url_ncloginks: apiurls.all_api_url,
