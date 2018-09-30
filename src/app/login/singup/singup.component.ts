@@ -312,14 +312,15 @@ export class SingupComponent implements OnInit {
     .subscribe (
       (resp) => {
         if(this.otherapp) {
-          this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+          this.resp_to_other_app('success', this.userpasswdlgForm.controls['email'].value, '');
         } else {
           this.signup_success();
         }
       },
       (err) => {
+        console.log(err);
         if(this.otherapp) {
-          this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+          this.resp_to_other_app('fail', this.userpasswdlgForm.controls['email'].value, err.error['error_msg']);
         } else {
           this.signup_user_exists(err.error['error_msg']);
         }
@@ -343,14 +344,14 @@ export class SingupComponent implements OnInit {
       .subscribe (
           resp => {
                 if(this.otherapp) {
-                  this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+                  this.resp_to_other_app('success', this.userpasswdlgForm.controls['email'].value,'');
                 } else {
                   this.signup_success();
                 }
           },  
           error => {
               if(this.otherapp) {
-                this.resp_to_other_app('new', this.userpasswdlgForm.controls['email'].value);
+                this.resp_to_other_app('fail', this.userpasswdlgForm.controls['email'].value,error.error["error_msg"]);
               } else {
                 this.signup_error(error);
               }
@@ -451,20 +452,21 @@ commontask(msg) {
     this.signupForm.markAsPristine();
   }
 
-  resp_to_other_app(signup, email) {
-    const dats = {
-      'signup': signup,
-      'email': email,
-      'appid': this.appid
-    }
-    this.api.loginapipost('appregres',dats)
-    .subscribe(
-      (res:any) => {
-        console.log(res);
-        window.location.href = res.body.url;
-      },
-      (err) => console.log(err)
-    )
-  }
-
+  resp_to_other_app(restyp, email, msg) {
+      const dats = {
+        'restyp': restyp,
+        'email': email,
+        'appid': this.appid,
+        'msg': msg
+      }
+      this.api.loginapipost('appregres',dats)
+      .subscribe(
+        (res:any) => {
+          console.log(res);
+          window.location.href = res.body.url;
+        },
+        (err) => console.log(err)
+      )
+    } 
+  
 }
