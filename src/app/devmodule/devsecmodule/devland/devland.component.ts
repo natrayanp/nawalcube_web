@@ -26,6 +26,9 @@ export class DevlandComponent implements OnInit {
     this.snav.sidenav = this.devsidenav;
     console.log(this.router.url);
     if (this.router.url === '/developers/devsecure') {
+      /* if (usertype == 'A'){
+        this.router.navigate(['/developers/devsecure/devadmindsb']);  
+      } else {*/
       this.router.navigate(['/developers/devsecure/devdsb']);
     }
     // this.router.navigate([{outlets: {devout: ['devdash']}}], {relativeTo: this.route});

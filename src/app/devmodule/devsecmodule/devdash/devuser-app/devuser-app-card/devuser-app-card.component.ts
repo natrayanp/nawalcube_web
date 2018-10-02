@@ -80,6 +80,10 @@ sub_create_app(operationt) {
   );
 }
 
+extendapp() {
+  console.log('implementation pending');
+}
+
 call_user_auth() {
   //const url = "http://localhost:4200/authorise?request=code&appid=74512c35dcdb7f512d0d55ec72ef8806ffb5091318099d131dd32b4db2317aaa&redirecturi=http://localhost:4200/developers/devsecure/devdsb"
   // window.open(url, '_blank');
