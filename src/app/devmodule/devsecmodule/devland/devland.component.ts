@@ -12,7 +12,7 @@ import { SidenavService } from '../../../services/sidenav.service';
 export class DevlandComponent implements OnInit {
 
   @ViewChild('devsidenav') public devsidenav;
-
+  custtyp: string;
   constructor(
                 private router: Router,
                 private route: ActivatedRoute,
@@ -22,17 +22,28 @@ export class DevlandComponent implements OnInit {
               ) {  }
 
   ngOnInit() {
+    this.custtyp = "N";
     console.log('dev land page');
     this.snav.sidenav = this.devsidenav;
     console.log(this.router.url);
     if (this.router.url === '/developers/devsecure') {
-      /* if (usertype == 'A'){
-        this.router.navigate(['/developers/devsecure/devadmindsb']);  
-      } else {*/
-      this.router.navigate(['/developers/devsecure/devdsb']);
-    }
+      this.auth.afAuth.idTokenResult
+      .subscribe (
+        (res) => {
+          this.auth.tknclaims = res;
+          this.custtyp = res.claims.custtype;
+          console.log(res);
+          if (res.claims.custtype === 'A'){
+            this.router.navigate(['/developers/devsecure/devadsb']);  
+          } else {
+          this.router.navigate(['/developers/devsecure/devdsb']);
+        }
+        }
+      )
+
     // this.router.navigate([{outlets: {devout: ['devdash']}}], {relativeTo: this.route});
   }
+}
 
   navclick(eve) {
     if (eve === 'logout') {

@@ -16,6 +16,7 @@ import { DevavailappComponent } from './devdash/devavailapp/devavailapp.componen
 import { DevavailappcardComponent } from './devdash/devavailapp/devavailappcard/devavailappcard.component';
 import { DevuserAppComponent } from './devdash/devuser-app/devuser-app.component';
 import { DevuserAppCardComponent } from './devdash/devuser-app/devuser-app-card/devuser-app-card.component';
+import { DevdashadminComponent } from './devdashadmin/devdashadmin.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { DevuserAppCardComponent } from './devdash/devuser-app/devuser-app-card/
     DevavailappComponent,
     DevavailappcardComponent,
     DevuserAppComponent,
-    DevuserAppCardComponent
+    DevuserAppCardComponent,
+    DevdashadminComponent
   ]
 })
 export class DevsecModule { }

@@ -6,7 +6,7 @@
             [fixedInViewport]="false" [fixedTopGap]="0"
             [fixedBottomGap]="0">
             <div class = "example-sidenav-cont">
-                <div fxLayout = "column" fxLayoutGap = "30%">
+                <div fxLayout = "column" fxLayoutGap = "30%" *ngIf = "custtyp !== 'A'">
                     <div>
                         <a type ="button" mat-button fxFlexFill routerLink="devdsb" routerLinkActive="active-link" fxFlexAlign ="center" style=" font-size:20px; width: 100%"> <mat-icon fxFlexAlign ="center">poll</mat-icon> &nbsp; Dashboard</a>
                     </div>
@@ -15,6 +15,14 @@
                         
                     </div>
                 </div>
+
+                <div fxLayout = "column" fxLayoutGap = "30%" *ngIf = "custtyp === 'A'">
+                    <div>
+                        <a type ="button" mat-button fxFlexFill routerLink="devdsb" routerLinkActive="active-link" fxFlexAlign ="center" style=" font-size:20px; width: 100%"> <mat-icon fxFlexAlign ="center">poll</mat-icon> &nbsp; Adminboard</a>
+                    </div>
+                </div>
+
+
             </div>
         
     </mat-sidenav>  
