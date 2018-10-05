@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NatinterceptorService } from './natinterceptor.service';
 import { SidenavService } from './sidenav.service';
 import { AuthGuardService } from './auth-guard.service';
+import { GaEventsService } from './google_analytics/ga-events.service';
 
 import { environment } from '../../environments/environment';
 
@@ -22,7 +23,8 @@ import { environment } from '../../environments/environment';
     NatinterceptorService,
     {provide: HTTP_INTERCEPTORS, useClass: NatinterceptorService, multi: true, },
     SidenavService,
-    AuthGuardService
+    AuthGuardService,
+    GaEventsService
   ],
   declarations: [],
 })

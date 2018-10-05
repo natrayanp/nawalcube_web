@@ -305,7 +305,8 @@ export class SingupComponent implements OnInit {
   createuserapi_notkn() {
     const frm_data = {
       'signup_frm' : this.signupForm.value,
-      'usrpass_frm' :this.userpasswdlgForm.value
+      'usrpass_frm' :this.userpasswdlgForm.value,
+      'otherapp': this.otherapp
     }
     console.log(frm_data);
     this.api.loginapipost('signupn', frm_data)
@@ -338,7 +339,8 @@ export class SingupComponent implements OnInit {
   createuserapi() {
     const frm_data = {
       'signup_frm' : this.signupForm.value,
-      'usrpass_frm' :this.userpasswdlgForm.value
+      'usrpass_frm' :this.userpasswdlgForm.value,
+      'otherapp': this.otherapp
     }
       this.api.loginapipost('signup', frm_data)
       .subscribe (
