@@ -68,13 +68,10 @@ export class SingupComponent implements OnInit {
         this.hmlnk = allParams.home;
         this.loglnk = allParams.home;
         this.appname = allParams.appname;
-
         console.log(this.appid);
         console.log(this.hmlnk);
         console.log(this.loglnk);
         console.log(this.appname);
-
-
       } else {
         this.otherapp = false;
       }
@@ -105,6 +102,7 @@ export class SingupComponent implements OnInit {
     
     } else {
       this.cust_types = cust_types;
+      this.otherapp = false;
     }
   }
 
