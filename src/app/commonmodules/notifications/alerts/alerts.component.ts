@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, OnInit, DoCheck,
+import { Component, Input, OnChanges, OnInit, DoCheck,SecurityContext,
          AfterContentInit, AfterViewInit, AfterViewChecked,
          AfterContentChecked, OnDestroy } from '@angular/core';
+import { DomSanitizer} from '@angular/platform-browser'
 import { NotifyService } from '../notify.service';
 import { Observable } from 'rxjs';
 
@@ -15,7 +16,7 @@ implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterViewChecked, AfterCon
   alert_id: string;
   private subscription: any;
 
-  constructor(public notify: NotifyService) { }
+  constructor(public notify: NotifyService,  private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     console.log('insider alerts');
@@ -31,6 +32,10 @@ implements OnChanges, OnInit, DoCheck, AfterViewInit, AfterViewChecked, AfterCon
     */
  }
 
+ sanitizemy(html) {
+  return this.sanitizer.sanitize(SecurityContext.HTML, html);
+ //return this.sanitizer.bypassSecurityTrustStyle(html);
+}
 
  ngOnChanges() {
   // console.log('ngOnChanges child', this.alert_id);

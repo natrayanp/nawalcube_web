@@ -10,7 +10,8 @@
           }">
           
           <span class="closebtn" *ngIf = "m.canclose === 'yes'" (click)="notify.clearalertmsg()">{{notify.alertticks}} &times;</span>  
-          {{ m.content }}   
+          <!--{{ m.content }}    -->
+          <div [innerHTML]= "sanitizemy(m.content)"></div>
         </mat-card>
     </div>
     </div>
