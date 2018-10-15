@@ -69,7 +69,7 @@ export class FirebaseauthService {
       console.log('tt');
       console.log(this.router.url);
       console.log('iam iam');
-      if (this.router.url.includes('/signup')) {
+      if (this.router.url.includes('/signup') || this.router.url.includes('/authorise')) {
         console.log('stay in sign up screen');
       } else {
         if (this.site === 'dv') {
