@@ -29,6 +29,7 @@ export class DevuserAppComponent implements OnInit {
   }
 
   fetch_appdet() {
+    console.log('devuser app');
     this.notify.clearalertmsg();
     this.mydialog = this.dialog.showalert('Fetch app data', 'We are working on your request, please wait');
     this.fetch_app = true;

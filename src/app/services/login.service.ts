@@ -114,6 +114,7 @@ export class LoginService {
         // try to get last login, user status, user name
         console.log(resp);
         console.log('navigate to secure page');
+        console.log(user);
 
        if (user.user.uid === resp.uid) {
             this.auth.set_session(user.user.uid, resp.sessionid);

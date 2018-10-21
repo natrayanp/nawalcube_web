@@ -64,7 +64,8 @@ export class DevcreappComponent implements OnInit {
         this.editmode = false;
         this.checkfor_selected_app();
         this.set_validators();
-        this.custtyp = this.genserv.get_cust_type_desc(this.auth.tknclaims.custtype);
+        console.log(this.auth.tknclaims.claims.custtype);
+        this.custtyp = this.genserv.get_cust_type_desc(this.auth.tknclaims.claims.custtype);
         console.log(this.custtyp);
         console.log(this.auth.tknclaims.custtype);
         this.appform.get('appusertype').setValue(this.custtyp);

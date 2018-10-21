@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 // import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -35,9 +35,9 @@ export class FirebaseauthService {
               public afAuth: AngularFireAuth,
               public router: Router
             ) {
-
                 this.afAuth.authState.subscribe(
                   user => {
+                            console.log('error in resolving auth state');
                             this.update_auth_sate(user);
                           },
                   err =>  {
