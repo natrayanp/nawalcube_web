@@ -8,6 +8,13 @@ export class GenserviceService {
 
   constructor() { }
 
+  // Variables for /authorise/auth to /authorise/allow : START
+
+
+
+  // Variables for /authorise/auth to /authorise/allow : END
+  
+
   get_cust_type_desc(ctype) {
     console.log(ctype);
     const myKeys = cust_types.filter(key => key.value === ctype);

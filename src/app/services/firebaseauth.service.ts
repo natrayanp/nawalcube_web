@@ -63,7 +63,7 @@ export class FirebaseauthService {
       }).catch(function(error) {
         // Handle error
         console.log('error inside get id token');
-        this.idToken = null;
+        this.idToken = '';
       });      
     } else {
       console.log('tt');
@@ -226,9 +226,14 @@ export class FirebaseauthService {
   }
 
   get_session(sess_str) {
+    console.log(sess_str);
     if (sess_str === null) {
-      if (this.firebase_user.uid !== null) {
-        sess_str = this.firebase_user.uid + '_sessid';
+      if (this.firebase_user != null) {
+        if (this.firebase_user.uid !== null) {
+          sess_str = this.firebase_user.uid + '_sessid';
+        } else {
+          sess_str = '_sessid';
+        }
       } else {
         sess_str = '_sessid';
       }

@@ -152,8 +152,9 @@ export class DevcreappComponent implements OnInit {
   sub_create_app(operationt) {
     let apidata = JSON.stringify(this.appform.value);
     apidata = JSON.parse(apidata);
-    apidata['appusertype'] = this.auth.tknclaims.custtype;
+    apidata['appusertype'] = this.auth.tknclaims.claims.custtype;
     apidata['operation'] = operationt;
+    console.log(this.appform.value);
     this.http.devmodapipost('appreg', apidata)
     .subscribe(
       (datas: any) => {

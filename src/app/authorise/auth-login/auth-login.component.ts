@@ -182,7 +182,8 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
       };
       console.log(this.req_param);
     if (this.req_param === 'code') {
-        this.router.navigate(['/allow']);
+        this.mydialog.close();
+        this.router.navigate(['/authorise/allow']);
         // window.location.href = 'http://127.0.0.1:8080/testapp?code=1345455';
     } else if (this.req_param === 'yenn') {
       this.mydialog.close();
@@ -211,6 +212,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     if (req_param === 'yenn') {
       this.router.navigate(['developers/devlgerr']);
     } else if (req_param === 'code') {
+      console.log('##############################');
       // this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
       // window.location.href = this.redirect_uri + '?error';
       // this.httpc.post (this.redirect_uri, {'r': this.redirect_uri});

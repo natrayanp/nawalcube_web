@@ -9,6 +9,7 @@ import { AuthoriseRoutingModule } from './authorise-routing.module';
 import { AuthLoginComponent } from './auth-login/auth-login.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthAllowComponent } from './auth-allow/auth-allow.component';
+import { AuthOutletComponent } from './auth-outlet/auth-outlet.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AuthAllowComponent } from './auth-allow/auth-allow.component';
   ],
   declarations: [
     AuthLoginComponent,
-    AuthAllowComponent
+    AuthAllowComponent,
+    AuthOutletComponent
   ]
 })
 export class AuthoriseModule { }
