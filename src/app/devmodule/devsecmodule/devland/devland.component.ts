@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FirebaseauthService } from '../../../services/firebaseauth.service';
 import { DialogsService } from '../../../commonmodules/dialogs/dialogs.service';
 import { SidenavService } from '../../../services/sidenav.service';
+import { DevmodService } from '../../core/devmod.service';
+
 
 @Component({
   selector: 'app-devland',
@@ -18,7 +20,8 @@ export class DevlandComponent implements OnInit {
                 private route: ActivatedRoute,
                 private auth: FirebaseauthService,
                 private dialog: DialogsService,
-                public snav: SidenavService
+                public snav: SidenavService,
+                private http: DevmodService,
               ) {  }
 
   ngOnInit() {
@@ -33,6 +36,7 @@ export class DevlandComponent implements OnInit {
           this.auth.tknclaims = res;
           this.custtyp = res.claims.custtype;
           console.log(res);
+          console.log(res.claims.custtype);
           if (res.claims.custtype === 'A'){
             this.router.navigate(['/developers/devsecure/devadsb']);  
           } else {
@@ -72,4 +76,5 @@ export class DevlandComponent implements OnInit {
       console.log(event);
     }
 
+  
   }

@@ -5,7 +5,7 @@ import { DevhomeComponent } from './devhome/devhome.component';
 // import { DevlandComponent } from './devland/devland.component';
 import { DevlgerrComponent } from './devlgerr/devlgerr.component';
 
-
+import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -15,6 +15,7 @@ const routes: Routes = [
     loadChildren: './devloginmodule/devlogin.module#DevloginmoduleModule'
   },
   { path: 'devsecure',
+    // canLoad: [AuthGuardService],
     loadChildren: './devsecmodule/devsec.module#DevsecModule'
   },
   { path: 'devlgerr', component: DevlgerrComponent }
