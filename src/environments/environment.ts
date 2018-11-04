@@ -62,6 +62,8 @@ export const environment = {
   endpt_ge: 'toups',
   url_appregres: apiurls.all_api_url, //apiurls.url_appregres
   endpt_appregres: 'ncappsingupres',
+  url_userauth: apiurls.all_api_url, //apiurls.url_appregres
+  endpt_userauth:'userauth',
 };
 
 

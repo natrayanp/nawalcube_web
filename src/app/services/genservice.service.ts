@@ -6,6 +6,8 @@ import { cust_types } from '../shared/interfacess';
 })
 export class GenserviceService {
 
+  auth_accept_data:any = {};
+
   constructor() { }
 
   // Variables for /authorise/auth to /authorise/allow : START
@@ -14,6 +16,7 @@ export class GenserviceService {
 
   // Variables for /authorise/auth to /authorise/allow : END
   
+
 
   get_cust_type_desc(ctype) {
     console.log(ctype);
@@ -32,5 +35,9 @@ export class GenserviceService {
     } else {
       return 'Unknown';
     }
+  }
+
+  set_auth_access_data(newdata) {
+    this.auth_accept_data = newdata;
   }
 }

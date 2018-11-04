@@ -9,6 +9,7 @@ import { NatHttpService } from '../../services/http.service';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GenserviceService } from '../../services/genservice.service';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
               private cdref: ChangeDetectorRef,
               private http: NatHttpService,
               private httpc: HttpClient,
+              private genserv: GenserviceService,
             ) { 
             }
 
@@ -48,6 +50,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     this.id1 = this.notify.get_unq_id();
     this.id2 = this.notify.get_unq_id();
     // Make the loged in user details as empty before login: START
+        this.genserv.auth_accept_data = {};
         this.auth.firebase_user = null;
         this.auth.idToken = '';
     // Make the loged in user details as empty before login: END
@@ -84,6 +87,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
 
 
   initialise_scrn() {
+    //Validate if the request is for valid app id
     const ttt = {'appid': this.app_id, 'redirecturi': this.redirect_uri};
     console.log(ttt);
     // this.comlogo_txt3val = this.http.apipost('authappnm', ttt).pipe(map(res => res.body.result_data.appname));
@@ -182,6 +186,15 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
       };
       console.log(this.req_param);
     if (this.req_param === 'code') {
+        // console.log(user.user.uid);
+        console.log(user.user.uid);
+
+        this.genserv.auth_accept_data = {
+          'userid' : user.user.uid,
+          'appid': this.app_id,
+          'redirecturi': this.redirect_uri
+        };
+
         this.mydialog.close();
         this.router.navigate(['/authorise/allow']);
         // window.location.href = 'http://127.0.0.1:8080/testapp?code=1345455';
