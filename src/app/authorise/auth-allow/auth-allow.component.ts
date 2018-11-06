@@ -24,8 +24,8 @@ accept() {
   .subscribe(
       (ress: any) => {
         console.log(ress);
-        console.log(this.genserv.auth_accept_data.redirecturi + '?authtkn=' + ress.body.authtkn);
-        window.location.href = this.genserv.auth_accept_data.redirecturi + '?authtkn=' + ress.body.authtkn;
+        console.log(this.genserv.auth_accept_data.redirecturi + '?type=code&regdata=' + ress.body.authtkn + '&msg=success');
+        window.location.href = this.genserv.auth_accept_data.redirecturi + '?type=code&regdata=' + ress.body.authtkn + '&msg=success';
       },
       (errs) => {
         console.log(errs);
