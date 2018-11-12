@@ -29,12 +29,18 @@ accept() {
       },
       (errs) => {
         console.log(errs);
+        this.show_error_page('auth token generation failed');
       }
   );
 }
 
 deny() {
+  this.show_error_page('User cancelled auth operation');
+}
 
+show_error_page(msg) {
+  console.log(this.genserv.auth_accept_data.redirecturi + '?type=code&regdata=401&msg='+ msg);
+  window.location.href = this.genserv.auth_accept_data.redirecturi + '?type=code&regdata=401&msg='+ msg;
 }
 
 }
