@@ -4,7 +4,7 @@ import { FirebaseauthService } from '../../../services/firebaseauth.service';
 import { DialogsService } from '../../../commonmodules/dialogs/dialogs.service';
 import { SidenavService } from '../../../services/sidenav.service';
 import { DevmodService } from '../../core/devmod.service';
-
+import { NavItem } from '../devsecmodels/nav-items';
 
 @Component({
   selector: 'app-devland',
@@ -12,7 +12,7 @@ import { DevmodService } from '../../core/devmod.service';
   styleUrls: ['./devland.component.scss']
 })
 export class DevlandComponent implements OnInit {
-
+  navItems: NavItem[];
   @ViewChild('devsidenav') public devsidenav;
   custtyp: string;
   constructor(
@@ -47,6 +47,7 @@ export class DevlandComponent implements OnInit {
 
     // this.router.navigate([{outlets: {devout: ['devdash']}}], {relativeTo: this.route});
   }
+  this.set_nav_item();
 }
 
   navclick(eve) {
@@ -76,5 +77,19 @@ export class DevlandComponent implements OnInit {
       console.log(event);
     }
 
+    set_nav_item() {
+      this.navItems = [
+        {
+          displayName: 'Dashboard',
+          iconName: 'recent_actors',
+          route: '/developers/devsecure/devdsb'
+        },
+        {
+          displayName: 'Create App',
+          iconName: 'videocam',
+          route: '/developers/devsecure/devapp'
+        }
+      ];
+    }
   
   }

@@ -17,6 +17,7 @@ import { DevavailappcardComponent } from './devdash/devavailapp/devavailappcard/
 import { DevuserAppComponent } from './devdash/devuser-app/devuser-app.component';
 import { DevuserAppCardComponent } from './devdash/devuser-app/devuser-app-card/devuser-app-card.component';
 import { DevdashadminComponent } from './devdashadmin/devdashadmin.component';
+import { MenuListItemComponent } from './devseccommon/menu-list-item/menu-list-item.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { DevdashadminComponent } from './devdashadmin/devdashadmin.component';
     DevavailappcardComponent,
     DevuserAppComponent,
     DevuserAppCardComponent,
-    DevdashadminComponent
+    DevdashadminComponent,
+    MenuListItemComponent
   ]
 })
 export class DevsecModule { }
