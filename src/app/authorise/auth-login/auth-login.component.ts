@@ -72,7 +72,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
      .subscribe(params => {
      'appid' in params ? this.app_id = params['appid'] : this.api_param_missing = true;
      'redirecturi' in params ? this.redirect_uri = params['redirecturi'] : this.uri_param_missing = true;
-     'request' in params ? this.req_param = params['request'] : this.req_param_missing = true;
+     'type' in params ? this.req_param = params['type'] : this.req_param_missing = true;
      
        console.log(params);
        this.initialise_scrn();
@@ -152,6 +152,7 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
         const subject = new Subject();
         this.comlogo_txt3val.source = subject.pipe(map(res => res));
         subject.next('API');
+        console.log('inside Check_for_param_err else else if');
       } else {
         this.send_error_resp(this.req_param);
       }
@@ -225,13 +226,14 @@ export class AuthLoginComponent implements OnChanges, OnInit, DoCheck, AfterView
     if (req_param === 'yenn') {
       this.router.navigate(['developers/devlgerr']);
     } else if (req_param === 'code') {
-      console.log('##############################');
+      
       // this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
-      // window.location.href = this.redirect_uri + '?error';
+            window.location.href = this.redirect_uri + '?type=code&regdata=401&msg=error in navigation';
       // this.httpc.post (this.redirect_uri, {'r': this.redirect_uri});
     } else {
       if (this.redirect_uri.length > 0) {
-        this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
+        //this.router.navigate([this.redirect_uri], { queryParams: { code: 'error' } });
+              window.location.href = this.redirect_uri + '?type=code&regdata=401&msg=request type not know';
       } else {
         this.fatal_err = true;
         this.userpasswdlgForm.controls['password'].reset();

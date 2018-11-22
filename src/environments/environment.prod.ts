@@ -2,12 +2,12 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-
 export const apiurls = {
   // Common routes for all
-  all_api_url: 'http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
+  all_api_url:  'https://dswqabuv9k.execute-api.ap-south-1.amazonaws.com/dev', //http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
+  url_signupn: 'http://127.0.0.1:8080',
   url_nclogin: 'http://127.0.0.1:8080',
   url_ncloginks: 'http://127.0.0.1:8080',
   url_dvlogin: 'http://127.0.0.1:8080',
@@ -16,7 +16,8 @@ export const apiurls = {
   url_dvlogout: 'http://127.0.0.1:8080',
   url_appreg: 'http://127.0.0.1:8080',
   url_appfetch: 'http://127.0.0.1:8080',
-  url_authappnm: 'http://127.0.0.1:8080'
+  url_authappnm: 'http://127.0.0.1:8080',
+  url_appregres: 'http://127.0.0.1:8080',
 };
 
 
@@ -33,6 +34,8 @@ export const environment = {
   // url_<screen + Functionality>
   url_signup: apiurls.all_api_url,
   endpt_signup : 'signup',
+  url_signupn: apiurls.all_api_url,
+  endpt_signupn : 'signupnotkn',
   url_nclogin: apiurls.all_api_url,
   endpt_nclogin : 'login',
   url_ncloginks: apiurls.all_api_url,
@@ -49,10 +52,18 @@ export const environment = {
   endpt_appreg : 'appregis',
   url_appfetch: apiurls.all_api_url,
   endpt_appfetch: 'appdetail',
+  url_appnlfetch: apiurls.all_api_url,
+  endpt_appnlfetch: 'appnldetail',
   url_authappnm: apiurls.all_api_url,
+  endpt_appregresp: 'appregresp',
+  url_appregresp: apiurls.all_api_url,  
   endpt_authappnm: 'appname',
   url_ge:  apiurls.all_api_url, // 'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'
-  endpt_ge: 'toups'
+  endpt_ge: 'toups',
+  url_appregres: apiurls.all_api_url, //apiurls.url_appregres
+  endpt_appregres: 'ncappsingupres',
+  url_userauth: apiurls.all_api_url, //apiurls.url_appregres
+  endpt_userauth:'userauth',
 };
 
 

@@ -4,7 +4,7 @@
 
 export const apiurls = {
   // Common routes for all
-  all_api_url: 'http://127.0.0.1:8080'/*'https://wuob9hr3o3.execute-api.ap-south-1.amazonaws.com/dev'*/,
+  all_api_url: 'https://dswqabuv9k.execute-api.ap-south-1.amazonaws.com/dev',
   // Individual routes
   url_signup: 'http://127.0.0.1:8080',
   url_signupn: 'http://127.0.0.1:8080',
